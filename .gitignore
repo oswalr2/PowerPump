@@ -6,3 +6,6 @@ xcuserdata/
 
 # macOS
 .DS_Store
+
+# Local tooling state
+.voight-agent-id
