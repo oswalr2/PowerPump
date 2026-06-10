@@ -1,0 +1,470 @@
+import SwiftUI
+
+struct WorkoutsView: View {
+    @ObservedObject private var store = WorkoutStore.shared
+    @State private var showActive = false
+    @State private var showSaveRoutine = false
+    @State private var routineName = ""
+
+    var body: some View {
+        NavigationStack {
+            ZStack {
+                Color.sbBackground.ignoresSafeArea()
+
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 20) {
+                        header
+
+                        // Resume banner if there's an orphan session
+                        if store.activeSession != nil {
+                            resumeBanner
+                        }
+
+                        startButton
+
+                        programsSection
+
+                        exerciseLibraryLink
+
+                        if !store.templates.isEmpty { routinesSection }
+
+                        if !store.history.isEmpty { historySection }
+
+                        Spacer(minLength: 100)
+                    }
+                    .padding(.top, 16)
+                }
+            }
+            .toolbar(.hidden, for: .navigationBar)
+        }
+        .fullScreenCover(isPresented: $showActive) {
+            ActiveWorkoutView(isPresented: $showActive)
+        }
+    }
+
+    // MARK: - Subviews
+
+    private var header: some View {
+        HStack {
+            Text("Workouts")
+                .font(SBFont.display(28))
+                .foregroundColor(.sbTextPrimary)
+            Spacer()
+        }
+        .padding(.horizontal, 20)
+    }
+
+    private var resumeBanner: some View {
+        Button { showActive = true } label: {
+            HStack(spacing: 12) {
+                Image(systemName: "play.circle.fill")
+                    .font(.system(size: 22))
+                    .foregroundColor(.sbAccent)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Workout in progress")
+                        .font(SBFont.heading(14))
+                        .foregroundColor(.sbTextPrimary)
+                    Text("Tap to resume")
+                        .font(SBFont.caption())
+                        .foregroundColor(.sbTextSecondary)
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .foregroundColor(.sbAccent)
+            }
+            .padding(16)
+            .background(Color.sbAccent.opacity(0.1))
+            .cornerRadius(16)
+            .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.sbAccent.opacity(0.4)))
+        }
+        .buttonStyle(.plain)
+        .padding(.horizontal, 20)
+    }
+
+    private var startButton: some View {
+        Button {
+            store.startEmpty()
+            showActive = true
+        } label: {
+            HStack {
+                Image(systemName: "bolt.fill")
+                    .font(.system(size: 16, weight: .bold))
+                Text("Start Empty Workout")
+                    .font(SBFont.body())
+                    .fontWeight(.bold)
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 14))
+            }
+            .foregroundColor(.white)
+            .padding(18)
+            .background(Color.sbAccent)
+            .cornerRadius(16)
+        }
+        .buttonStyle(.plain)
+        .padding(.horizontal, 20)
+    }
+
+    // MARK: - Programs
+
+    private var programsSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Programs")
+                .font(SBFont.heading())
+                .foregroundColor(.sbTextPrimary)
+                .padding(.horizontal, 20)
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 12) {
+                    ForEach(ProgramLibrary.all) { program in
+                        ProgramCard(program: program) {
+                            store.start(template: program.template)
+                            HapticManager.medium()
+                            showActive = true
+                        }
+                    }
+                }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 4)
+            }
+        }
+    }
+
+    private var exerciseLibraryLink: some View {
+        NavigationLink(destination: ExercisesView()) {
+            HStack(spacing: 12) {
+                Image(systemName: "list.bullet.rectangle")
+                    .font(.system(size: 18))
+                    .foregroundColor(.sbAccent)
+                Text("Exercise Library")
+                    .font(SBFont.body())
+                    .foregroundColor(.sbTextPrimary)
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 13))
+                    .foregroundColor(.sbTextSecondary)
+            }
+            .padding(16)
+            .background(Color.sbSurface)
+            .cornerRadius(14)
+            .overlay(RoundedRectangle(cornerRadius: 14).stroke(Color.sbBorder))
+        }
+        .buttonStyle(.plain)
+        .padding(.horizontal, 20)
+    }
+
+    private var routinesSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("My Routines")
+                .font(SBFont.heading())
+                .foregroundColor(.sbTextPrimary)
+                .padding(.horizontal, 20)
+
+            ForEach(store.templates) { template in
+                TemplateCard(template: template) {
+                    store.start(template: template)
+                    showActive = true
+                }
+                .padding(.horizontal, 20)
+            }
+        }
+    }
+
+    private var historySection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Recent Workouts")
+                .font(SBFont.heading())
+                .foregroundColor(.sbTextPrimary)
+                .padding(.horizontal, 20)
+
+            ForEach(store.history.prefix(5)) { session in
+                HistoryCard(session: session)
+                    .padding(.horizontal, 20)
+            }
+        }
+    }
+}
+
+// MARK: - Template Card
+
+private struct TemplateCard: View {
+    let template: WorkoutTemplate
+    let onStart: () -> Void
+    @ObservedObject private var store = WorkoutStore.shared
+
+    var body: some View {
+        HStack(spacing: 14) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(template.name)
+                    .font(SBFont.heading(15))
+                    .foregroundColor(.sbTextPrimary)
+                Text("\(template.exercises.count) exercise\(template.exercises.count == 1 ? "" : "s")")
+                    .font(SBFont.caption())
+                    .foregroundColor(.sbTextSecondary)
+            }
+
+            Spacer()
+
+            Button(action: onStart) {
+                Text("Start")
+                    .font(SBFont.caption())
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(Color.sbAccent)
+                    .cornerRadius(10)
+            }
+            .buttonStyle(.plain)
+        }
+        .padding(16)
+        .background(Color.sbSurface)
+        .cornerRadius(16)
+        .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.sbBorder))
+        .swipeActions(edge: .trailing) {
+            Button(role: .destructive) {
+                store.deleteTemplate(template)
+            } label: {
+                Label("Delete", systemImage: "trash")
+            }
+        }
+    }
+}
+
+// MARK: - History Card
+
+private struct HistoryCard: View {
+    let session: WorkoutSession
+
+    private var dateString: String {
+        let f = DateFormatter()
+        f.dateStyle = .medium
+        f.timeStyle = .short
+        return f.string(from: session.startedAt)
+    }
+
+    private var durationString: String {
+        let m = Int(session.duration) / 60
+        return m < 60 ? "\(m) min" : String(format: "%dh %02dm", m / 60, m % 60)
+    }
+
+    var body: some View {
+        HStack(spacing: 14) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(session.name)
+                    .font(SBFont.heading(15))
+                    .foregroundColor(.sbTextPrimary)
+                Text(dateString)
+                    .font(SBFont.caption())
+                    .foregroundColor(.sbTextSecondary)
+            }
+
+            Spacer()
+
+            VStack(alignment: .trailing, spacing: 4) {
+                Text(durationString)
+                    .font(SBFont.body())
+                    .fontWeight(.semibold)
+                    .foregroundColor(.sbAccent)
+                Text("\(session.completedSets) sets · \(Int(session.totalVolume)) kg")
+                    .font(SBFont.caption())
+                    .foregroundColor(.sbTextSecondary)
+            }
+        }
+        .padding(14)
+        .background(Color.sbSurface)
+        .cornerRadius(14)
+        .overlay(RoundedRectangle(cornerRadius: 14).stroke(Color.sbBorder))
+    }
+}
+
+// MARK: - Exercise Picker Sheet
+
+struct ExercisePickerView: View {
+    let onSelect: (String) -> Void
+    @State private var searchText = ""
+    @State private var selectedCategory: MuscleGroup? = nil
+    @Environment(\.dismiss) private var dismiss
+
+    private var filtered: [Exercise] {
+        var list = ExerciseDatabase.all
+        if let cat = selectedCategory { list = list.filter { $0.category == cat } }
+        if !searchText.isEmpty {
+            list = list.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+        }
+        return list
+    }
+
+    var body: some View {
+        NavigationStack {
+            ZStack {
+                Color.sbBackground.ignoresSafeArea()
+
+                VStack(spacing: 0) {
+                    HStack(spacing: 10) {
+                        Image(systemName: "magnifyingglass").foregroundColor(.sbTextSecondary)
+                        TextField("Search exercises...", text: $searchText)
+                            .font(SBFont.body())
+                            .foregroundColor(.sbTextPrimary)
+                    }
+                    .padding(12)
+                    .background(Color.sbSurface)
+                    .cornerRadius(12)
+                    .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.sbBorder))
+                    .padding(16)
+
+                    // Category filter
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 8) {
+                            FilterChip(label: "All", isSelected: selectedCategory == nil) {
+                                selectedCategory = nil
+                            }
+                            ForEach(MuscleGroup.allCases, id: \.self) { g in
+                                FilterChip(label: g.rawValue, isSelected: selectedCategory == g) {
+                                    selectedCategory = selectedCategory == g ? nil : g
+                                }
+                            }
+                        }
+                        .padding(.horizontal, 16)
+                    }
+                    .padding(.bottom, 12)
+
+                    ScrollView(showsIndicators: false) {
+                        LazyVStack(spacing: 8) {
+                            ForEach(filtered) { exercise in
+                                Button { onSelect(exercise.id) } label: {
+                                    HStack(spacing: 12) {
+                                        if let name = ExerciseDatabase.muscleIconNames[exercise.id],
+                                           let img = UIImage(named: name) {
+                                            Image(uiImage: img)
+                                                .resizable().scaledToFill()
+                                                .frame(width: 42, height: 42)
+                                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                        } else {
+                                            RoundedRectangle(cornerRadius: 8)
+                                                .fill(Color.sbSurfaceRaised)
+                                                .frame(width: 42, height: 42)
+                                        }
+                                        VStack(alignment: .leading, spacing: 2) {
+                                            Text(exercise.name)
+                                                .font(SBFont.body())
+                                                .foregroundColor(.sbTextPrimary)
+                                            Text(exercise.primaryMuscle)
+                                                .font(SBFont.caption())
+                                                .foregroundColor(.sbTextSecondary)
+                                        }
+                                        Spacer()
+                                        Image(systemName: "plus.circle.fill")
+                                            .font(.system(size: 20))
+                                            .foregroundColor(.sbAccent)
+                                    }
+                                    .padding(12)
+                                    .background(Color.sbSurface)
+                                    .cornerRadius(12)
+                                    .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.sbBorder))
+                                }
+                                .buttonStyle(.plain)
+                            }
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.bottom, 40)
+                    }
+                }
+            }
+            .navigationTitle("Add Exercise")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") { dismiss() }
+                        .foregroundColor(.sbAccent)
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Program Card
+
+private struct ProgramCard: View {
+    let program: BuiltinProgram
+    let onStart: () -> Void
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            // Top colour band
+            ZStack(alignment: .bottomLeading) {
+                RoundedRectangle(cornerRadius: 0)
+                    .fill(program.color.opacity(0.15))
+                    .frame(height: 72)
+
+                HStack {
+                    Image(systemName: program.icon)
+                        .font(.system(size: 28, weight: .bold))
+                        .foregroundColor(program.color)
+                        .padding(16)
+                    Spacer()
+                    Text("\(program.estimatedMinutes)m")
+                        .font(SBFont.label(11))
+                        .fontWeight(.semibold)
+                        .foregroundColor(program.color)
+                        .padding(.trailing, 14)
+                        .padding(.bottom, 12)
+                }
+            }
+
+            VStack(alignment: .leading, spacing: 6) {
+                Text(program.name)
+                    .font(SBFont.heading(16))
+                    .foregroundColor(.sbTextPrimary)
+
+                Text(program.subtitle)
+                    .font(SBFont.label(11))
+                    .foregroundColor(.sbTextSecondary)
+                    .lineLimit(2)
+
+                Text("\(program.template.exercises.count) exercises")
+                    .font(SBFont.label(10))
+                    .foregroundColor(.sbTextSecondary)
+                    .padding(.top, 2)
+
+                Button(action: onStart) {
+                    Text("Start")
+                        .font(SBFont.caption())
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 9)
+                        .background(program.color)
+                        .cornerRadius(10)
+                }
+                .buttonStyle(.plain)
+                .padding(.top, 4)
+            }
+            .padding(14)
+        }
+        .frame(width: 165)
+        .background(Color.sbSurface)
+        .cornerRadius(16)
+        .overlay(RoundedRectangle(cornerRadius: 16).stroke(program.color.opacity(0.3), lineWidth: 1.5))
+    }
+}
+
+private struct FilterChip: View {
+    let label: String
+    let isSelected: Bool
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            Text(label)
+                .font(SBFont.caption())
+                .foregroundColor(isSelected ? .white : .sbTextSecondary)
+                .padding(.horizontal, 14)
+                .padding(.vertical, 7)
+                .background(isSelected ? Color.sbAccent : Color.sbSurface)
+                .cornerRadius(20)
+                .overlay(RoundedRectangle(cornerRadius: 20).stroke(isSelected ? Color.sbAccent : Color.sbBorder))
+        }
+        .buttonStyle(.plain)
+    }
+}
