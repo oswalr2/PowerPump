@@ -2,7 +2,6 @@ import SwiftUI
 
 struct ProfileView: View {
     @ObservedObject private var profile  = UserProfile.shared
-    @ObservedObject private var notif    = NotificationManager.shared
     @ObservedObject private var language = LanguageManager.shared
     @ObservedObject private var health   = HealthKitService.shared
     @State private var showSettings      = false
@@ -18,7 +17,6 @@ struct ProfileView: View {
                         statsCard
                         targetsCard
                         healthCard
-                        notificationsCard
                         settingsButton
                         SBSecondaryButton(title: "Edit Profile") {
                             profile.onboardingDone = false
@@ -31,7 +29,6 @@ struct ProfileView: View {
             }
             .navigationBarHidden(true)
         }
-        .onAppear { notif.checkStatus() }
         .sheet(isPresented: $showSettings) { SettingsView() }
     }
 
@@ -124,102 +121,6 @@ struct ProfileView: View {
         }
     }
 
-    // MARK: - Notifications
-
-    private var notificationsCard: some View {
-        SBCard {
-            VStack(alignment: .leading, spacing: 16) {
-                // Header
-                HStack {
-                    Image(systemName: "bell.fill").foregroundColor(.sbAccent)
-                    Text("Notifications")
-                        .font(SBFont.heading())
-                        .foregroundColor(.sbTextPrimary)
-                    Spacer()
-                    if notif.isAuthorized {
-                        Image(systemName: "checkmark.circle.fill").foregroundColor(.sbGreen)
-                    }
-                }
-
-                if !notif.isAuthorized {
-                    // Permission prompt
-                    VStack(spacing: 10) {
-                        Text("Allow notifications to get reminders for workouts, hydration, and meals.")
-                            .font(SBFont.caption())
-                            .foregroundColor(.sbTextSecondary)
-                            .lineSpacing(3)
-
-                        SBPrimaryButton(title: "Enable Notifications") {
-                            notif.requestPermission()
-                        }
-                    }
-                } else {
-                    // Workout reminder
-                    NotifRow(
-                        icon: "dumbbell.fill",
-                        title: "Workout Reminder",
-                        isOn: $notif.workoutEnabled
-                    ) {
-                        if notif.workoutEnabled {
-                            DatePicker("", selection: $notif.workoutTime, displayedComponents: .hourAndMinute)
-                                .labelsHidden()
-                                .tint(.sbAccent)
-                        }
-                    }
-
-                    Divider().background(Color.sbBorder)
-
-                    // Hydration reminder
-                    NotifRow(
-                        icon: "drop.fill",
-                        title: "Hydration Reminder",
-                        isOn: $notif.hydrationEnabled
-                    ) {
-                        if notif.hydrationEnabled {
-                            HStack(spacing: 0) {
-                                Text("Every")
-                                    .font(SBFont.caption())
-                                    .foregroundColor(.sbTextSecondary)
-                                Spacer()
-                                ForEach([1, 2, 3], id: \.self) { h in
-                                    Button {
-                                        notif.hydrationEveryHours = h
-                                    } label: {
-                                        Text("\(h)h")
-                                            .font(SBFont.caption())
-                                            .foregroundColor(notif.hydrationEveryHours == h ? .white : .sbTextSecondary)
-                                            .padding(.horizontal, 10)
-                                            .padding(.vertical, 6)
-                                            .background(notif.hydrationEveryHours == h ? Color.sbAccent : Color.sbSurfaceRaised)
-                                            .cornerRadius(7)
-                                    }
-                                    .buttonStyle(.plain)
-                                }
-                            }
-                        }
-                    }
-
-                    Divider().background(Color.sbBorder)
-
-                    // Meal reminders
-                    NotifRow(
-                        icon: "fork.knife",
-                        title: "Meal Reminders",
-                        isOn: $notif.mealsEnabled
-                    ) {
-                        if notif.mealsEnabled {
-                            VStack(spacing: 8) {
-                                MealTimeRow(label: "Breakfast", time: $notif.breakfastTime)
-                                MealTimeRow(label: "Lunch",     time: $notif.lunchTime)
-                                MealTimeRow(label: "Dinner",    time: $notif.dinnerTime)
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     // MARK: - Health
 
     private var healthCard: some View {
@@ -280,51 +181,6 @@ struct ProfileView: View {
         .padding(.vertical, 6)
     }
 
-}
-
-// MARK: - Notification sub-views
-
-private struct NotifRow<Extra: View>: View {
-    let icon: String
-    let title: String
-    @Binding var isOn: Bool
-    @ViewBuilder let extra: () -> Extra
-
-    var body: some View {
-        VStack(spacing: 10) {
-            HStack {
-                Image(systemName: icon)
-                    .foregroundColor(.sbAccent)
-                    .frame(width: 20)
-                Text(title)
-                    .font(SBFont.body())
-                    .foregroundColor(.sbTextPrimary)
-                Spacer()
-                Toggle("", isOn: $isOn)
-                    .labelsHidden()
-                    .tint(.sbAccent)
-            }
-            extra()
-        }
-    }
-}
-
-private struct MealTimeRow: View {
-    let label: String
-    @Binding var time: Date
-
-    var body: some View {
-        HStack {
-            Text(label)
-                .font(SBFont.caption())
-                .foregroundColor(.sbTextSecondary)
-                .frame(width: 70, alignment: .leading)
-            Spacer()
-            DatePicker("", selection: $time, displayedComponents: .hourAndMinute)
-                .labelsHidden()
-                .tint(.sbAccent)
-        }
-    }
 }
 
 // MARK: - TargetRow

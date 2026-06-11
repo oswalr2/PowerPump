@@ -3,6 +3,7 @@ import SwiftUI
 struct SettingsView: View {
     @ObservedObject private var theme    = ThemeManager.shared
     @ObservedObject private var language = LanguageManager.shared
+    @ObservedObject private var notif    = NotificationManager.shared
     @Environment(\.dismiss) private var dismiss
 
     @State private var showAbout    = false
@@ -26,6 +27,13 @@ struct SettingsView: View {
                         languageRow
                     } header: {
                         sectionHeader("Language")
+                    }
+
+                    // MARK: Notifications
+                    Section {
+                        notificationsRow
+                    } header: {
+                        sectionHeader("Notifications")
                     }
 
                     // MARK: Support
@@ -53,6 +61,7 @@ struct SettingsView: View {
                 }
             }
         }
+        .onAppear { notif.checkStatus() }
         .sheet(isPresented: $showAbout) { AboutView() }
         .confirmationDialog("", isPresented: $showLanguage, titleVisibility: .hidden) {
             ForEach(LanguageManager.available) { lang in
@@ -122,6 +131,84 @@ struct SettingsView: View {
         .listRowBackground(Color.sbSurface)
     }
 
+    // MARK: - Notifications row
+
+    private var notificationsRow: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            if !notif.isAuthorized {
+                Text("Allow notifications to get reminders for workouts, hydration, and meals.")
+                    .font(SBFont.caption())
+                    .foregroundColor(.sbTextSecondary)
+                    .lineSpacing(3)
+
+                SBPrimaryButton(title: "Enable Notifications") {
+                    notif.requestPermission()
+                }
+            } else {
+                NotifRow(
+                    icon: "dumbbell.fill",
+                    title: "Workout Reminder",
+                    isOn: $notif.workoutEnabled
+                ) {
+                    if notif.workoutEnabled {
+                        DatePicker("", selection: $notif.workoutTime, displayedComponents: .hourAndMinute)
+                            .labelsHidden()
+                            .tint(.sbAccent)
+                    }
+                }
+
+                Divider().background(Color.sbBorder)
+
+                NotifRow(
+                    icon: "drop.fill",
+                    title: "Hydration Reminder",
+                    isOn: $notif.hydrationEnabled
+                ) {
+                    if notif.hydrationEnabled {
+                        HStack(spacing: 0) {
+                            Text("Every")
+                                .font(SBFont.caption())
+                                .foregroundColor(.sbTextSecondary)
+                            Spacer()
+                            ForEach([1, 2, 3], id: \.self) { h in
+                                Button {
+                                    notif.hydrationEveryHours = h
+                                } label: {
+                                    Text("\(h)h")
+                                        .font(SBFont.caption())
+                                        .foregroundColor(notif.hydrationEveryHours == h ? .white : .sbTextSecondary)
+                                        .padding(.horizontal, 10)
+                                        .padding(.vertical, 6)
+                                        .background(notif.hydrationEveryHours == h ? Color.sbAccent : Color.sbSurfaceRaised)
+                                        .cornerRadius(7)
+                                }
+                                .buttonStyle(.plain)
+                            }
+                        }
+                    }
+                }
+
+                Divider().background(Color.sbBorder)
+
+                NotifRow(
+                    icon: "fork.knife",
+                    title: "Meal Reminders",
+                    isOn: $notif.mealsEnabled
+                ) {
+                    if notif.mealsEnabled {
+                        VStack(spacing: 8) {
+                            MealTimeRow(label: "Breakfast", time: $notif.breakfastTime)
+                            MealTimeRow(label: "Lunch",     time: $notif.lunchTime)
+                            MealTimeRow(label: "Dinner",    time: $notif.dinnerTime)
+                        }
+                    }
+                }
+            }
+        }
+        .padding(.vertical, 6)
+        .listRowBackground(Color.sbSurface)
+    }
+
     // MARK: - Support rows
 
     private var supportRow: some View {
@@ -166,5 +253,50 @@ struct SettingsView: View {
             .font(SBFont.label(12))
             .foregroundColor(.sbTextSecondary)
             .textCase(nil)
+    }
+}
+
+// MARK: - Notification sub-views
+
+private struct NotifRow<Extra: View>: View {
+    let icon: String
+    let title: String
+    @Binding var isOn: Bool
+    @ViewBuilder let extra: () -> Extra
+
+    var body: some View {
+        VStack(spacing: 10) {
+            HStack {
+                Image(systemName: icon)
+                    .foregroundColor(.sbAccent)
+                    .frame(width: 20)
+                Text(LocalizedStringKey(title))
+                    .font(SBFont.body())
+                    .foregroundColor(.sbTextPrimary)
+                Spacer()
+                Toggle("", isOn: $isOn)
+                    .labelsHidden()
+                    .tint(.sbAccent)
+            }
+            extra()
+        }
+    }
+}
+
+private struct MealTimeRow: View {
+    let label: String
+    @Binding var time: Date
+
+    var body: some View {
+        HStack {
+            Text(LocalizedStringKey(label))
+                .font(SBFont.caption())
+                .foregroundColor(.sbTextSecondary)
+                .frame(width: 70, alignment: .leading)
+            Spacer()
+            DatePicker("", selection: $time, displayedComponents: .hourAndMinute)
+                .labelsHidden()
+                .tint(.sbAccent)
+        }
     }
 }

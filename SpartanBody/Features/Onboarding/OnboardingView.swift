@@ -198,10 +198,10 @@ private struct GoalCard: View {
                 .scaleEffect(isSelected ? 1.05 : 1.0)
 
                 VStack(alignment: .leading, spacing: 3) {
-                    Text(goal.rawValue)
+                    Text(LocalizedStringKey(goal.rawValue))
                         .font(SBFont.heading(17))
                         .foregroundColor(isSelected ? .sbAccent : .sbTextPrimary)
-                    Text(goal.description)
+                    Text(LocalizedStringKey(goal.description))
                         .font(SBFont.caption())
                         .foregroundColor(.sbTextSecondary)
                         .lineLimit(2)
@@ -300,7 +300,7 @@ private struct StepperRow: View {
             }
 
             VStack(alignment: .leading, spacing: 2) {
-                Text(label)
+                Text(LocalizedStringKey(label))
                     .font(SBFont.caption())
                     .foregroundColor(.sbTextSecondary)
                 HStack(alignment: .lastTextBaseline, spacing: 3) {
@@ -419,10 +419,10 @@ private struct ActivityCard: View {
                 .scaleEffect(isSelected ? 1.05 : 1.0)
 
                 VStack(alignment: .leading, spacing: 3) {
-                    Text(level.rawValue)
+                    Text(LocalizedStringKey(level.rawValue))
                         .font(SBFont.heading(15))
                         .foregroundColor(isSelected ? .sbAccent : .sbTextPrimary)
-                    Text(detail)
+                    Text(LocalizedStringKey(detail))
                         .font(SBFont.caption())
                         .foregroundColor(.sbTextSecondary)
                         .lineLimit(2)
@@ -513,7 +513,7 @@ private struct SummaryStep: View {
                 Image(systemName: profile.goal.icon)
                     .font(.system(size: 18, weight: .bold))
                     .foregroundColor(.sbAccent)
-                Text(profile.goal.rawValue + " · " + profile.activityLevel.rawValue)
+                Text(NSLocalizedString(profile.goal.rawValue, comment: "") + " · " + NSLocalizedString(profile.activityLevel.rawValue, comment: ""))
                     .font(SBFont.caption())
                     .foregroundColor(.sbTextSecondary)
             }
@@ -547,7 +547,7 @@ private struct MacroPill: View {
                 .font(SBFont.heading(18))
                 .foregroundColor(color)
                 .monospacedDigit()
-            Text(label)
+            Text(LocalizedStringKey(label))
                 .font(SBFont.label(11))
                 .foregroundColor(.sbTextSecondary)
         }

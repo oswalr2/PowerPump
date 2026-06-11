@@ -8,7 +8,12 @@ struct RecipesView: View {
     private var filtered: [Recipe] {
         var list = RecipeDatabase.all
         if let g = selectedGoal { list = list.filter { $0.goal == g } }
-        if !searchText.isEmpty { list = list.filter { $0.name.localizedCaseInsensitiveContains(searchText) } }
+        if !searchText.isEmpty {
+            list = list.filter {
+                $0.name.localizedCaseInsensitiveContains(searchText)
+                || NSLocalizedString($0.name, comment: "").localizedCaseInsensitiveContains(searchText)
+            }
+        }
         return list
     }
 
@@ -134,7 +139,7 @@ private struct RecipeCard: View {
                 .cornerRadius(16)
 
             VStack(alignment: .leading, spacing: 6) {
-                Text(recipe.name)
+                Text(LocalizedStringKey(recipe.name))
                     .font(SBFont.heading(16))
                     .foregroundColor(.sbTextPrimary)
                     .lineLimit(1)
@@ -231,7 +236,7 @@ struct RecipeDetailView: View {
                     .padding(.horizontal, 20)
 
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(recipe.name)
+                        Text(LocalizedStringKey(recipe.name))
                             .font(SBFont.display(26))
                             .foregroundColor(.sbTextPrimary)
 
@@ -255,11 +260,11 @@ struct RecipeDetailView: View {
                         ForEach(recipe.ingredients) { ing in
                             HStack {
                                 Circle().fill(Color.sbAccent).frame(width: 6, height: 6)
-                                Text(ing.name)
+                                Text(LocalizedStringKey(ing.name))
                                     .font(SBFont.body())
                                     .foregroundColor(.sbTextPrimary)
                                 Spacer()
-                                Text(ing.amount)
+                                Text(LocalizedStringKey(ing.amount))
                                     .font(SBFont.caption())
                                     .foregroundColor(.sbTextSecondary)
                             }
@@ -282,7 +287,7 @@ struct RecipeDetailView: View {
                                     .frame(width: 26, height: 26)
                                     .background(Color.sbAccent)
                                     .clipShape(Circle())
-                                Text(step)
+                                Text(LocalizedStringKey(step))
                                     .font(SBFont.body())
                                     .foregroundColor(.sbTextPrimary)
                                     .fixedSize(horizontal: false, vertical: true)
@@ -354,13 +359,13 @@ struct RecipeDetailView: View {
                 Text(value).font(SBFont.heading(18)).foregroundColor(.sbTextPrimary)
                 if !unit.isEmpty { Text(unit).font(SBFont.label()).foregroundColor(.sbTextSecondary) }
             }
-            Text(label).font(SBFont.label(10)).foregroundColor(.sbTextSecondary)
+            Text(LocalizedStringKey(label)).font(SBFont.label(10)).foregroundColor(.sbTextSecondary)
         }
         .frame(maxWidth: .infinity)
     }
 
     private func sectionHeader(_ title: String) -> some View {
-        Text(title)
+        Text(LocalizedStringKey(title))
             .font(SBFont.heading())
             .foregroundColor(.sbTextPrimary)
             .padding(.horizontal, 20)
@@ -372,7 +377,7 @@ struct RecipeDetailView: View {
         Button {
             let item = FoodItem(
                 id: recipe.id,
-                name: recipe.name,
+                name: NSLocalizedString(recipe.name, comment: ""),
                 category: .other,
                 per100g: NutritionInfo(
                     calories: scaled.calories,
