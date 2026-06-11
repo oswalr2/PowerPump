@@ -337,7 +337,7 @@ private struct TargetRow: View {
         HStack {
             Text(LocalizedStringKey(label)).font(SBFont.body()).foregroundColor(.sbTextSecondary)
             Spacer()
-            Text(value).font(SBFont.body()).fontWeight(.semibold).foregroundColor(.sbTextPrimary)
+            Text(LocalizedStringKey(value)).font(SBFont.body()).fontWeight(.semibold).foregroundColor(.sbTextPrimary)
         }
         .padding(.vertical, 2)
     }

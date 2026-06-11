@@ -41,7 +41,7 @@ struct RecipesView: View {
                     Text("Recipes")
                         .font(SBFont.display(28))
                         .foregroundColor(.sbTextPrimary)
-                    Text("For your goal: \(profile.goal.rawValue)")
+                    Text("For your goal: \(NSLocalizedString(profile.goal.rawValue, comment: ""))")
                         .font(SBFont.caption())
                         .foregroundColor(.sbTextSecondary)
                 }
@@ -81,7 +81,7 @@ struct RecipesView: View {
         Button {
             withAnimation(.easeInOut(duration: 0.2)) { selectedGoal = goal }
         } label: {
-            Text(label)
+            Text(LocalizedStringKey(label))
                 .font(SBFont.caption())
                 .foregroundColor(selectedGoal == goal ? .white : .sbTextSecondary)
                 .padding(.horizontal, 16).padding(.vertical, 8)
@@ -180,7 +180,7 @@ private struct GoalBadge: View {
         }
     }
     var body: some View {
-        Text(goal.rawValue)
+        Text(LocalizedStringKey(goal.rawValue))
             .font(SBFont.label(9))
             .foregroundColor(color)
             .padding(.horizontal, 7).padding(.vertical, 3)
@@ -192,7 +192,7 @@ private struct GoalBadge: View {
 private struct TagBadge: View {
     let text: String
     var body: some View {
-        Text(text)
+        Text(LocalizedStringKey(text))
             .font(SBFont.label(9))
             .foregroundColor(.sbTextSecondary)
             .padding(.horizontal, 7).padding(.vertical, 3)

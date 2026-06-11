@@ -129,7 +129,7 @@ struct NutritionView: View {
 
     private func calorieStat(_ label: String, _ value: String, _ color: Color) -> some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text(label).font(SBFont.label()).foregroundColor(.sbTextSecondary)
+            Text(LocalizedStringKey(label)).font(SBFont.label()).foregroundColor(.sbTextSecondary)
             Text(value).font(SBFont.body()).fontWeight(.semibold).foregroundColor(color)
         }
     }
@@ -244,7 +244,7 @@ struct NutritionView: View {
     private func legendDot(_ color: Color, _ label: String) -> some View {
         HStack(spacing: 4) {
             Circle().fill(color).frame(width: 8, height: 8)
-            Text(label)
+            Text(LocalizedStringKey(label))
         }
     }
 }
@@ -260,7 +260,7 @@ private struct MacroBar: View {
     var body: some View {
         VStack(spacing: 6) {
             HStack {
-                Text(label).font(SBFont.caption()).foregroundColor(.sbTextSecondary)
+                Text(LocalizedStringKey(label)).font(SBFont.caption()).foregroundColor(.sbTextSecondary)
                 Spacer()
                 Text(String(format: "%.0fg / %.0fg", value, goal))
                     .font(SBFont.label()).foregroundColor(.sbTextPrimary)

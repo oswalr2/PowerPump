@@ -92,7 +92,7 @@ struct SBTabBar: View {
                                 .foregroundColor(selectedTab == i ? .sbAccent : .sbTextSecondary)
                                 .scaleEffect(selectedTab == i ? 1.1 : 1.0)
 
-                            Text(tabs[i].label)
+                            Text(LocalizedStringKey(tabs[i].label))
                                 .font(SBFont.label(10))
                                 .foregroundColor(selectedTab == i ? .sbAccent : .sbTextSecondary)
                         }

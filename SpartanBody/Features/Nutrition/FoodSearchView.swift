@@ -35,7 +35,7 @@ struct FoodSearchView: View {
                     }
                 }
             }
-            .navigationTitle("Add to \(meal.rawValue)")
+            .navigationTitle("Add to \(NSLocalizedString(meal.rawValue, comment: ""))")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -93,7 +93,7 @@ struct FoodSearchView: View {
         Button {
             withAnimation(.easeInOut(duration: 0.2)) { category = cat }
         } label: {
-            Text(label)
+            Text(LocalizedStringKey(label))
                 .font(SBFont.caption())
                 .foregroundColor(category == cat ? .white : .sbTextSecondary)
                 .padding(.horizontal, 14).padding(.vertical, 7)
@@ -239,7 +239,7 @@ struct FoodSearchView: View {
 
                 // Add button
                 Button { confirmAdd() } label: {
-                    Text("Add to \(meal.rawValue)")
+                    Text("Add to \(NSLocalizedString(meal.rawValue, comment: ""))")
                         .font(SBFont.body())
                         .fontWeight(.bold)
                         .foregroundColor(.white)

@@ -6,6 +6,7 @@ extension Color {
     // Accent is the same in both themes
     static let sbAccent        = Color(hex: "#0A84FF")
     static let sbAccentDim     = Color(hex: "#0A84FF").opacity(0.15)
+    static let sbCyan          = Color(hex: "#32D5E8")
     static let sbRed           = Color(hex: "#FF4545")
     static let sbGreen         = Color(hex: "#34C759")
 
@@ -47,6 +48,14 @@ extension Color {
     }
 }
 
+// MARK: - Gradients
+
+extension LinearGradient {
+    static let sbAccentGradient = LinearGradient(
+        colors: [Color.sbAccent, Color.sbCyan],
+        startPoint: .topLeading, endPoint: .bottomTrailing)
+}
+
 // MARK: - Typography
 struct SBFont {
     static func display(_ size: CGFloat = 34) -> Font { .system(size: size, weight: .black, design: .rounded) }
@@ -65,8 +74,9 @@ struct SBCard<Content: View>: View {
         content
             .padding(16)
             .background(Color.sbSurface)
-            .cornerRadius(16)
-            .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.sbBorder, lineWidth: 1))
+            .cornerRadius(20)
+            .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.sbBorder.opacity(0.6), lineWidth: 1))
+            .shadow(color: .black.opacity(0.18), radius: 14, y: 6)
     }
 }
 
@@ -84,8 +94,9 @@ struct SBPrimaryButton: View {
                 .padding(.vertical, 16)
                 .frame(maxWidth: isFullWidth ? .infinity : nil)
                 .padding(.horizontal, isFullWidth ? 0 : 32)
-                .background(Color.sbAccent)
+                .background(LinearGradient.sbAccentGradient)
                 .cornerRadius(14)
+                .shadow(color: Color.sbAccent.opacity(0.35), radius: 10, y: 4)
         }
     }
 }
@@ -155,14 +166,16 @@ struct SBProgressBar: View {
     var body: some View {
         GeometryReader { geo in
             ZStack(alignment: .leading) {
-                RoundedRectangle(cornerRadius: 4).fill(Color.sbBorder).frame(height: 6)
-                RoundedRectangle(cornerRadius: 4)
-                    .fill(color)
-                    .frame(width: geo.size.width * min(max(progress, 0), 1), height: 6)
+                Capsule().fill(Color.sbSurfaceRaised).frame(height: 8)
+                Capsule()
+                    .fill(LinearGradient(colors: [color, color.opacity(0.65)],
+                                         startPoint: .leading, endPoint: .trailing))
+                    .frame(width: max(geo.size.width * min(max(progress, 0), 1), progress > 0 ? 8 : 0),
+                           height: 8)
                     .animation(.spring(), value: progress)
             }
         }
-        .frame(height: 6)
+        .frame(height: 8)
     }
 }
 

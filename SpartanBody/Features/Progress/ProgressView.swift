@@ -447,7 +447,7 @@ struct ProgressView: View {
             Image(systemName: icon)
                 .font(.system(size: 30))
                 .foregroundColor(.sbBorder)
-            Text(message)
+            Text(LocalizedStringKey(message))
                 .font(SBFont.caption())
                 .foregroundColor(.sbTextSecondary)
                 .multilineTextAlignment(.center)

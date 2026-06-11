@@ -135,23 +135,28 @@ struct DashboardView: View {
                 ZStack {
                     // Background ring
                     Circle()
-                        .stroke(Color.sbBorder, lineWidth: 14)
-                        .frame(width: 160, height: 160)
+                        .stroke(Color.sbSurfaceRaised, lineWidth: 16)
+                        .frame(width: 170, height: 170)
 
                     // Progress ring
                     Circle()
                         .trim(from: 0, to: min(Double(caloriesConsumed) / Double(profile.dailyCalorieTarget), 1.0))
                         .stroke(
-                            caloriesConsumed > profile.dailyCalorieTarget ? Color.sbRed : Color.sbAccent,
-                            style: StrokeStyle(lineWidth: 14, lineCap: .round)
+                            caloriesConsumed > profile.dailyCalorieTarget
+                                ? AnyShapeStyle(Color.sbRed)
+                                : AnyShapeStyle(AngularGradient(
+                                    colors: [.sbAccent, .sbCyan, .sbAccent],
+                                    center: .center, startAngle: .degrees(-90), endAngle: .degrees(270))),
+                            style: StrokeStyle(lineWidth: 16, lineCap: .round)
                         )
                         .rotationEffect(.degrees(-90))
-                        .frame(width: 160, height: 160)
+                        .frame(width: 170, height: 170)
+                        .shadow(color: Color.sbAccent.opacity(caloriesConsumed > 0 ? 0.35 : 0), radius: 8)
                         .animation(.spring(), value: caloriesConsumed)
 
                     VStack(spacing: 2) {
                         Text("\(caloriesConsumed)")
-                            .font(SBFont.display(32))
+                            .font(SBFont.display(38))
                             .foregroundColor(.sbTextPrimary)
                             .monospacedDigit()
                         Text("/ \(profile.dailyCalorieTarget) kcal")
@@ -159,6 +164,7 @@ struct DashboardView: View {
                             .foregroundColor(.sbTextSecondary)
                     }
                 }
+                .padding(.vertical, 6)
 
                 HStack(spacing: 0) {
                     SBStatBox(value: "\(profile.dailyCalorieTarget - caloriesConsumed)",
@@ -227,7 +233,7 @@ struct DashboardView: View {
                             HapticManager.light()
                         } label: {
                             Image(systemName: i < water.todayGlasses ? "drop.fill" : "drop")
-                                .foregroundColor(i < water.todayGlasses ? .sbAccent : .sbBorder)
+                                .foregroundColor(i < water.todayGlasses ? .sbCyan : Color.sbTextSecondary.opacity(0.35))
                                 .font(.system(size: 22))
                                 .scaleEffect(i < water.todayGlasses ? 1.1 : 1.0)
                                 .animation(.spring(response: 0.25, dampingFraction: 0.6), value: water.todayGlasses)
@@ -404,7 +410,8 @@ private struct MacroRow: View {
     var body: some View {
         VStack(spacing: 6) {
             HStack {
-                Text(name)
+                Circle().fill(color).frame(width: 8, height: 8)
+                Text(LocalizedStringKey(name))
                     .font(SBFont.body())
                     .foregroundColor(.sbTextPrimary)
                 Spacer()
@@ -435,7 +442,7 @@ private struct QuickActionButton: View {
                         .foregroundColor(color)
                         .font(.system(size: 20, weight: .semibold))
                 }
-                Text(label)
+                Text(LocalizedStringKey(label))
                     .font(SBFont.label())
                     .foregroundColor(.sbTextSecondary)
                     .multilineTextAlignment(.center)
