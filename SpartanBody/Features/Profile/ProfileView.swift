@@ -5,8 +5,6 @@ struct ProfileView: View {
     @ObservedObject private var notif    = NotificationManager.shared
     @ObservedObject private var language = LanguageManager.shared
     @ObservedObject private var health   = HealthKitService.shared
-    @State private var apiKeyInput       = ExerciseDBService.apiKey
-    @State private var apiKeySaved       = false
     @State private var showSettings      = false
 
     var body: some View {
@@ -21,7 +19,6 @@ struct ProfileView: View {
                         targetsCard
                         healthCard
                         notificationsCard
-                        apiKeyCard
                         settingsButton
                         SBSecondaryButton(title: "Edit Profile") {
                             profile.onboardingDone = false
@@ -283,53 +280,6 @@ struct ProfileView: View {
         .padding(.vertical, 6)
     }
 
-    // MARK: - API Key
-
-    private var apiKeyCard: some View {
-        SBCard {
-            VStack(alignment: .leading, spacing: 12) {
-                HStack {
-                    Image(systemName: "play.circle.fill").foregroundColor(.sbAccent)
-                    Text("Exercise GIFs")
-                        .font(SBFont.heading())
-                        .foregroundColor(.sbTextPrimary)
-                    Spacer()
-                    if !ExerciseDBService.apiKey.isEmpty {
-                        Image(systemName: "checkmark.circle.fill").foregroundColor(.sbGreen)
-                    }
-                }
-                Text("Paste your free RapidAPI key to unlock animated GIFs for every exercise.")
-                    .font(SBFont.caption())
-                    .foregroundColor(.sbTextSecondary)
-                    .lineSpacing(3)
-                HStack(spacing: 10) {
-                    TextField("Paste RapidAPI key here…", text: $apiKeyInput)
-                        .font(SBFont.caption())
-                        .foregroundColor(.sbTextPrimary)
-                        .padding(12)
-                        .background(Color.sbSurfaceRaised)
-                        .cornerRadius(10)
-                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.sbBorder))
-                        .autocorrectionDisabled()
-                        .textInputAutocapitalization(.never)
-                    Button {
-                        ExerciseDBService.apiKey = apiKeyInput
-                        ExerciseDBService.clearCache()
-                        apiKeySaved = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { apiKeySaved = false }
-                    } label: {
-                        Text(apiKeySaved ? "Saved!" : "Save")
-                            .font(SBFont.caption())
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 14)
-                            .padding(.vertical, 12)
-                            .background(apiKeySaved ? Color.sbGreen : Color.sbAccent)
-                            .cornerRadius(10)
-                    }
-                }
-            }
-        }
-    }
 }
 
 // MARK: - Notification sub-views

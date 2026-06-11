@@ -337,10 +337,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "SpartanBody reads your heart rate during workouts.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "SpartanBody saves your workout data to Apple Health.";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.oswaldo.spartanbody";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.oswaldo.spartanbody;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.oswaldo.spartanbody.watchkitapp";
+				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartanbody.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = NO;
@@ -364,10 +364,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "SpartanBody reads your heart rate during workouts.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "SpartanBody saves your workout data to Apple Health.";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "com.oswaldo.spartanbody";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.oswaldo.spartanbody;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.oswaldo.spartanbody.watchkitapp";
+				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartanbody.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = NO;
@@ -388,9 +388,13 @@
 				DEVELOPMENT_TEAM = NWUY84K2DU;
 				INFOPLIST_FILE = SpartanBodyWatch/Complications/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SpartanBodyComplication;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.oswaldo.spartanbody.watchkitapp.complication";
+				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartanbody.watchkitapp.complication;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -411,9 +415,13 @@
 				DEVELOPMENT_TEAM = NWUY84K2DU;
 				INFOPLIST_FILE = SpartanBodyWatch/Complications/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SpartanBodyComplication;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.oswaldo.spartanbody.watchkitapp.complication";
+				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartanbody.watchkitapp.complication;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
