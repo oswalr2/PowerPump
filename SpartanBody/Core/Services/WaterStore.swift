@@ -5,7 +5,14 @@ final class WaterStore: ObservableObject {
 
     @Published private(set) var todayGlasses: Int = 0
 
-    private init() { load() }
+    private init() {
+        load()
+        NotificationCenter.default.addObserver(
+            forName: .NSCalendarDayChanged, object: nil, queue: .main
+        ) { [weak self] _ in
+            self?.load()
+        }
+    }
 
     func set(_ glasses: Int) {
         todayGlasses = max(0, min(8, glasses))
@@ -13,10 +20,16 @@ final class WaterStore: ObservableObject {
         HealthKitService.shared.saveWater(glasses: todayGlasses)
     }
 
-    private var todayKey: String {
+    private static let keyFormatter: DateFormatter = {
         let f = DateFormatter()
+        f.locale = Locale(identifier: "en_US_POSIX")
+        f.calendar = Calendar(identifier: .gregorian)
         f.dateFormat = "yyyy-MM-dd"
-        return "sb_water_\(f.string(from: .now))"
+        return f
+    }()
+
+    private var todayKey: String {
+        "sb_water_\(Self.keyFormatter.string(from: .now))"
     }
 
     private func load() {

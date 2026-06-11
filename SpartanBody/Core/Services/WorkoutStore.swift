@@ -38,6 +38,26 @@ final class WorkoutStore: ObservableObject {
 
     func cancel() { activeSession = nil }
 
+    // A workout finished on the Apple Watch. If the phone has an active session,
+    // finish it; otherwise record a standalone session so the workout still
+    // counts toward history and streaks. HealthKit is not written here because
+    // the watch already saved the workout via HKLiveWorkoutBuilder.
+    func recordWatchWorkout(durationSeconds: Int, sets: Int) {
+        if activeSession != nil {
+            finish()
+            return
+        }
+        guard durationSeconds > 0 else { return }
+        var session = WorkoutSession(
+            name: "Watch Workout",
+            startedAt: Date().addingTimeInterval(-Double(durationSeconds)),
+            exercises: []
+        )
+        session.finishedAt = .now
+        history.insert(session, at: 0)
+        save()
+    }
+
     // MARK: - Exercise / set mutation
 
     func addExercise(_ exerciseID: String) {
@@ -48,12 +68,20 @@ final class WorkoutStore: ObservableObject {
     }
 
     func removeExercise(at index: Int) {
+        guard let session = activeSession, session.exercises.indices.contains(index) else { return }
         activeSession?.exercises.remove(at: index)
+    }
+
+    private func validIndices(_ exerciseIndex: Int, _ setIndex: Int) -> Bool {
+        guard let session = activeSession,
+              session.exercises.indices.contains(exerciseIndex),
+              session.exercises[exerciseIndex].sets.indices.contains(setIndex) else { return false }
+        return true
     }
 
     func addSet(to exerciseIndex: Int) {
         guard let session = activeSession,
-              exerciseIndex < session.exercises.count else { return }
+              session.exercises.indices.contains(exerciseIndex) else { return }
         let ex = session.exercises[exerciseIndex]
         let newSet = SessionSet(setNumber: ex.sets.count + 1,
                                 weight: ex.sets.last?.weight ?? 0,
@@ -62,6 +90,7 @@ final class WorkoutStore: ObservableObject {
     }
 
     func removeSet(exerciseIndex: Int, setIndex: Int) {
+        guard validIndices(exerciseIndex, setIndex) else { return }
         activeSession?.exercises[exerciseIndex].sets.remove(at: setIndex)
         for i in 0..<(activeSession?.exercises[exerciseIndex].sets.count ?? 0) {
             activeSession?.exercises[exerciseIndex].sets[i].setNumber = i + 1
@@ -70,17 +99,19 @@ final class WorkoutStore: ObservableObject {
 
     // Returns new completed state
     func toggleSet(exerciseIndex: Int, setIndex: Int) -> Bool {
-        guard activeSession != nil else { return false }
+        guard validIndices(exerciseIndex, setIndex) else { return false }
         let current = activeSession?.exercises[exerciseIndex].sets[setIndex].completed ?? false
         activeSession?.exercises[exerciseIndex].sets[setIndex].completed = !current
         return !current
     }
 
     func updateWeight(_ weight: Double, exerciseIndex: Int, setIndex: Int) {
+        guard validIndices(exerciseIndex, setIndex) else { return }
         activeSession?.exercises[exerciseIndex].sets[setIndex].weight = weight
     }
 
     func updateReps(_ reps: Int, exerciseIndex: Int, setIndex: Int) {
+        guard validIndices(exerciseIndex, setIndex) else { return }
         activeSession?.exercises[exerciseIndex].sets[setIndex].reps = reps
     }
 

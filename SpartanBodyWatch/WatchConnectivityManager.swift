@@ -33,12 +33,19 @@ final class WatchConnectivityManager: NSObject, ObservableObject {
     }
 
     func sendWorkoutFinished(duration: Int, sets: Int) {
-        guard WCSession.default.isReachable else { return }
-        WCSession.default.sendMessage([
+        let payload: [String: Any] = [
             "action":   "workoutFinished",
             "duration": duration,
             "sets":     sets
-        ], replyHandler: nil, errorHandler: nil)
+        ]
+        if WCSession.default.isReachable {
+            WCSession.default.sendMessage(payload, replyHandler: nil) { _ in
+                // Live delivery failed — queue it so the phone gets it later.
+                WCSession.default.transferUserInfo(payload)
+            }
+        } else {
+            WCSession.default.transferUserInfo(payload)
+        }
     }
 
     private func applyContext(_ ctx: [String: Any]) {

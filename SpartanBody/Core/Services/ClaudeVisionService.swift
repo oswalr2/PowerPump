@@ -38,10 +38,16 @@ final class ClaudeVisionService {
         UserDefaults.standard.set(scansUsedToday + 1, forKey: key)
     }
 
-    private func todayKey() -> String {
+    private static let keyFormatter: DateFormatter = {
         let f = DateFormatter()
+        f.locale = Locale(identifier: "en_US_POSIX")
+        f.calendar = Calendar(identifier: .gregorian)
         f.dateFormat = "yyyy-MM-dd"
-        return "sb_scan_\(f.string(from: Date()))"
+        return f
+    }()
+
+    private func todayKey() -> String {
+        "sb_scan_\(Self.keyFormatter.string(from: Date()))"
     }
 
     // MARK: - Main API call

@@ -88,12 +88,24 @@ extension PhoneConnectivityManager: WCSessionDelegate {
         }
     }
 
-    // Watch finished a workout
+    // Watch finished a workout (live message)
     func session(_ session: WCSession,
                  didReceiveMessage message: [String: Any]) {
-        guard message["action"] as? String == "workoutFinished" else { return }
+        handleWatchPayload(message)
+    }
+
+    // Watch finished a workout while the phone was unreachable (queued transfer)
+    func session(_ session: WCSession,
+                 didReceiveUserInfo userInfo: [String: Any] = [:]) {
+        handleWatchPayload(userInfo)
+    }
+
+    private func handleWatchPayload(_ payload: [String: Any]) {
+        guard payload["action"] as? String == "workoutFinished" else { return }
+        let duration = payload["duration"] as? Int ?? 0
+        let sets     = payload["sets"]     as? Int ?? 0
         DispatchQueue.main.async {
-            WorkoutStore.shared.finish()
+            WorkoutStore.shared.recordWatchWorkout(durationSeconds: duration, sets: sets)
         }
     }
 }

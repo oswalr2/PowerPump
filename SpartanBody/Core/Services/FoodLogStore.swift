@@ -6,17 +6,39 @@ final class FoodLogStore: ObservableObject {
     @Published private(set) var todayEntries: [LoggedFood] = []
 
     private var allLogs: [String: [LoggedFood]] = [:]
+    private var loadedDayKey = ""
 
-    private init() { load() }
+    private init() {
+        load()
+        NotificationCenter.default.addObserver(
+            forName: .NSCalendarDayChanged, object: nil, queue: .main
+        ) { [weak self] _ in
+            self?.rolloverIfNeeded()
+        }
+    }
 
     // MARK: - Today key
 
     private var todayKey: String { dateKey(for: .now) }
 
-    private func dateKey(for date: Date) -> String {
+    private static let keyFormatter: DateFormatter = {
         let f = DateFormatter()
+        f.locale = Locale(identifier: "en_US_POSIX")
+        f.calendar = Calendar(identifier: .gregorian)
         f.dateFormat = "yyyy-MM-dd"
-        return f.string(from: date)
+        return f
+    }()
+
+    private func dateKey(for date: Date) -> String {
+        Self.keyFormatter.string(from: date)
+    }
+
+    // Reload today's entries when the calendar day changes while the app is alive,
+    // so yesterday's meals don't leak into the new day.
+    private func rolloverIfNeeded() {
+        guard loadedDayKey != todayKey else { return }
+        loadedDayKey = todayKey
+        todayEntries = allLogs[todayKey] ?? []
     }
 
     // MARK: - Computed totals for today
@@ -75,6 +97,7 @@ final class FoodLogStore: ObservableObject {
     // MARK: - Mutations
 
     func add(_ item: FoodItem, grams: Double, meal: MealType) {
+        rolloverIfNeeded()
         let n = item.nutrition(grams: grams)
         let entry = LoggedFood(
             foodID:    item.id,
@@ -91,6 +114,7 @@ final class FoodLogStore: ObservableObject {
     }
 
     func remove(_ entry: LoggedFood) {
+        rolloverIfNeeded()
         todayEntries.removeAll { $0.id == entry.id }
         allLogs[todayKey] = todayEntries
         save()
@@ -110,6 +134,7 @@ final class FoodLogStore: ObservableObject {
            let decoded = try? JSONDecoder().decode([String: [LoggedFood]].self, from: data) {
             allLogs = decoded
         }
+        loadedDayKey = todayKey
         todayEntries = allLogs[todayKey] ?? []
     }
 }
