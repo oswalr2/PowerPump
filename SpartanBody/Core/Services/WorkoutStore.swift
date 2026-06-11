@@ -5,7 +5,7 @@ final class WorkoutStore: ObservableObject {
 
     @Published var templates: [WorkoutTemplate] = []
     @Published var history: [WorkoutSession] = []
-    @Published var activeSession: WorkoutSession?
+    @Published var activeSession: WorkoutSession? { didSet { saveActiveSession() } }
 
     private init() { load() }
 
@@ -239,5 +239,26 @@ final class WorkoutStore: ObservableObject {
            let v = try? JSONDecoder().decode([WorkoutTemplate].self, from: d) { templates = v }
         if let d = UserDefaults.standard.data(forKey: "sb_history"),
            let v = try? JSONDecoder().decode([WorkoutSession].self, from: d) { history = v }
+        restoreActiveSession()
+    }
+
+    // Survive the app being killed mid-workout: the active session is saved on
+    // every change and restored on launch (discarded if older than 12 hours).
+    private func saveActiveSession() {
+        if let session = activeSession, let d = try? JSONEncoder().encode(session) {
+            UserDefaults.standard.set(d, forKey: "sb_active_session")
+        } else {
+            UserDefaults.standard.removeObject(forKey: "sb_active_session")
+        }
+    }
+
+    private func restoreActiveSession() {
+        guard let d = UserDefaults.standard.data(forKey: "sb_active_session"),
+              let session = try? JSONDecoder().decode(WorkoutSession.self, from: d),
+              Date().timeIntervalSince(session.startedAt) < 12 * 3600 else {
+            UserDefaults.standard.removeObject(forKey: "sb_active_session")
+            return
+        }
+        activeSession = session
     }
 }

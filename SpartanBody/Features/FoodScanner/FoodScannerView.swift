@@ -161,7 +161,9 @@ struct FoodScannerView: View {
                     .fill(i < service.scansUsedThisWeek ? Color.sbBorder : Color.sbAccent)
                     .frame(width: 10, height: 10)
             }
-            Text("\(service.scansRemaining) scan\(service.scansRemaining == 1 ? "" : "s") left this week")
+            Text(service.scansRemaining == 1
+                 ? "1 scan left this week"
+                 : "\(service.scansRemaining) scans left this week")
                 .font(SBFont.caption())
                 .foregroundColor(.sbTextSecondary)
                 .padding(.leading, 4)

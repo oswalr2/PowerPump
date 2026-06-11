@@ -67,7 +67,7 @@ struct AboutView: View {
                                     .font(SBFont.heading(15))
                                     .foregroundColor(.sbTextPrimary)
                             }
-                            Text("SpartanBody uses Claude (by Anthropic) to power the AI Food Scanner and AI Coach. Food photos are sent to Anthropic's servers to estimate nutrition. No personal data is stored on our servers — all your logs and settings remain on your device.")
+                            Text("The AI Food Scanner uses Claude (by Anthropic). Food photos are sent through our secure server to Anthropic to estimate nutrition; photos are not stored. Everything else — your logs, workouts, and settings — stays on your device.")
                                 .font(SBFont.caption())
                                 .foregroundColor(.sbTextSecondary)
                                 .lineSpacing(4)
@@ -77,7 +77,7 @@ struct AboutView: View {
                         .cornerRadius(16)
                         .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.sbBorder))
 
-                        Text("© 2025 SpartanBody. All rights reserved.")
+                        Text("© 2026 SpartanBody. All rights reserved.")
                             .font(SBFont.label(11))
                             .foregroundColor(Color.sbTextSecondary.opacity(0.5))
                             .padding(.bottom, 40)
@@ -127,7 +127,7 @@ struct PrivacyPolicyView: View {
                 Color.sbBackground.ignoresSafeArea()
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 20) {
-                        Text("Last updated: June 2025")
+                        Text("Last updated: June 2026")
                             .font(SBFont.caption())
                             .foregroundColor(.sbTextSecondary)
 
