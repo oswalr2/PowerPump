@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 enum ScanError: LocalizedError {
-    case dailyLimitReached
+    case weeklyLimitReached
     case imageEncodingFailed
     case networkError(String)
     case parsingFailed
@@ -10,7 +10,7 @@ enum ScanError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .dailyLimitReached:   return "You've used all \(Config.dailyScanLimit) daily scans. Come back tomorrow!"
+        case .weeklyLimitReached:  return "You've used your free scan for this week. Come back next week!"
         case .imageEncodingFailed: return "Could not process the image. Try again."
         case .networkError(let m): return "Network error: \(m)"
         case .parsingFailed:       return "Couldn't read the response. Try a clearer photo."
@@ -23,80 +23,59 @@ final class ClaudeVisionService {
     static let shared = ClaudeVisionService()
     private init() {}
 
-    // MARK: - Daily limit
+    // MARK: - User ID (stable per install, sent to the proxy for rate limiting)
 
-    var scansUsedToday: Int {
-        let key = todayKey()
-        return UserDefaults.standard.integer(forKey: key)
+    private var userID: String {
+        if let id = UserDefaults.standard.string(forKey: "sb_user_id") { return id }
+        let id = UUID().uuidString
+        UserDefaults.standard.set(id, forKey: "sb_user_id")
+        return id
     }
 
-    var scansRemaining: Int { max(0, Config.dailyScanLimit - scansUsedToday) }
-    var isLimitReached: Bool { scansUsedToday >= Config.dailyScanLimit }
+    // MARK: - Weekly limit (UI only — the proxy is the source of truth)
+
+    var scansUsedThisWeek: Int {
+        UserDefaults.standard.integer(forKey: weekKey())
+    }
+
+    var scansRemaining: Int { max(0, Config.weeklyScanLimit - scansUsedThisWeek) }
+    var isLimitReached: Bool { scansUsedThisWeek >= Config.weeklyScanLimit }
 
     private func incrementScanCount() {
-        let key = todayKey()
-        UserDefaults.standard.set(scansUsedToday + 1, forKey: key)
+        UserDefaults.standard.set(scansUsedThisWeek + 1, forKey: weekKey())
     }
 
-    private static let keyFormatter: DateFormatter = {
-        let f = DateFormatter()
-        f.locale = Locale(identifier: "en_US_POSIX")
-        f.calendar = Calendar(identifier: .gregorian)
-        f.dateFormat = "yyyy-MM-dd"
-        return f
-    }()
-
-    private func todayKey() -> String {
-        "sb_scan_\(Self.keyFormatter.string(from: Date()))"
+    private func markLimitReached() {
+        UserDefaults.standard.set(Config.weeklyScanLimit, forKey: weekKey())
     }
 
-    // MARK: - Main API call
+    private func weekKey() -> String {
+        let cal = Calendar(identifier: .iso8601)
+        let c = cal.dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date())
+        return String(format: "sb_scan_%04d-W%02d", c.yearForWeekOfYear ?? 0, c.weekOfYear ?? 0)
+    }
+
+    // MARK: - Main API call (via Cloudflare Worker proxy)
 
     func analyzeFood(image: UIImage) async throws -> FoodScanResponse {
-        guard !isLimitReached else { throw ScanError.dailyLimitReached }
+        guard !isLimitReached else { throw ScanError.weeklyLimitReached }
 
-        // Compress: resize to max 1024px, JPEG 0.75
-        guard let compressed = compress(image),
-              let base64 = compressed.base64EncodedString() as String? else {
+        guard let compressed = compress(image) else {
             throw ScanError.imageEncodingFailed
         }
 
-        let language = LanguageManager.shared.languageNameForAI
-        let prompt = """
-        Analyze the food in this image. For EACH food item you can identify, estimate the weight and nutrition.
-        Use food names in \(language).
-        Respond ONLY with valid JSON — no explanation, no markdown, no code block. Use this exact format:
-        {"items":[{"name":"Food Name","grams":150,"calories":200,"protein":15.0,"carbs":20.0,"fat":8.0}],"totalCalories":200,"totalProtein":15.0,"totalCarbs":20.0,"totalFat":8.0}
-        If you cannot identify any food, respond: {"items":[],"totalCalories":0,"totalProtein":0,"totalCarbs":0,"totalFat":0}
-        """
+        guard let url = URL(string: Config.scanProxyURL) else {
+            throw ScanError.networkError("Invalid proxy URL")
+        }
 
         let requestBody: [String: Any] = [
-            "model": Config.claudeModel,
-            "max_tokens": 1024,
-            "messages": [[
-                "role": "user",
-                "content": [
-                    [
-                        "type": "image",
-                        "source": [
-                            "type": "base64",
-                            "media_type": "image/jpeg",
-                            "data": base64
-                        ]
-                    ],
-                    ["type": "text", "text": prompt]
-                ]
-            ]]
+            "user_id":  userID,
+            "image":    compressed.base64EncodedString(),
+            "language": LanguageManager.shared.languageNameForAI,
         ]
-
-        guard let url = URL(string: "https://api.anthropic.com/v1/messages") else {
-            throw ScanError.networkError("Invalid URL")
-        }
 
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.setValue(Config.claudeAPIKey, forHTTPHeaderField: "x-api-key")
-        request.setValue("2023-06-01", forHTTPHeaderField: "anthropic-version")
         request.setValue("application/json", forHTTPHeaderField: "content-type")
         request.httpBody = try? JSONSerialization.data(withJSONObject: requestBody)
         request.timeoutInterval = 30
@@ -104,12 +83,16 @@ final class ClaudeVisionService {
         let (data, response) = try await URLSession.shared.data(for: request)
 
         if let http = response as? HTTPURLResponse, http.statusCode != 200 {
+            if http.statusCode == 429 {
+                markLimitReached()
+                throw ScanError.weeklyLimitReached
+            }
             let msg = (try? JSONSerialization.jsonObject(with: data) as? [String: Any])?
                           .description ?? "HTTP \(http.statusCode)"
             throw ScanError.apiError(msg)
         }
 
-        // Parse Claude's response envelope
+        // Parse Claude's response envelope (forwarded verbatim by the proxy)
         guard let envelope = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
               let content = (envelope["content"] as? [[String: Any]])?.first,
               let text = content["text"] as? String else {

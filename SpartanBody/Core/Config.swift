@@ -1,13 +1,14 @@
 import Foundation
 
 enum Config {
-    // ⚠️ Replace with your Anthropic API key before shipping.
-    // For production: move this call to a backend proxy so the key is never in the binary.
-    static let claudeAPIKey = "YOUR_ANTHROPIC_API_KEY_HERE"
-    static let claudeModel  = "claude-haiku-4-5-20251001"
+    // Cloudflare Worker proxy for the food scanner. The Anthropic API key lives
+    // only on the server — never in the app. Deploy steps: CloudflareWorker/README.md.
+    // Replace with your deployed worker URL (must end in /scan).
+    static let scanProxyURL = "https://spartanbody-scan.TU-SUBDOMINIO.workers.dev/scan"
 
-    // Free daily scan quota per user
-    static let dailyScanLimit = 1
+    // Free weekly scan quota per user. The proxy enforces this server-side;
+    // this value only drives the UI. Keep in sync with WEEKLY_LIMIT in worker.js.
+    static let weeklyScanLimit = 1
 
     // App Store & support
     // Replace appStoreID with your real numeric App Store ID once the app is created in App Store Connect.

@@ -1,0 +1,7 @@
+name = "spartanbody-scan"
+main = "worker.js"
+compatibility_date = "2026-06-01"
+
+[[kv_namespaces]]
+binding = "SCANS"
+id = "REEMPLAZA_CON_TU_KV_ID"

@@ -156,12 +156,12 @@ struct FoodScannerView: View {
 
     private var scanLimitBadge: some View {
         HStack(spacing: 6) {
-            ForEach(0..<Config.dailyScanLimit, id: \.self) { i in
+            ForEach(0..<Config.weeklyScanLimit, id: \.self) { i in
                 Circle()
-                    .fill(i < service.scansUsedToday ? Color.sbBorder : Color.sbAccent)
+                    .fill(i < service.scansUsedThisWeek ? Color.sbBorder : Color.sbAccent)
                     .frame(width: 10, height: 10)
             }
-            Text("\(service.scansRemaining) scan\(service.scansRemaining == 1 ? "" : "s") left today")
+            Text("\(service.scansRemaining) scan\(service.scansRemaining == 1 ? "" : "s") left this week")
                 .font(SBFont.caption())
                 .foregroundColor(.sbTextSecondary)
                 .padding(.leading, 4)
@@ -173,10 +173,10 @@ struct FoodScannerView: View {
             Image(systemName: "hourglass")
                 .font(.system(size: 32))
                 .foregroundColor(.sbTextSecondary)
-            Text("Daily limit reached")
+            Text("Weekly limit reached")
                 .font(SBFont.heading())
                 .foregroundColor(.sbTextPrimary)
-            Text("You've used your 3 free scans for today.\nCome back tomorrow for more!")
+            Text("You've used your free scan for this week.\nCome back next week for more!")
                 .font(SBFont.body())
                 .foregroundColor(.sbTextSecondary)
                 .multilineTextAlignment(.center)
