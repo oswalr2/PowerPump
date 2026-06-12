@@ -10,6 +10,7 @@ struct FoodSearchView: View {
     @State private var grams: Double = 100
     @State private var gramsText  = "100"
     @State private var category: FoodCategory? = nil
+    @State private var showBarcodeScanner = false
 
     private var results: [FoodItem] {
         var list = FoodDatabase.all
@@ -65,6 +66,14 @@ struct FoodSearchView: View {
                     Image(systemName: "xmark.circle.fill").foregroundColor(.sbTextSecondary)
                 }
             }
+            Button {
+                HapticManager.light()
+                showBarcodeScanner = true
+            } label: {
+                Image(systemName: "barcode.viewfinder")
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundColor(.sbAccent)
+            }
         }
         .padding(12)
         .background(Color.sbSurface)
@@ -72,6 +81,12 @@ struct FoodSearchView: View {
         .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.sbBorder))
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
+        .sheet(isPresented: $showBarcodeScanner) {
+            BarcodeScanSheet { item in
+                selected = item
+                setGrams(100)
+            }
+        }
     }
 
     // MARK: - Category filter
