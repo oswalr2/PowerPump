@@ -31,7 +31,14 @@ struct SettingsView: View {
 
                     // MARK: Notifications
                     Section {
-                        notificationsRow
+                        if !notif.isAuthorized {
+                            notificationsPermissionRow
+                        } else {
+                            workoutReminderRow
+                            hydrationReminderRow
+                            mealsReminderRow
+                            sleepReminderRow
+                        }
                     } header: {
                         sectionHeader("Notifications")
                     }
@@ -131,81 +138,83 @@ struct SettingsView: View {
         .listRowBackground(Color.sbSurface)
     }
 
-    // MARK: - Notifications row
+    // MARK: - Notification rows
 
-    private var notificationsRow: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            if !notif.isAuthorized {
-                Text("Allow notifications to get reminders for workouts, hydration, and meals.")
-                    .font(SBFont.caption())
-                    .foregroundColor(.sbTextSecondary)
-                    .lineSpacing(3)
+    private var notificationsPermissionRow: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Text("Allow notifications to get reminders for workouts, hydration, and meals.")
+                .font(SBFont.caption())
+                .foregroundColor(.sbTextSecondary)
+                .lineSpacing(3)
 
-                SBPrimaryButton(title: "Enable Notifications") {
-                    notif.requestPermission()
-                }
-            } else {
-                NotifRow(
-                    icon: "dumbbell.fill",
-                    title: "Workout Reminder",
-                    isOn: $notif.workoutEnabled
-                ) {
-                    if notif.workoutEnabled {
-                        DatePicker("", selection: $notif.workoutTime, displayedComponents: .hourAndMinute)
-                            .labelsHidden()
-                            .tint(.sbAccent)
-                    }
-                }
+            SBPrimaryButton(title: "Enable Notifications") {
+                notif.requestPermission()
+            }
+        }
+        .padding(.vertical, 6)
+        .listRowBackground(Color.sbSurface)
+    }
 
-                Divider().background(Color.sbBorder)
+    private var workoutReminderRow: some View {
+        NotifRow(icon: "dumbbell.fill", title: "Workout Reminder", isOn: $notif.workoutEnabled) {
+            if notif.workoutEnabled {
+                DatePicker("", selection: $notif.workoutTime, displayedComponents: .hourAndMinute)
+                    .labelsHidden()
+                    .tint(.sbAccent)
+            }
+        }
+        .listRowBackground(Color.sbSurface)
+    }
 
-                NotifRow(
-                    icon: "drop.fill",
-                    title: "Hydration Reminder",
-                    isOn: $notif.hydrationEnabled
-                ) {
-                    if notif.hydrationEnabled {
-                        HStack(spacing: 0) {
-                            Text("Every")
+    private var hydrationReminderRow: some View {
+        NotifRow(icon: "drop.fill", title: "Hydration Reminder", isOn: $notif.hydrationEnabled) {
+            if notif.hydrationEnabled {
+                HStack(spacing: 0) {
+                    Text("Every")
+                        .font(SBFont.caption())
+                        .foregroundColor(.sbTextSecondary)
+                    Spacer()
+                    ForEach([1, 2, 3], id: \.self) { h in
+                        Button {
+                            notif.hydrationEveryHours = h
+                        } label: {
+                            Text("\(h)h")
                                 .font(SBFont.caption())
-                                .foregroundColor(.sbTextSecondary)
-                            Spacer()
-                            ForEach([1, 2, 3], id: \.self) { h in
-                                Button {
-                                    notif.hydrationEveryHours = h
-                                } label: {
-                                    Text("\(h)h")
-                                        .font(SBFont.caption())
-                                        .foregroundColor(notif.hydrationEveryHours == h ? .white : .sbTextSecondary)
-                                        .padding(.horizontal, 10)
-                                        .padding(.vertical, 6)
-                                        .background(notif.hydrationEveryHours == h ? Color.sbAccent : Color.sbSurfaceRaised)
-                                        .cornerRadius(7)
-                                }
-                                .buttonStyle(.plain)
-                            }
+                                .foregroundColor(notif.hydrationEveryHours == h ? .white : .sbTextSecondary)
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 6)
+                                .background(notif.hydrationEveryHours == h ? Color.sbAccent : Color.sbSurfaceRaised)
+                                .cornerRadius(7)
                         }
-                    }
-                }
-
-                Divider().background(Color.sbBorder)
-
-                NotifRow(
-                    icon: "fork.knife",
-                    title: "Meal Reminders",
-                    isOn: $notif.mealsEnabled
-                ) {
-                    if notif.mealsEnabled {
-                        VStack(spacing: 8) {
-                            MealTimeRow(label: "Breakfast", time: $notif.breakfastTime)
-                            MealTimeRow(label: "Lunch",     time: $notif.lunchTime)
-                            MealTimeRow(label: "Dinner",    time: $notif.dinnerTime)
-                        }
+                        .buttonStyle(.borderless)
                     }
                 }
             }
         }
-        .padding(.vertical, 6)
+        .listRowBackground(Color.sbSurface)
+    }
+
+    private var mealsReminderRow: some View {
+        NotifRow(icon: "fork.knife", title: "Meal Reminders", isOn: $notif.mealsEnabled) {
+            if notif.mealsEnabled {
+                VStack(spacing: 8) {
+                    MealTimeRow(label: "Breakfast", time: $notif.breakfastTime)
+                    MealTimeRow(label: "Lunch",     time: $notif.lunchTime)
+                    MealTimeRow(label: "Dinner",    time: $notif.dinnerTime)
+                }
+            }
+        }
+        .listRowBackground(Color.sbSurface)
+    }
+
+    private var sleepReminderRow: some View {
+        NotifRow(icon: "moon.zzz.fill", title: "Sleep Reminder", isOn: $notif.sleepEnabled) {
+            if notif.sleepEnabled {
+                DatePicker("", selection: $notif.sleepTime, displayedComponents: .hourAndMinute)
+                    .labelsHidden()
+                    .tint(.sbAccent)
+            }
+        }
         .listRowBackground(Color.sbSurface)
     }
 

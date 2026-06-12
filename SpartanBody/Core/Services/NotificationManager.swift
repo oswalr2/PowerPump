@@ -20,18 +20,24 @@ final class NotificationManager: ObservableObject {
     @Published var lunchTime: Date            { didSet { save(); scheduleMeals() } }
     @Published var dinnerTime: Date           { didSet { save(); scheduleMeals() } }
 
+    // Sleep
+    @Published var sleepEnabled: Bool         { didSet { save(); scheduleSleep() } }
+    @Published var sleepTime: Date            { didSet { save(); scheduleSleep() } }
+
     private let ud = UserDefaults.standard
 
     private init() {
         workoutEnabled     = ud.bool(forKey: "nb_workout_on")
         hydrationEnabled   = ud.bool(forKey: "nb_hydration_on")
         mealsEnabled       = ud.bool(forKey: "nb_meals_on")
+        sleepEnabled       = ud.bool(forKey: "nb_sleep_on")
         hydrationEveryHours = ud.integer(forKey: "nb_hydration_hours").nonZero(default: 2)
 
         workoutTime   = ud.date("nb_workout_time")   ?? Self.time(hour: 7,  minute: 0)
         breakfastTime = ud.date("nb_breakfast_time") ?? Self.time(hour: 8,  minute: 0)
         lunchTime     = ud.date("nb_lunch_time")     ?? Self.time(hour: 12, minute: 30)
         dinnerTime    = ud.date("nb_dinner_time")    ?? Self.time(hour: 19, minute: 0)
+        sleepTime     = ud.date("nb_sleep_time")     ?? Self.time(hour: 22, minute: 30)
 
         checkStatus()
     }
@@ -63,6 +69,7 @@ final class NotificationManager: ObservableObject {
         scheduleWorkout()
         scheduleHydration()
         scheduleMeals()
+        scheduleSleep()
     }
 
     private func scheduleWorkout() {
@@ -70,9 +77,20 @@ final class NotificationManager: ObservableObject {
         guard workoutEnabled, isAuthorized else { return }
         schedule(
             id: "sb.workout",
-            title: "Time to train 💪",
-            body: "Your workout is waiting. Let's get it done!",
+            title: NSLocalizedString("notif.workout.title", comment: ""),
+            body:  NSLocalizedString("notif.workout.body",  comment: ""),
             time: workoutTime
+        )
+    }
+
+    private func scheduleSleep() {
+        cancel(ids: ["sb.sleep"])
+        guard sleepEnabled, isAuthorized else { return }
+        schedule(
+            id: "sb.sleep",
+            title: NSLocalizedString("notif.sleep.title", comment: ""),
+            body:  NSLocalizedString("notif.sleep.body",  comment: ""),
+            time: sleepTime
         )
     }
 
@@ -89,8 +107,8 @@ final class NotificationManager: ObservableObject {
             comps.minute = 0
             let trigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: true)
             add(id: "sb.hydration.\(index)",
-                title: "Stay hydrated 💧",
-                body: "Have you had some water lately? Your body will thank you.",
+                title: NSLocalizedString("notif.water.title", comment: ""),
+                body:  NSLocalizedString("notif.water.body",  comment: ""),
                 trigger: trigger)
             hour += hydrationEveryHours
             index += 1
@@ -102,9 +120,15 @@ final class NotificationManager: ObservableObject {
         guard mealsEnabled, isAuthorized else { return }
 
         let meals: [(id: String, title: String, body: String, time: Date)] = [
-            ("sb.meal.breakfast", "Good morning! 🌅", "Don't forget to log your breakfast and start the day right.", breakfastTime),
-            ("sb.meal.lunch",     "Lunchtime! 🥗",    "Log your lunch to stay on top of your calorie goal.",         lunchTime),
-            ("sb.meal.dinner",    "Dinner time! 🍽",  "Log your dinner and finish the day strong.",                  dinnerTime),
+            ("sb.meal.breakfast",
+             NSLocalizedString("notif.breakfast.title", comment: ""),
+             NSLocalizedString("notif.breakfast.body",  comment: ""), breakfastTime),
+            ("sb.meal.lunch",
+             NSLocalizedString("notif.lunch.title", comment: ""),
+             NSLocalizedString("notif.lunch.body",  comment: ""), lunchTime),
+            ("sb.meal.dinner",
+             NSLocalizedString("notif.dinner.title", comment: ""),
+             NSLocalizedString("notif.dinner.body",  comment: ""), dinnerTime),
         ]
         for meal in meals {
             schedule(id: meal.id, title: meal.title, body: meal.body, time: meal.time)
@@ -141,11 +165,13 @@ final class NotificationManager: ObservableObject {
         ud.set(workoutEnabled,       forKey: "nb_workout_on")
         ud.set(hydrationEnabled,     forKey: "nb_hydration_on")
         ud.set(mealsEnabled,         forKey: "nb_meals_on")
+        ud.set(sleepEnabled,         forKey: "nb_sleep_on")
         ud.set(hydrationEveryHours,  forKey: "nb_hydration_hours")
         ud.setDate(workoutTime,      forKey: "nb_workout_time")
         ud.setDate(breakfastTime,    forKey: "nb_breakfast_time")
         ud.setDate(lunchTime,        forKey: "nb_lunch_time")
         ud.setDate(dinnerTime,       forKey: "nb_dinner_time")
+        ud.setDate(sleepTime,        forKey: "nb_sleep_time")
     }
 
     private static func time(hour: Int, minute: Int) -> Date {
