@@ -12677,6 +12677,34 @@
         }
       }
     },
+    "Weekly Menu": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menú de la semana"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menu de la semaine"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menù della settimana"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cardápio da semana"
+          }
+        }
+      }
+    },
     "Weekly limit reached": {
       "localizations": {
         "es": {
@@ -13563,6 +13591,74 @@
         }
       }
     },
+    "coach.motivation.gainMuscle.v2": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Muscle is built one rep at a time. Today's session is tomorrow's strength."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El músculo se construye repetición a repetición. La sesión de hoy es la fuerza de mañana."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le muscle se construit une rép à la fois. La séance d'aujourd'hui est la force de demain."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Il muscolo si costruisce una ripetizione alla volta. La sessione di oggi è la forza di domani."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O músculo se constrói uma repetição de cada vez. O treino de hoje é a força de amanhã."
+          }
+        }
+      }
+    },
+    "coach.motivation.gainMuscle.v3": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The iron never lies: show up, lift, grow. Spartans are forged, not born."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El hierro nunca miente: preséntate, levanta, crece. Los espartanos se forjan, no nacen."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La fonte ne ment jamais : présente-toi, soulève, progresse. Les spartiates se forgent."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Il ferro non mente mai: presentati, solleva, cresci. Gli spartani si forgiano, non nascono."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O ferro nunca mente: apareça, levante, cresça. Espartanos são forjados, não nascem."
+          }
+        }
+      }
+    },
     "coach.motivation.loseWeight": {
       "localizations": {
         "en": {
@@ -13597,6 +13693,74 @@
         }
       }
     },
+    "coach.motivation.loseWeight.v2": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Small steps every day burn the biggest fires. Keep showing up."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Los pasos pequeños de cada día encienden los fuegos más grandes. Sigue presentándote."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les petits pas de chaque jour allument les plus grands feux. Continue de te présenter."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I piccoli passi di ogni giorno accendono i fuochi più grandi. Continua a presentarti."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pequenos passos todos os dias acendem as maiores chamas. Continue aparecendo."
+          }
+        }
+      }
+    },
+    "coach.motivation.loseWeight.v3": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You don't have to be perfect — just consistent. Your future self is watching."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No tienes que ser perfecto — solo constante. Tu yo del futuro te está viendo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu n'as pas besoin d'être parfait — juste régulier. Ton futur toi te regarde."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Non devi essere perfetto — solo costante. Il te del futuro ti sta guardando."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Você não precisa ser perfeito — só constante. O seu eu do futuro está de olho."
+          }
+        }
+      }
+    },
     "coach.motivation.stayFit": {
       "localizations": {
         "en": {
@@ -13627,6 +13791,74 @@
           "stringUnit": {
             "state": "translated",
             "value": "O melhor treino é aquele que você continua fazendo — construa hábitos que se encaixem na sua vida e o fitness cuidará de si mesmo."
+          }
+        }
+      }
+    },
+    "coach.motivation.stayFit.v2": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Health is the quiet victory you win every single day."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La salud es la victoria silenciosa que ganas todos los días."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La santé est la victoire silencieuse que tu gagnes chaque jour."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La salute è la vittoria silenziosa che vinci ogni giorno."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A saúde é a vitória silenciosa que você conquista todos os dias."
+          }
+        }
+      }
+    },
+    "coach.motivation.stayFit.v3": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move today so you can keep moving for decades. Your body thanks you."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Muévete hoy para seguir moviéndote por décadas. Tu cuerpo te lo agradece."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bouge aujourd'hui pour continuer à bouger pendant des décennies. Ton corps te remercie."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Muoviti oggi per continuare a muoverti per decenni. Il tuo corpo ti ringrazia."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mova-se hoje para continuar se movendo por décadas. Seu corpo agradece."
           }
         }
       }

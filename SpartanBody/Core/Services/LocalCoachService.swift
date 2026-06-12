@@ -17,10 +17,11 @@ struct LocalCoachService {
         var plan = FitnessPlan(
             analysis:       analysis(goal: goal, bmi: bmi, bmiCategory: bmiCategory, weightKg: weightKg,
                                      activityLevel: activityLevel, extraContext: extraContext),
-            weeklySchedule: schedule(goal: goal, activityLevel: activityLevel),
+            weeklySchedule: applyVariety(schedule(goal: goal, activityLevel: activityLevel)),
             nutritionPlan:  nutrition(goal: goal, dailyCalories: dailyCalories, dailyProtein: dailyProtein),
-            tips:           tips(goal: goal),
-            motivation:     motivation(goal: goal)
+            tips:           tips(goal: goal).shuffled(),
+            motivation:     motivation(goal: goal),
+            weeklyMeals:    weeklyMeals(goal: goal)
         )
         if !extraContext.trimmingCharacters(in: .whitespaces).isEmpty {
             plan = applyContext(plan, context: extraContext.lowercased())
@@ -392,8 +393,73 @@ struct LocalCoachService {
             weeklySchedule: newSchedule,
             nutritionPlan:  plan.nutritionPlan,
             tips:           plan.tips,
-            motivation:     plan.motivation
+            motivation:     plan.motivation,
+            weeklyMeals:    plan.weeklyMeals
         )
+    }
+
+    // MARK: - Variety (so regenerating doesn't feel identical)
+
+    // Interchangeable exercises with the same target — applied at random
+    // on each generation so two plans rarely look the same.
+    private static let varietySwaps: [(String, String)] = [
+        ("Jump Rope",         "High Knees"),
+        ("Mountain Climbers", "Burpees"),
+        ("Crunch",            "Bicycle Crunch"),
+        ("Walking Lunge",     "Reverse Lunge"),
+        ("Lateral Raise",     "Front Raise"),
+        ("Hammer Curl",       "Dumbbell Curl"),
+        ("Glute Bridge",      "Single-leg Glute Bridge"),
+        ("Cable Fly",         "Dumbbell Fly"),
+        ("Russian Twist",     "Heel Touch"),
+        ("Plank 3",           "Side Plank 3"),
+    ]
+
+    private static func applyVariety(_ schedule: [DayPlan]) -> [DayPlan] {
+        // Pick a random subset of swaps for this generation.
+        let active = varietySwaps.filter { _ in Bool.random() }
+        guard !active.isEmpty else { return schedule }
+        return schedule.map { day in
+            let varied = day.exercises.map { ex in
+                active.reduce(ex) { $0.replacingOccurrences(of: $1.0, with: $1.1) }
+            }
+            return DayPlan(day: day.day, type: day.type, focus: day.focus, exercises: varied)
+        }
+    }
+
+    // MARK: - Weekly meal suggestions (from the recipe library, goal-matched)
+
+    private static func weeklyMeals(goal: FitnessGoal) -> [DayMeals] {
+        let recipeGoal: RecipeGoal = {
+            switch goal {
+            case .loseWeight: return .weightLoss
+            case .gainMuscle: return .muscleGain
+            case .stayFit:    return .maintenance
+            }
+        }()
+
+        let breakfasts = RecipeDatabase.all
+            .filter { $0.tags.contains("Breakfast") }
+            .map(\.name).shuffled()
+        let goalMains = RecipeDatabase.all
+            .filter { $0.goal == recipeGoal && !$0.tags.contains("Breakfast") }
+            .map(\.name).shuffled()
+        let otherMains = RecipeDatabase.all
+            .filter { $0.goal != recipeGoal && !$0.tags.contains("Breakfast") }
+            .map(\.name).shuffled()
+        let mains = goalMains + otherMains
+
+        guard !breakfasts.isEmpty, mains.count >= 2 else { return [] }
+
+        let d = days
+        return (0..<7).map { i in
+            DayMeals(
+                day:       d[i],
+                breakfast: breakfasts[i % breakfasts.count],
+                lunch:     mains[i % mains.count],
+                dinner:    mains[(i + mains.count / 2) % mains.count]
+            )
+        }
     }
 
     private static func hasKneeKeyword(_ ctx: String) -> Bool {
@@ -412,8 +478,11 @@ struct LocalCoachService {
     private static func applyKneeSubstitution(_ ex: String) -> String {
         let subs: [(String, String)] = [
             ("Jump Rope", "March in Place"),
+            ("High Knees", "March in Place"),
+            ("Burpees", "March in Place"),
             ("Box Jump", "Step-up (no jump)"),
             ("Walking Lunge", "Hip Thrust"),
+            ("Reverse Lunge", "Hip Thrust"),
             ("Squat 4×15", "Wall Squat 4×15"),
             ("Squat 4×12", "Wall Squat 4×12"),
             ("Squat 5×5",  "Leg Press 5×5"),
@@ -648,10 +717,14 @@ struct LocalCoachService {
     // MARK: - Motivation
 
     private static func motivation(goal: FitnessGoal) -> String {
+        // Three phrasings per goal — one picked at random per generation.
+        let variant = ["", ".v2", ".v3"].randomElement() ?? ""
+        let key: String
         switch goal {
-        case .loseWeight: return NSLocalizedString("coach.motivation.loseWeight", comment: "")
-        case .gainMuscle: return NSLocalizedString("coach.motivation.gainMuscle", comment: "")
-        case .stayFit:    return NSLocalizedString("coach.motivation.stayFit",    comment: "")
+        case .loseWeight: key = "coach.motivation.loseWeight"
+        case .gainMuscle: key = "coach.motivation.gainMuscle"
+        case .stayFit:    key = "coach.motivation.stayFit"
         }
+        return NSLocalizedString(key + variant, comment: "")
     }
 }

@@ -6,6 +6,16 @@ struct FitnessPlan: Codable {
     var nutritionPlan:  AINutritionPlan
     var tips:           [String]
     var motivation:     String
+    var weeklyMeals:    [DayMeals] = []
+}
+
+// Suggested menu for one day (recipe names — localized at render time).
+struct DayMeals: Codable, Identifiable {
+    var id: String { day }
+    var day:       String
+    var breakfast: String
+    var lunch:     String
+    var dinner:    String
 }
 
 struct DayPlan: Codable, Identifiable {

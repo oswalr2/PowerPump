@@ -132,7 +132,7 @@ struct AICoachView: View {
 
     private func profileStat(_ label: String, _ value: String) -> some View {
         VStack(spacing: 4) {
-            Text(value)
+            Text(LocalizedStringKey(value))
                 .font(SBFont.label(11))
                 .fontWeight(.bold)
                 .foregroundColor(.sbAccent)
@@ -206,6 +206,7 @@ struct AICoachView: View {
                 analysisCard(p.analysis)
                 weeklySection(p.weeklySchedule)
                 nutritionSection(p.nutritionPlan)
+                if !p.weeklyMeals.isEmpty { weeklyMealsSection(p.weeklyMeals) }
                 if !p.tips.isEmpty { tipsSection(p.tips) }
 
                 Spacer(minLength: 80)
@@ -330,6 +331,47 @@ struct AICoachView: View {
             .background(Color.sbSurface)
             .cornerRadius(14)
             .overlay(RoundedRectangle(cornerRadius: 14).stroke(Color.sbBorder))
+        }
+    }
+
+    private func weeklyMealsSection(_ meals: [DayMeals]) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Weekly Menu")
+                .font(SBFont.heading())
+                .foregroundColor(.sbTextPrimary)
+
+            VStack(spacing: 0) {
+                ForEach(Array(meals.enumerated()), id: \.element.id) { i, day in
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(day.day)
+                            .font(SBFont.heading(14))
+                            .foregroundColor(.sbAccent)
+                        mealLine(icon: "sunrise.fill",  name: day.breakfast)
+                        mealLine(icon: "sun.max.fill",  name: day.lunch)
+                        mealLine(icon: "moon.fill",     name: day.dinner)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(14)
+                    if i < meals.count - 1 {
+                        Divider().background(Color.sbBorder)
+                    }
+                }
+            }
+            .background(Color.sbSurface)
+            .cornerRadius(14)
+            .overlay(RoundedRectangle(cornerRadius: 14).stroke(Color.sbBorder))
+        }
+    }
+
+    private func mealLine(icon: String, name: String) -> some View {
+        HStack(spacing: 8) {
+            Image(systemName: icon)
+                .font(.system(size: 11, weight: .semibold))
+                .foregroundColor(.sbTextSecondary)
+                .frame(width: 16)
+            Text(LocalizedStringKey(name))
+                .font(SBFont.body(14))
+                .foregroundColor(.sbTextPrimary)
         }
     }
 
