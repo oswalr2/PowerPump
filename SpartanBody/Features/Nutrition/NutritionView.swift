@@ -126,12 +126,17 @@ struct NutritionView: View {
             HStack(alignment: .center, spacing: 24) {
                 ZStack {
                     Circle()
-                        .stroke(Color.sbBorder, lineWidth: 10)
+                        .stroke(Color.sbSurfaceRaised, lineWidth: 10)
                     Circle()
                         .trim(from: 0, to: progress)
-                        .stroke(over ? Color.sbRed : Color.sbAccent,
-                                style: StrokeStyle(lineWidth: 10, lineCap: .round))
+                        .stroke(
+                            over ? AnyShapeStyle(Color.sbRed)
+                                 : AnyShapeStyle(AngularGradient(
+                                       colors: [.sbAccent, .sbCyan, .sbAccent],
+                                       center: .center, startAngle: .degrees(-90), endAngle: .degrees(270))),
+                            style: StrokeStyle(lineWidth: 10, lineCap: .round))
                         .rotationEffect(.degrees(-90))
+                        .shadow(color: Color.sbAccent.opacity(consumed > 0 ? 0.3 : 0), radius: 6)
                         .animation(.spring(response: 0.6), value: consumed)
                     VStack(spacing: 2) {
                         Text("\(Int(consumed))")

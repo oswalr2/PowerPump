@@ -64,11 +64,15 @@ struct ProfileView: View {
     private var avatarSection: some View {
         VStack(spacing: 12) {
             ZStack {
-                Circle().fill(Color.sbAccentDim).frame(width: 90, height: 90)
+                Circle()
+                    .stroke(LinearGradient.sbAccentGradient, lineWidth: 3)
+                    .frame(width: 98, height: 98)
+                Circle().fill(Color.sbAccentDim).frame(width: 86, height: 86)
                 Text(profile.name.isEmpty ? "?" : String(profile.name.prefix(1)).uppercased())
                     .font(SBFont.display(36))
                     .foregroundColor(.sbAccent)
             }
+            .shadow(color: Color.sbAccent.opacity(0.25), radius: 10)
             Text(profile.name.isEmpty ? "Spartan" : profile.name)
                 .font(SBFont.heading())
                 .foregroundColor(.sbTextPrimary)

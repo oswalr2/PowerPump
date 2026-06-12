@@ -152,10 +152,12 @@ struct ActiveWorkoutView: View {
                     Text("Finish")
                         .font(SBFont.caption())
                         .fontWeight(.bold)
+                        .lineLimit(1)
+                        .fixedSize()
                         .foregroundColor(.white)
                         .padding(.horizontal, 16)
                         .padding(.vertical, 9)
-                        .background(Color.sbAccent)
+                        .background(LinearGradient.sbAccentGradient)
                         .cornerRadius(10)
                 }
             }
