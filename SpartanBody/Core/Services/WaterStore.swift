@@ -18,6 +18,7 @@ final class WaterStore: ObservableObject {
         todayGlasses = max(0, min(8, glasses))
         UserDefaults.standard.set(todayGlasses, forKey: todayKey)
         HealthKitService.shared.saveWater(glasses: todayGlasses)
+        PhoneConnectivityManager.shared.syncToWatch()
     }
 
     private static let keyFormatter: DateFormatter = {

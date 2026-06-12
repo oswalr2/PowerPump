@@ -61,6 +61,13 @@ struct ActiveWorkoutView: View {
         }
         .onAppear { startClock() }
         .onDisappear { clockTimer?.invalidate() }
+        .onChange(of: showRestTimer) { showing in
+            if showing {
+                WorkoutLiveActivityManager.shared.startRest(seconds: restSeconds, session: store.activeSession)
+            } else {
+                WorkoutLiveActivityManager.shared.endRest(session: store.activeSession)
+            }
+        }
         .sheet(isPresented: $showExercisePicker) {
             ExercisePickerView { id in
                 store.addExercise(id)

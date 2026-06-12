@@ -5,7 +5,12 @@ final class WorkoutStore: ObservableObject {
 
     @Published var templates: [WorkoutTemplate] = []
     @Published var history: [WorkoutSession] = []
-    @Published var activeSession: WorkoutSession? { didSet { saveActiveSession() } }
+    @Published var activeSession: WorkoutSession? {
+        didSet {
+            saveActiveSession()
+            WorkoutLiveActivityManager.shared.sync(session: activeSession)
+        }
+    }
 
     private init() { load() }
 

@@ -16,6 +16,10 @@
 		AA000001000000000000AA16 /* SpartanBodyComplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000AA09 /* SpartanBodyComplication.swift */; };
 		AA000001000000000000AA17 /* SpartanBodyWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = AA000001000000000000AA01 /* SpartanBodyWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AA000001000000000000AA18 /* SpartanBodyComplication.appex in Embed Widget Extensions */ = {isa = PBXBuildFile; fileRef = AA000001000000000000AA02 /* SpartanBodyComplication.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		BB000001000000000000BB10 /* SpartanBodyWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000001000000000000BB02 /* SpartanBodyWidgetBundle.swift */; };
+		BB000001000000000000BB11 /* WorkoutActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000001000000000000BB03 /* WorkoutActivityAttributes.swift */; };
+		BB000001000000000000BB12 /* WorkoutActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000001000000000000BB03 /* WorkoutActivityAttributes.swift */; };
+		BB000001000000000000BB13 /* SpartanBodyWidget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BB000001000000000000BB01 /* SpartanBodyWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +36,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = AA000001000000000000AA41;
 			remoteInfo = SpartanBodyComplication;
+		};
+		BB000001000000000000BB61 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F36D36FF2FB3EF4000CA86B6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BB000001000000000000BB40;
+			remoteInfo = SpartanBodyWidget;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -58,6 +69,17 @@
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BB000001000000000000BB30 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				BB000001000000000000BB13 /* SpartanBodyWidget.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +92,11 @@
 		AA000001000000000000AA07 /* WatchWorkoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchWorkoutManager.swift; sourceTree = "<group>"; };
 		AA000001000000000000AA08 /* WatchWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchWorkoutView.swift; sourceTree = "<group>"; };
 		AA000001000000000000AA09 /* SpartanBodyComplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpartanBodyComplication.swift; sourceTree = "<group>"; };
+		BB000001000000000000BB01 /* SpartanBodyWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SpartanBodyWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB000001000000000000BB02 /* SpartanBodyWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpartanBodyWidgetBundle.swift; sourceTree = "<group>"; };
+		BB000001000000000000BB03 /* WorkoutActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutActivityAttributes.swift; sourceTree = "<group>"; };
+		BB000001000000000000BB04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BB000001000000000000BB05 /* SpartanBodyWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SpartanBodyWidget.entitlements; sourceTree = "<group>"; };
 		F36D37072FB3EF4000CA86B6 /* SpartanBody.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpartanBody.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -90,6 +117,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		AA000001000000000000AA35 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BB000001000000000000BB32 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -128,11 +162,23 @@
 			path = Complications;
 			sourceTree = "<group>";
 		};
+		BB000001000000000000BB20 /* SpartanBodyWidget */ = {
+			isa = PBXGroup;
+			children = (
+				BB000001000000000000BB02 /* SpartanBodyWidgetBundle.swift */,
+				BB000001000000000000BB03 /* WorkoutActivityAttributes.swift */,
+				BB000001000000000000BB04 /* Info.plist */,
+				BB000001000000000000BB05 /* SpartanBodyWidget.entitlements */,
+			);
+			path = SpartanBodyWidget;
+			sourceTree = "<group>";
+		};
 		F36D36FE2FB3EF4000CA86B6 = {
 			isa = PBXGroup;
 			children = (
 				F36D37092FB3EF4000CA86B6 /* SpartanBody */,
 				AA000001000000000000AA20 /* SpartanBodyWatch */,
+				BB000001000000000000BB20 /* SpartanBodyWidget */,
 				F36D37082FB3EF4000CA86B6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -143,6 +189,7 @@
 				F36D37072FB3EF4000CA86B6 /* SpartanBody.app */,
 				AA000001000000000000AA01 /* SpartanBodyWatch.app */,
 				AA000001000000000000AA02 /* SpartanBodyComplication.appex */,
+				BB000001000000000000BB01 /* SpartanBodyWidget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -186,6 +233,23 @@
 			productReference = AA000001000000000000AA02 /* SpartanBodyComplication.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		BB000001000000000000BB40 /* SpartanBodyWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BB000001000000000000BB55 /* Build configuration list for PBXNativeTarget "SpartanBodyWidget" */;
+			buildPhases = (
+				BB000001000000000000BB31 /* Sources */,
+				BB000001000000000000BB32 /* Frameworks */,
+				BB000001000000000000BB33 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SpartanBodyWidget;
+			productName = SpartanBodyWidget;
+			productReference = BB000001000000000000BB01 /* SpartanBodyWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		F36D37062FB3EF4000CA86B6 /* SpartanBody */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F36D37122FB3EF4100CA86B6 /* Build configuration list for PBXNativeTarget "SpartanBody" */;
@@ -194,11 +258,13 @@
 				F36D37042FB3EF4000CA86B6 /* Frameworks */,
 				F36D37052FB3EF4000CA86B6 /* Resources */,
 				AA000001000000000000AA37 /* Embed Watch Content */,
+				BB000001000000000000BB30 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				AA000001000000000000AA60 /* PBXTargetDependency */,
+				BB000001000000000000BB60 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				F36D37092FB3EF4000CA86B6 /* SpartanBody */,
@@ -224,6 +290,9 @@
 						CreatedOnToolsVersion = 26.5;
 					};
 					AA000001000000000000AA41 = {
+						CreatedOnToolsVersion = 26.5;
+					};
+					BB000001000000000000BB40 = {
 						CreatedOnToolsVersion = 26.5;
 					};
 					F36D37062FB3EF4000CA86B6 = {
@@ -252,6 +321,7 @@
 				F36D37062FB3EF4000CA86B6 /* SpartanBody */,
 				AA000001000000000000AA40 /* SpartanBodyWatch */,
 				AA000001000000000000AA41 /* SpartanBodyComplication */,
+				BB000001000000000000BB40 /* SpartanBodyWidget */,
 			);
 		};
 /* End PBXProject section */
@@ -265,6 +335,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		AA000001000000000000AA36 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BB000001000000000000BB33 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -302,10 +379,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BB000001000000000000BB31 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB000001000000000000BB10 /* SpartanBodyWidgetBundle.swift in Sources */,
+				BB000001000000000000BB11 /* WorkoutActivityAttributes.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F36D37032FB3EF4000CA86B6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB000001000000000000BB12 /* WorkoutActivityAttributes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,6 +408,11 @@
 			isa = PBXTargetDependency;
 			target = AA000001000000000000AA41 /* SpartanBodyComplication */;
 			targetProxy = AA000001000000000000AA63 /* PBXContainerItemProxy */;
+		};
+		BB000001000000000000BB60 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BB000001000000000000BB40 /* SpartanBodyWidget */;
+			targetProxy = BB000001000000000000BB61 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -430,6 +522,60 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 9.0;
+			};
+			name = Release;
+		};
+		BB000001000000000000BB50 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SpartanBodyWidget/SpartanBodyWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NWUY84K2DU;
+				INFOPLIST_FILE = SpartanBodyWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SpartanBody;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartanbody.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		BB000001000000000000BB51 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SpartanBodyWidget/SpartanBodyWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NWUY84K2DU;
+				INFOPLIST_FILE = SpartanBodyWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SpartanBody;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartanbody.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -565,6 +711,7 @@
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "SpartanBody reads your steps and active energy to show your daily activity.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "SpartanBody saves your workouts, nutrition, and water intake to Apple Health.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "SpartanBody accesses your photos to scan food and estimate nutrition.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_BackgroundColor = LaunchBackground;
@@ -605,6 +752,7 @@
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "SpartanBody reads your steps and active energy to show your daily activity.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "SpartanBody saves your workouts, nutrition, and water intake to Apple Health.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "SpartanBody accesses your photos to scan food and estimate nutrition.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -645,6 +793,15 @@
 			buildConfigurations = (
 				AA000001000000000000AA53 /* Debug */,
 				AA000001000000000000AA54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BB000001000000000000BB55 /* Build configuration list for PBXNativeTarget "SpartanBodyWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BB000001000000000000BB50 /* Debug */,
+				BB000001000000000000BB51 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

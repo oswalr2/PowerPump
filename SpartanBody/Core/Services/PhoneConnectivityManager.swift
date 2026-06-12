@@ -43,6 +43,7 @@ final class PhoneConnectivityManager: NSObject {
             "proteinTarget":   profile.dailyProteinTarget,
             "steps":           health.stepsToday,
             "streak":          workouts.currentStreak,
+            "water":           WaterStore.shared.todayGlasses,
             "hasActiveWorkout": workouts.activeSession != nil,
         ]
 
@@ -62,6 +63,9 @@ final class PhoneConnectivityManager: NSObject {
         defaults?.set(ctx["calories"]      as? Int ?? 0,    forKey: "watch_calories")
         defaults?.set(ctx["calorieTarget"] as? Int ?? 2000, forKey: "watch_calorieTarget")
         defaults?.set(ctx["streak"]        as? Int ?? 0,    forKey: "watch_streak")
+        defaults?.set(Int(ctx["protein"]   as? Double ?? 0), forKey: "watch_protein")
+        defaults?.set(ctx["proteinTarget"] as? Int ?? 150,  forKey: "watch_proteinTarget")
+        defaults?.set(ctx["water"]         as? Int ?? 0,    forKey: "watch_water")
     }
 }
 
