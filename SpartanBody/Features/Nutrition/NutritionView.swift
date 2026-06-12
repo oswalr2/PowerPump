@@ -17,6 +17,9 @@ struct NutritionView: View {
                     VStack(spacing: 20) {
                         header
                         calorieCard
+                        if store.todayEntries.isEmpty && !store.yesterdayEntries.isEmpty {
+                            copyYesterdayButton
+                        }
                         macrosCard
                         weeklyCard
                         ForEach(MealType.allCases, id: \.self) { meal in
@@ -70,6 +73,34 @@ struct NutritionView: View {
         let f = DateFormatter()
         f.dateStyle = .full
         return f.string(from: .now)
+    }
+
+    // MARK: - Copy yesterday
+
+    private var copyYesterdayButton: some View {
+        Button {
+            HapticManager.success()
+            withAnimation(.spring(response: 0.4)) { store.copyYesterday() }
+        } label: {
+            HStack(spacing: 10) {
+                Image(systemName: "arrow.uturn.backward.circle.fill")
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundColor(.sbAccent)
+                Text("Copy yesterday's meals")
+                    .font(SBFont.body())
+                    .fontWeight(.semibold)
+                    .foregroundColor(.sbTextPrimary)
+                Spacer()
+                Text("\(Int(store.yesterdayEntries.reduce(0) { $0 + $1.nutrition.calories })) kcal")
+                    .font(SBFont.caption())
+                    .foregroundColor(.sbTextSecondary)
+            }
+            .padding(14)
+            .background(Color.sbAccentDim)
+            .cornerRadius(14)
+            .overlay(RoundedRectangle(cornerRadius: 14).stroke(Color.sbAccent.opacity(0.35)))
+        }
+        .buttonStyle(.plain)
     }
 
     // MARK: - Calorie card
@@ -285,6 +316,8 @@ private struct MealSection: View {
     let meal: MealType
     @Binding var addingMeal: MealType?
     @ObservedObject private var store = FoodLogStore.shared
+    @State private var showSaveMeal = false
+    @State private var savedMealName = ""
 
     var body: some View {
         let entries = store.entries(for: meal)
@@ -303,6 +336,17 @@ private struct MealSection: View {
                     Text("\(Int(kcal)) kcal")
                         .font(SBFont.caption()).foregroundColor(.sbTextSecondary)
                 }
+                if !entries.isEmpty {
+                    Button {
+                        savedMealName = ""
+                        showSaveMeal = true
+                    } label: {
+                        Image(systemName: "bookmark")
+                            .font(.system(size: 15, weight: .semibold))
+                            .foregroundColor(.sbAccent)
+                    }
+                    .buttonStyle(.plain)
+                }
                 Button { addingMeal = meal } label: {
                     Image(systemName: "plus.circle.fill")
                         .font(.system(size: 20))
@@ -311,6 +355,18 @@ private struct MealSection: View {
                 .buttonStyle(.plain)
             }
             .padding(14)
+            .alert("Save as meal", isPresented: $showSaveMeal) {
+                TextField("Meal name…", text: $savedMealName)
+                Button("Save") {
+                    let name = savedMealName.trimmingCharacters(in: .whitespaces)
+                    guard !name.isEmpty else { return }
+                    SavedMealStore.shared.save(name: name, entries: entries)
+                    HapticManager.success()
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("Log this combo again with one tap from the food search.")
+            }
 
             if entries.isEmpty {
                 Text("Tap + to log food")

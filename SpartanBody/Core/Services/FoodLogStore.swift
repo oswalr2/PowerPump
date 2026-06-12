@@ -94,6 +94,52 @@ final class FoodLogStore: ObservableObject {
         }.reversed()
     }
 
+    // MARK: - Frequent items & copy yesterday
+
+    // Rebuild a FoodItem from a logged entry (per-100g values derived from the portion).
+    func foodItem(from entry: LoggedFood) -> FoodItem {
+        FoodItem(id: entry.foodID, name: entry.foodName, category: .other,
+                 per100g: entry.nutrition.scaled(by: 100 / max(entry.grams, 1)))
+    }
+
+    // Most-logged foods of the past 30 days, most frequent first.
+    var frequentItems: [FoodItem] {
+        let cutoff = Calendar.current.date(byAdding: .day, value: -30, to: .now) ?? .now
+        var stats: [String: (count: Int, lastAt: Date, sample: LoggedFood)] = [:]
+        for entries in allLogs.values {
+            for e in entries where e.loggedAt >= cutoff && e.grams > 0 {
+                let prev = stats[e.foodID]
+                stats[e.foodID] = ((prev?.count ?? 0) + 1,
+                                   max(prev?.lastAt ?? .distantPast, e.loggedAt),
+                                   e)
+            }
+        }
+        return stats.values
+            .sorted { $0.count != $1.count ? $0.count > $1.count : $0.lastAt > $1.lastAt }
+            .prefix(8)
+            .map { foodItem(from: $0.sample) }
+    }
+
+    // Portion used the last time this food was logged.
+    func lastGrams(for foodID: String) -> Double? {
+        allLogs.values.flatMap { $0 }
+            .filter { $0.foodID == foodID }
+            .max { $0.loggedAt < $1.loggedAt }?
+            .grams
+    }
+
+    var yesterdayEntries: [LoggedFood] {
+        guard let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: .now) else { return [] }
+        return allLogs[dateKey(for: yesterday)] ?? []
+    }
+
+    // One-tap repeat of yesterday's full day, meal by meal.
+    func copyYesterday() {
+        for e in yesterdayEntries {
+            add(foodItem(from: e), grams: e.grams, meal: e.meal)
+        }
+    }
+
     // MARK: - Mutations
 
     func add(_ item: FoodItem, grams: Double, meal: MealType) {

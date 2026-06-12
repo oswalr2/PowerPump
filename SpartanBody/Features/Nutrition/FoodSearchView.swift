@@ -3,6 +3,8 @@ import SwiftUI
 struct FoodSearchView: View {
     let meal: MealType
     @ObservedObject private var store = FoodLogStore.shared
+    @ObservedObject private var customFoods = CustomFoodStore.shared
+    @ObservedObject private var savedMeals = SavedMealStore.shared
     @Environment(\.dismiss) private var dismiss
 
     @State private var query      = ""
@@ -11,13 +13,17 @@ struct FoodSearchView: View {
     @State private var gramsText  = "100"
     @State private var category: FoodCategory? = nil
     @State private var showBarcodeScanner = false
+    @State private var showCreateFood = false
 
     private var results: [FoodItem] {
-        var list = FoodDatabase.all
+        var list = customFoods.foods + FoodDatabase.all
         if let cat = category { list = list.filter { $0.category == cat } }
         if !query.isEmpty { list = list.filter { $0.name.localizedCaseInsensitiveContains(query) } }
         return list
     }
+
+    // Quick-access sections only on the default view (no search, no filter)
+    private var showsQuickSections: Bool { query.isEmpty && category == nil }
 
     var body: some View {
         NavigationStack {
@@ -124,36 +130,148 @@ struct FoodSearchView: View {
     private var foodList: some View {
         ScrollView(showsIndicators: false) {
             LazyVStack(spacing: 8) {
-                ForEach(results) { item in
-                    Button { selected = item } label: {
-                        HStack(spacing: 14) {
-                            VStack(alignment: .leading, spacing: 3) {
-                                Text(item.name)
-                                    .font(SBFont.body())
-                                    .foregroundColor(.sbTextPrimary)
-                                Text(String(format: "%.0f kcal · P%.0fg C%.0fg F%.0fg (per 100g)",
-                                            item.per100g.calories, item.per100g.protein,
-                                            item.per100g.carbs, item.per100g.fat))
-                                    .font(SBFont.label(10))
-                                    .foregroundColor(.sbTextSecondary)
-                            }
-                            Spacer()
-                            Image(systemName: "plus.circle.fill")
-                                .font(.system(size: 20))
-                                .foregroundColor(.sbAccent)
-                        }
-                        .padding(14)
-                        .background(Color.sbSurface)
-                        .cornerRadius(12)
-                        .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.sbBorder))
+                if showsQuickSections && !savedMeals.meals.isEmpty {
+                    sectionLabel("My Meals")
+                    ForEach(savedMeals.meals) { savedMeal in
+                        savedMealRow(savedMeal)
                     }
-                    .buttonStyle(.plain)
+                }
+
+                if showsQuickSections && !store.frequentItems.isEmpty {
+                    sectionLabel("Frequent")
+                    ForEach(store.frequentItems) { item in
+                        foodRow(item)
+                    }
+                    sectionLabel("All Foods")
+                }
+
+                createFoodRow
+
+                ForEach(results) { item in
+                    foodRow(item)
                 }
             }
             .padding(.horizontal, 16)
             .padding(.top, 12)
             .padding(.bottom, 40)
         }
+        .sheet(isPresented: $showCreateFood) {
+            CreateFoodView { item in
+                select(item)
+            }
+        }
+    }
+
+    // Open the portion view, pre-filled with the last portion used for this food.
+    private func select(_ item: FoodItem) {
+        let last = store.lastGrams(for: item.id) ?? 100
+        selected = item
+        setGrams(last)
+    }
+
+    private func sectionLabel(_ key: String) -> some View {
+        Text(LocalizedStringKey(key))
+            .font(SBFont.label(12))
+            .foregroundColor(.sbTextSecondary)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.top, 8)
+            .padding(.leading, 2)
+    }
+
+    private func foodRow(_ item: FoodItem) -> some View {
+        Button { select(item) } label: {
+            HStack(spacing: 14) {
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(item.name)
+                        .font(SBFont.body())
+                        .foregroundColor(.sbTextPrimary)
+                    Text(String(format: "%.0f kcal · P%.0fg C%.0fg F%.0fg (per 100g)",
+                                item.per100g.calories, item.per100g.protein,
+                                item.per100g.carbs, item.per100g.fat))
+                        .font(SBFont.label(10))
+                        .foregroundColor(.sbTextSecondary)
+                }
+                Spacer()
+                if item.id.hasPrefix("custom_") {
+                    Button {
+                        CustomFoodStore.shared.remove(item)
+                    } label: {
+                        Image(systemName: "trash")
+                            .font(.system(size: 14))
+                            .foregroundColor(.sbTextSecondary.opacity(0.6))
+                    }
+                    .buttonStyle(.plain)
+                }
+                Image(systemName: "plus.circle.fill")
+                    .font(.system(size: 20))
+                    .foregroundColor(.sbAccent)
+            }
+            .padding(14)
+            .background(Color.sbSurface)
+            .cornerRadius(12)
+            .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.sbBorder))
+        }
+        .buttonStyle(.plain)
+    }
+
+    // One tap: logs the whole saved combo to this meal and closes.
+    private func savedMealRow(_ savedMeal: SavedMeal) -> some View {
+        Button {
+            HapticManager.success()
+            savedMeals.log(savedMeal, to: meal)
+            dismiss()
+        } label: {
+            HStack(spacing: 14) {
+                Image(systemName: "bookmark.fill")
+                    .font(.system(size: 16))
+                    .foregroundColor(.sbAccent)
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(savedMeal.name)
+                        .font(SBFont.body())
+                        .fontWeight(.semibold)
+                        .foregroundColor(.sbTextPrimary)
+                    Text("\(savedMeal.items.count) foods · \(Int(savedMeal.totalCalories)) kcal")
+                        .font(SBFont.label(10))
+                        .foregroundColor(.sbTextSecondary)
+                }
+                Spacer()
+                Button {
+                    savedMeals.remove(savedMeal)
+                } label: {
+                    Image(systemName: "trash")
+                        .font(.system(size: 14))
+                        .foregroundColor(.sbTextSecondary.opacity(0.6))
+                }
+                .buttonStyle(.plain)
+                Image(systemName: "plus.circle.fill")
+                    .font(.system(size: 20))
+                    .foregroundColor(.sbGreen)
+            }
+            .padding(14)
+            .background(Color.sbSurface)
+            .cornerRadius(12)
+            .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.sbAccent.opacity(0.3)))
+        }
+        .buttonStyle(.plain)
+    }
+
+    private var createFoodRow: some View {
+        Button { showCreateFood = true } label: {
+            HStack(spacing: 10) {
+                Image(systemName: "plus.square.dashed")
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundColor(.sbAccent)
+                Text("Create your own food")
+                    .font(SBFont.caption())
+                    .fontWeight(.semibold)
+                    .foregroundColor(.sbAccent)
+                Spacer()
+            }
+            .padding(12)
+            .background(Color.sbAccentDim)
+            .cornerRadius(12)
+        }
+        .buttonStyle(.plain)
     }
 
     // MARK: - Portion view
