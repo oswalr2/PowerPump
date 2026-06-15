@@ -11,6 +11,8 @@ struct DashboardView: View {
     @State private var showNutrition    = false
     @State private var showChallenges   = false
     @State private var showFoodScanner  = false
+    @State private var showBarcodeScanner = false
+    @State private var showSettings     = false
     @State private var appeared         = false
 
     private var caloriesConsumed: Int { Int(foodLog.todayCalories) }
@@ -111,13 +113,20 @@ struct DashboardView: View {
                 .cornerRadius(10)
             }
 
-            ZStack {
-                Circle().fill(Color.sbSurface).frame(width: 46, height: 46)
-                Image(systemName: "bell.fill")
-                    .foregroundColor(.sbTextSecondary)
-                    .font(.system(size: 18))
+            Button {
+                HapticManager.light()
+                showSettings = true
+            } label: {
+                ZStack {
+                    Circle().fill(Color.sbSurface).frame(width: 46, height: 46)
+                    Image(systemName: "bell.fill")
+                        .foregroundColor(.sbAccent)
+                        .font(.system(size: 18))
+                }
             }
+            .buttonStyle(.plain)
         }
+        .sheet(isPresented: $showSettings) { SettingsView() }
     }
 
     // MARK: - Calorie Ring
@@ -375,24 +384,34 @@ struct DashboardView: View {
                 .font(SBFont.heading())
                 .foregroundColor(.sbTextPrimary)
 
-            HStack(spacing: 12) {
-                QuickActionButton(icon: "camera.fill", label: "Scan Food",     color: .sbAccent) {
+            HStack(spacing: 10) {
+                QuickActionButton(icon: "camera.fill",       label: "Scan Food") {
                     HapticManager.light()
                     showFoodScanner = true
                 }
-                QuickActionButton(icon: "play.fill",   label: "Start Workout", color: .sbGreen) {
+                QuickActionButton(icon: "barcode.viewfinder", label: "Scan Barcode") {
+                    HapticManager.light()
+                    showBarcodeScanner = true
+                }
+                QuickActionButton(icon: "play.fill",         label: "Start Workout") {
                     HapticManager.medium()
                     NotificationCenter.default.post(name: .switchToTab, object: 1)
                 }
-                QuickActionButton(icon: "fork.knife",  label: "Log Meal",      color: Color.orange) {
+                QuickActionButton(icon: "fork.knife",        label: "Log Meal") {
                     HapticManager.light()
                     showNutrition = true
                 }
             }
         }
-        .sheet(isPresented: $showNutrition)    { NutritionView() }
-        .sheet(isPresented: $showChallenges)  { ChallengesView() }
-        .sheet(isPresented: $showFoodScanner) { FoodScannerView() }
+        .sheet(isPresented: $showNutrition)       { NutritionView() }
+        .sheet(isPresented: $showChallenges)      { ChallengesView() }
+        .sheet(isPresented: $showFoodScanner)     { FoodScannerView() }
+        .sheet(isPresented: $showBarcodeScanner)  {
+            BarcodeScanSheet { item in
+                FoodLogStore.shared.add(item, grams: 100, meal: .snack)
+                HapticManager.success()
+            }
+        }
     }
 }
 
@@ -428,7 +447,6 @@ private struct MacroRow: View {
 private struct QuickActionButton: View {
     let icon: String
     let label: String
-    let color: Color
     let action: () -> Void
 
     var body: some View {
@@ -436,17 +454,18 @@ private struct QuickActionButton: View {
             VStack(spacing: 8) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(color.opacity(0.15))
+                        .fill(Color.sbAccent.opacity(0.15))
                         .frame(height: 52)
                     Image(systemName: icon)
-                        .foregroundColor(color)
+                        .foregroundColor(.sbAccent)
                         .font(.system(size: 20, weight: .semibold))
                 }
                 Text(LocalizedStringKey(label))
-                    .font(SBFont.label())
+                    .font(SBFont.label(10))
                     .foregroundColor(.sbTextSecondary)
                     .multilineTextAlignment(.center)
                     .lineLimit(2)
+                    .minimumScaleFactor(0.8)
             }
         }
         .frame(maxWidth: .infinity)

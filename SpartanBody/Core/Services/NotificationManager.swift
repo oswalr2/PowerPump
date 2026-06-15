@@ -1,32 +1,41 @@
 import Foundation
 import UserNotifications
 
-final class NotificationManager: ObservableObject {
+final class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterDelegate {
     static let shared = NotificationManager()
 
     @Published var isAuthorized = false
 
+    // Toggling any reminder on auto-requests permission, so the user doesn't
+    // have to find a hidden button — the toggle itself triggers the system prompt.
+    private func ensureAuthorized(then onAuthorized: @escaping () -> Void) {
+        if isAuthorized { onAuthorized(); return }
+        requestPermission { granted in
+            if granted { onAuthorized() }
+        }
+    }
+
     // Workout
-    @Published var workoutEnabled: Bool       { didSet { save(); scheduleWorkout() } }
+    @Published var workoutEnabled: Bool       { didSet { save(); if workoutEnabled { ensureAuthorized { self.scheduleWorkout() } } else { scheduleWorkout() } } }
     @Published var workoutTime: Date          { didSet { save(); scheduleWorkout() } }
 
     // Hydration
-    @Published var hydrationEnabled: Bool     { didSet { save(); scheduleHydration() } }
+    @Published var hydrationEnabled: Bool     { didSet { save(); if hydrationEnabled { ensureAuthorized { self.scheduleHydration() } } else { scheduleHydration() } } }
     @Published var hydrationEveryHours: Int   { didSet { save(); scheduleHydration() } }
 
     // Meals
-    @Published var mealsEnabled: Bool         { didSet { save(); scheduleMeals() } }
+    @Published var mealsEnabled: Bool         { didSet { save(); if mealsEnabled { ensureAuthorized { self.scheduleMeals() } } else { scheduleMeals() } } }
     @Published var breakfastTime: Date        { didSet { save(); scheduleMeals() } }
     @Published var lunchTime: Date            { didSet { save(); scheduleMeals() } }
     @Published var dinnerTime: Date           { didSet { save(); scheduleMeals() } }
 
     // Sleep
-    @Published var sleepEnabled: Bool         { didSet { save(); scheduleSleep() } }
+    @Published var sleepEnabled: Bool         { didSet { save(); if sleepEnabled { ensureAuthorized { self.scheduleSleep() } } else { scheduleSleep() } } }
     @Published var sleepTime: Date            { didSet { save(); scheduleSleep() } }
 
     private let ud = UserDefaults.standard
 
-    private init() {
+    private override init() {
         workoutEnabled     = ud.bool(forKey: "nb_workout_on")
         hydrationEnabled   = ud.bool(forKey: "nb_hydration_on")
         mealsEnabled       = ud.bool(forKey: "nb_meals_on")
@@ -39,7 +48,18 @@ final class NotificationManager: ObservableObject {
         dinnerTime    = ud.date("nb_dinner_time")    ?? Self.time(hour: 19, minute: 0)
         sleepTime     = ud.date("nb_sleep_time")     ?? Self.time(hour: 22, minute: 30)
 
+        super.init()
+        UNUserNotificationCenter.current().delegate = self
         checkStatus()
+    }
+
+    // Show banners even when the app is in the foreground (otherwise iOS
+    // delivers them silently, which looks like "the reminders don't work").
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler:
+                                @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.banner, .sound, .badge])
     }
 
     // MARK: - Permission
@@ -49,10 +69,26 @@ final class NotificationManager: ObservableObject {
             .requestAuthorization(options: [.alert, .badge, .sound]) { granted, _ in
                 DispatchQueue.main.async {
                     self.isAuthorized = granted
+                    // Reschedule whatever toggles are currently on, now that
+                    // we actually have permission.
                     if granted { self.scheduleAll() }
                     completion(granted)
                 }
             }
+    }
+
+    // Re-syncs reminders whenever the app comes back to foreground — covers the
+    // case where the user changes permission from iOS Settings while the app is
+    // backgrounded.
+    func refreshIfAuthorized() {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            let authorized = settings.authorizationStatus == .authorized
+            DispatchQueue.main.async {
+                let wasAuthorized = self.isAuthorized
+                self.isAuthorized = authorized
+                if authorized && !wasAuthorized { self.scheduleAll() }
+            }
+        }
     }
 
     func checkStatus() {

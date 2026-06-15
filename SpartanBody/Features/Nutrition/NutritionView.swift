@@ -398,7 +398,7 @@ private struct FoodEntryRow: View {
     var body: some View {
         HStack(spacing: 12) {
             VStack(alignment: .leading, spacing: 2) {
-                Text(entry.foodName)
+                Text(LocalizedStringKey(entry.foodName))
                     .font(SBFont.body()).foregroundColor(.sbTextPrimary)
                 Text(String(format: "%.0fg", entry.grams))
                     .font(SBFont.caption()).foregroundColor(.sbTextSecondary)

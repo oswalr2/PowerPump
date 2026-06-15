@@ -480,6 +480,62 @@
         }
       }
     },
+    "1 head": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 unidad"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 tête"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 testa"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 cabeça"
+          }
+        }
+      }
+    },
+    "1 large": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 grande"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 grand"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 grande"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 grande"
+          }
+        }
+      }
+    },
     "1 medium": {
       "extractionState": "stale",
       "localizations": {
@@ -678,6 +734,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "1 c. chá de cada"
+          }
+        }
+      }
+    },
+    "1.5L": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1,5 L"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1,5 L"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1,5 L"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1,5 L"
           }
         }
       }
@@ -1092,6 +1176,62 @@
         }
       }
     },
+    "3 cloves": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 dientes"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 gousses"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 spicchi"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 dentes"
+          }
+        }
+      }
+    },
+    "3 tbsp": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 cdas"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 c. à s."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 cucchiai"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 c. sopa"
+          }
+        }
+      }
+    },
     "3 whole": {
       "extractionState": "stale",
       "localizations": {
@@ -1150,6 +1290,34 @@
         }
       }
     },
+    "4 tbsp": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4 cdas"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4 c. à s."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4 cucchiai"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4 c. sopa"
+          }
+        }
+      }
+    },
     "6 large": {
       "extractionState": "stale",
       "localizations": {
@@ -1175,6 +1343,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "6 grandes"
+          }
+        }
+      }
+    },
+    "6 small": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "6 pequeñas"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "6 petites"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "6 piccoli"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "6 pequenas"
           }
         }
       }
@@ -1680,6 +1876,34 @@
         }
       }
     },
+    "Add cauliflower rice and soy sauce. Stir-fry 5 more minutes.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agrega el arroz de coliflor y salsa de soya. Saltea 5 minutos más."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajoute le riz de chou-fleur et la sauce soja. Fais sauter 5 min de plus."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aggiungi il riso di cavolfiore e la salsa di soia. Salta altri 5 min."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicione o arroz de couve-flor e o molho de soja. Refogue por mais 5 min."
+          }
+        }
+      }
+    },
     "Add cherry tomatoes and cook 3-4 minutes until softened.": {
       "extractionState": "stale",
       "localizations": {
@@ -1709,6 +1933,90 @@
         }
       }
     },
+    "Add garlic and sauté for 30 seconds.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agrega el ajo y sofríe 30 segundos."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajoute l'ail et fais revenir 30 sec."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aggiungi l'aglio e soffriggi 30 sec."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicione o alho e refogue por 30 segundos."
+          }
+        }
+      }
+    },
+    "Add lentils and broth. Bring to a boil, then simmer 20-25 min.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agrega lentejas y caldo. Hierve y luego cocina a fuego lento 20-25 min."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajoute lentilles et bouillon. Porte à ébullition, puis mijote 20-25 min."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aggiungi lenticchie e brodo. Porta a bollore, poi cuoci a fuoco lento 20-25 min."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicione lentilhas e caldo. Ferva e cozinhe em fogo baixo por 20-25 min."
+          }
+        }
+      }
+    },
+    "Add mixed vegetables and stir-fry 3 minutes.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agrega las verduras mixtas y saltea 3 minutos."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajoute les légumes et fais sauter 3 min."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aggiungi le verdure miste e salta in padella 3 min."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicione os legumes mistos e refogue por 3 minutos."
+          }
+        }
+      }
+    },
     "Add soy sauce and ginger. Toss for 1 minute.": {
       "extractionState": "stale",
       "localizations": {
@@ -1734,6 +2042,62 @@
           "stringUnit": {
             "state": "translated",
             "value": "Adicione o molho de soja e o gengibre. Misture por 1 minuto."
+          }
+        }
+      }
+    },
+    "Add spices and stir for 1 minute until fragrant.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agrega las especias y revuelve 1 minuto hasta que aromaticen."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajoute les épices et remue 1 min jusqu'à parfum."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aggiungi le spezie e mescola 1 minuto fino a profumare."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicione as especiarias e mexa por 1 minuto até soltar o aroma."
+          }
+        }
+      }
+    },
+    "Add spinach and cook until wilted, 1 minute.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agrega la espinaca y cocina hasta marchitar, 1 minuto."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajoute les épinards et cuis jusqu'à fanage, 1 min."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aggiungi gli spinaci e cuoci finché appassiscono, 1 minuto."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicione o espinafre e cozinhe até murchar, 1 minuto."
           }
         }
       }
@@ -1880,6 +2244,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Adicione o peru, as cenouras e o aipo. Cozinhe em fogo baixo por 15 minutos."
+          }
+        }
+      }
+    },
+    "Add zucchini and bell pepper. Cook 4-5 min until tender-crisp.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agrega calabacín y pimiento. Cocina 4-5 min hasta tiernos pero firmes."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajoute courgette et poivron. Cuis 4-5 min jusqu'à tendre."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aggiungi zucchina e peperone. Cuoci 4-5 min finché teneri ma croccanti."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicione abobrinha e pimentão. Cozinhe 4-5 min até ficarem al dente."
           }
         }
       }
@@ -2086,6 +2478,62 @@
         }
       }
     },
+    "Almonds": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Almendras"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Amandes"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mandorle"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Amêndoas"
+          }
+        }
+      }
+    },
+    "Almonds, slivered": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Almendras fileteadas"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Amandes effilées"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mandorle a scaglie"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Amêndoas laminadas"
+          }
+        }
+      }
+    },
     "Analyzing your meal…": {
       "localizations": {
         "es": {
@@ -2139,6 +2587,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Aparência"
+          }
+        }
+      }
+    },
+    "Apple": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manzana"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pomme"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mela"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maçã"
           }
         }
       }
@@ -2206,6 +2682,34 @@
         }
       }
     },
+    "Arrange quinoa and lentils at the base of each bowl.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acomoda quinoa y lentejas en la base de cada bowl."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dispose quinoa et lentilles au fond de chaque bol."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disponi quinoa e lenticchie sul fondo di ogni ciotola."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrume quinoa e lentilhas no fundo de cada tigela."
+          }
+        }
+      }
+    },
     "Arrange quinoa in bowls and top with avocado, tomatoes, cucumber, and chickpeas.": {
       "extractionState": "stale",
       "localizations": {
@@ -2231,6 +2735,62 @@
           "stringUnit": {
             "state": "translated",
             "value": "Distribua a quinoa em tigelas e cubra com abacate, tomates, pepino e grão-de-bico."
+          }
+        }
+      }
+    },
+    "Arrange rice at the base of a bowl.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acomoda el arroz en la base del bowl."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dispose le riz au fond du bol."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disponi il riso sul fondo della ciotola."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrume o arroz no fundo da tigela."
+          }
+        }
+      }
+    },
+    "Asparagus": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Espárragos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Asperges"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Asparagi"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aspargos"
           }
         }
       }
@@ -2380,6 +2940,62 @@
         }
       }
     },
+    "Avocado & Quinoa Salad": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ensalada de aguacate y quinoa"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salade avocat et quinoa"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Insalata di avocado e quinoa"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salada de abacate com quinoa"
+          }
+        }
+      }
+    },
+    "Avocado, diced": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aguacate en cubos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avocat en dés"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avocado a cubetti"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abacate em cubos"
+          }
+        }
+      }
+    },
     "Avocado, sliced": {
       "extractionState": "stale",
       "localizations": {
@@ -2497,6 +3113,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Voltar à busca"
+          }
+        }
+      }
+    },
+    "Bagel": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bagel"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bagel"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bagel"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bagel"
           }
         }
       }
@@ -2703,6 +3347,62 @@
         }
       }
     },
+    "Beets": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Betabel"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Betterave"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barbabietola"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beterraba"
+          }
+        }
+      }
+    },
+    "Bell Pepper": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pimiento"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poivron"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peperone"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pimentão"
+          }
+        }
+      }
+    },
     "Bell pepper, diced": {
       "extractionState": "stale",
       "localizations": {
@@ -2797,6 +3497,62 @@
         }
       }
     },
+    "Black Bean & Quinoa Tacos": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tacos de frijol negro y quinoa"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tacos haricots noirs et quinoa"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tacos di fagioli neri e quinoa"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tacos de feijão preto com quinoa"
+          }
+        }
+      }
+    },
+    "Black beans (canned, drained)": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Frijoles negros (de lata, escurridos)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Haricots noirs (en boîte, égouttés)"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fagioli neri (in scatola, scolati)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Feijão preto (em lata, escorrido)"
+          }
+        }
+      }
+    },
     "Blend oats into flour. Mash banana.": {
       "extractionState": "stale",
       "localizations": {
@@ -2822,6 +3578,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Triture a aveia até virar farinha. Amasse a banana."
+          }
+        }
+      }
+    },
+    "Blueberries": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arándanos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Myrtilles"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mirtilli"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mirtilos"
           }
         }
       }
@@ -3001,6 +3785,34 @@
         }
       }
     },
+    "Brown rice (cooked)": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arroz integral (cocido)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Riz brun (cuit)"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Riso integrale (cotto)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arroz integral (cozido)"
+          }
+        }
+      }
+    },
     "Budget": {
       "extractionState": "stale",
       "localizations": {
@@ -3141,6 +3953,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Queimado"
+          }
+        }
+      }
+    },
+    "Butter": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantequilla"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beurre"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Burro"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manteiga"
           }
         }
       }
@@ -3317,6 +4157,62 @@
         }
       }
     },
+    "Carrot, julienned": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zanahoria en juliana"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Carotte en julienne"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Carota a julienne"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cenoura em julienne"
+          }
+        }
+      }
+    },
+    "Carrots, diced": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zanahorias en cubos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Carottes en dés"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Carote a cubetti"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cenouras em cubos"
+          }
+        }
+      }
+    },
     "Carrots, sliced": {
       "extractionState": "stale",
       "localizations": {
@@ -3342,6 +4238,118 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cenouras em rodelas"
+          }
+        }
+      }
+    },
+    "Cashews": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anacardos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noix de cajou"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anacardi"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Castanha de caju"
+          }
+        }
+      }
+    },
+    "Cauliflower Rice Stir-Fry": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salteado de arroz de coliflor"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sauté de riz de chou-fleur"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saltato di riso di cavolfiore"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Refogado de arroz de couve-flor"
+          }
+        }
+      }
+    },
+    "Cauliflower, riced": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coliflor rallada (tipo arroz)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chou-fleur râpé (façon riz)"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cavolfiore grattugiato (tipo riso)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couve-flor ralada (tipo arroz)"
+          }
+        }
+      }
+    },
+    "Celery": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apio"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Céleri"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sedano"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aipo"
           }
         }
       }
@@ -3494,6 +4502,62 @@
         }
       }
     },
+    "Cheddar": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cheddar"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cheddar"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cheddar"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cheddar"
+          }
+        }
+      }
+    },
+    "Cheddar Cheese": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Queso cheddar"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fromage cheddar"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Formaggio cheddar"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Queijo cheddar"
+          }
+        }
+      }
+    },
     "Cherry tomatoes": {
       "extractionState": "stale",
       "localizations": {
@@ -3610,6 +4674,34 @@
         }
       }
     },
+    "Chicken Breast": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pechuga de pollo"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blanc de poulet"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Petto di pollo"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peito de frango"
+          }
+        }
+      }
+    },
     "Chicken breast": {
       "extractionState": "stale",
       "localizations": {
@@ -3693,6 +4785,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Grão-de-bico (em lata, escorrido)"
+          }
+        }
+      }
+    },
+    "Chickpeas (cooked)": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Garbanzos (cocidos)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pois chiches (cuits)"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ceci (cotti)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grão-de-bico (cozido)"
           }
         }
       }
@@ -3813,6 +4933,34 @@
         }
       }
     },
+    "Cinnamon": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Canela"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cannelle"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cannella"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Canela"
+          }
+        }
+      }
+    },
     "Classic": {
       "extractionState": "stale",
       "localizations": {
@@ -3894,6 +5042,62 @@
           "stringUnit": {
             "state": "translated",
             "value": "Fechar"
+          }
+        }
+      }
+    },
+    "Coconut Oil": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aceite de coco"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Huile de coco"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Olio di cocco"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Óleo de coco"
+          }
+        }
+      }
+    },
+    "Cod": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bacalao"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cabillaud"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Merluzzo"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bacalhau"
           }
         }
       }
@@ -4251,6 +5455,34 @@
         }
       }
     },
+    "Cook pasta according to package instructions.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cocina la pasta según las instrucciones del paquete."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fais cuire les pâtes selon les instructions du paquet."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuoci la pasta secondo le istruzioni."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cozinhe o macarrão conforme a embalagem."
+          }
+        }
+      }
+    },
     "Cook pasta according to package instructions. Reserve ¼ cup pasta water.": {
       "extractionState": "stale",
       "localizations": {
@@ -4366,6 +5598,202 @@
         }
       }
     },
+    "Corn": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maíz"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maïs"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mais"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Milho"
+          }
+        }
+      }
+    },
+    "Corn tortillas": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tortillas de maíz"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tortillas de maïs"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tortillas di mais"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tortilhas de milho"
+          }
+        }
+      }
+    },
+    "Cornmeal": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Harina de maíz"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Semoule de maïs"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Farina di mais"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fubá"
+          }
+        }
+      }
+    },
+    "Cottage Cheese": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Queso cottage"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fromage cottage"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ricotta"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Queijo cottage"
+          }
+        }
+      }
+    },
+    "Cottage Cheese & Berry Bowl": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bowl de queso cottage y frutos rojos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bol fromage cottage et fruits rouges"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bowl di ricotta e frutti di bosco"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bowl de cottage e frutas vermelhas"
+          }
+        }
+      }
+    },
+    "Cottage cheese (low fat)": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Queso cottage (bajo en grasa)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fromage cottage (faible en gras)"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ricotta (magra)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Queijo cottage (light)"
+          }
+        }
+      }
+    },
+    "Cream Cheese": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Queso crema"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fromage frais"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Formaggio cremoso"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cream cheese"
+          }
+        }
+      }
+    },
     "Create your own food": {
       "localizations": {
         "es": {
@@ -4390,6 +5818,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Criar seu próprio alimento"
+          }
+        }
+      }
+    },
+    "Cucumber": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pepino"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Concombre"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cetriolo"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pepino"
           }
         }
       }
@@ -4452,6 +5908,34 @@
         }
       }
     },
+    "Cumin, chili powder": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comino y chile en polvo"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cumin et piment en poudre"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cumino e peperoncino in polvere"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cominho e pimenta em pó"
+          }
+        }
+      }
+    },
     "Cumin, paprika, garlic powder": {
       "extractionState": "stale",
       "localizations": {
@@ -4477,6 +5961,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cominho, páprica e alho em pó"
+          }
+        }
+      }
+    },
+    "Cumin, paprika, turmeric": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comino, paprika, cúrcuma"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cumin, paprika, curcuma"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cumino, paprika, curcuma"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cominho, páprica, cúrcuma"
           }
         }
       }
@@ -4622,6 +6134,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Escuro"
+          }
+        }
+      }
+    },
+    "Dark Chocolate 70%": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chocolate negro 70%"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chocolat noir 70%"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cioccolato fondente 70%"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chocolate amargo 70%"
           }
         }
       }
@@ -4946,6 +6486,118 @@
         }
       }
     },
+    "Drain pasta and combine with vegetables. Top with parmesan.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escurre la pasta y mezcla con las verduras. Cubre con parmesano."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Égoutte les pâtes et combine avec les légumes. Garnis de parmesan."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scola la pasta e unisci alle verdure. Completa con parmigiano."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escorra o macarrão e combine com os legumes. Finalize com parmesão."
+          }
+        }
+      }
+    },
+    "Dried oregano": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Orégano seco"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Origan séché"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Origano secco"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Orégano seco"
+          }
+        }
+      }
+    },
+    "Drizzle with extra soy sauce or sriracha to taste.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rocía con más salsa de soya o sriracha al gusto."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrose de sauce soja ou sriracha au goût."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Condisci con altra salsa di soia o sriracha a piacere."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Regue com mais molho de soja ou sriracha a gosto."
+          }
+        }
+      }
+    },
+    "Drizzle with honey.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rocía con miel."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrose de miel."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Condisci con miele."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Regue com mel."
+          }
+        }
+      }
+    },
     "Drizzle with lemon-tahini dressing and serve.": {
       "extractionState": "stale",
       "localizations": {
@@ -5000,6 +6652,62 @@
           "stringUnit": {
             "state": "translated",
             "value": "Regue com azeite e suco de limão. Tempere e misture."
+          }
+        }
+      }
+    },
+    "Drizzle with tahini sauce and serve.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rocía con la salsa de tahini y sirve."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrose de sauce tahini et sers."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Condisci con la salsa di tahina e servi."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Regue com o molho de tahine e sirva."
+          }
+        }
+      }
+    },
+    "Edamame": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edamame"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edamame"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edamame"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edamame"
           }
         }
       }
@@ -5062,6 +6770,34 @@
         }
       }
     },
+    "Egg Whites": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claras de huevo"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blancs d'œufs"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Albumi"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claras de ovo"
+          }
+        }
+      }
+    },
     "Egg whites": {
       "extractionState": "stale",
       "localizations": {
@@ -5120,6 +6856,34 @@
         }
       }
     },
+    "Eggs (omit for vegan)": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Huevos (omitir si es vegano)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Œufs (omettre si végan)"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uova (omettere se vegano)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ovos (omitir se vegano)"
+          }
+        }
+      }
+    },
     "Eggs (poached or fried)": {
       "extractionState": "stale",
       "localizations": {
@@ -5145,6 +6909,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ovos (pochê ou fritos)"
+          }
+        }
+      }
+    },
+    "Eggs (whole)": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Huevos (enteros)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Œufs (entiers)"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uova (intere)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ovos (inteiros)"
           }
         }
       }
@@ -5466,6 +7258,62 @@
         }
       }
     },
+    "Feta cheese, crumbled": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Queso feta desmenuzado"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fromage feta émietté"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Feta sbriciolata"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Queijo feta esfarelado"
+          }
+        }
+      }
+    },
+    "Fill each tortilla with the bean-quinoa mixture.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rellena cada tortilla con la mezcla de frijol y quinoa."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Garnis chaque tortilla du mélange haricots-quinoa."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Riempi ogni tortilla con il composto di fagioli e quinoa."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recheie cada tortilla com a mistura de feijão e quinoa."
+          }
+        }
+      }
+    },
     "Filling": {
       "extractionState": "stale",
       "localizations": {
@@ -5672,6 +7520,34 @@
         }
       }
     },
+    "Flaxseeds": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Linaza"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Graines de lin"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Semi di lino"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Linhaça"
+          }
+        }
+      }
+    },
     "Fluff quinoa with a fork and let cool slightly.": {
       "extractionState": "stale",
       "localizations": {
@@ -5814,6 +7690,90 @@
           "stringUnit": {
             "state": "translated",
             "value": "Frequentes"
+          }
+        }
+      }
+    },
+    "Fresh cilantro": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cilantro fresco"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coriandre fraîche"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coriandolo fresco"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coentro fresco"
+          }
+        }
+      }
+    },
+    "Fresh parsley, chopped": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perejil fresco picado"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Persil frais haché"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prezzemolo fresco tritato"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salsa fresca picada"
+          }
+        }
+      }
+    },
+    "Fresh spinach": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Espinaca fresca"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Épinards frais"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spinaci freschi"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Espinafre fresco"
           }
         }
       }
@@ -6133,6 +8093,62 @@
         }
       }
     },
+    "Granola": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Granola"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Granola"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Granola"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Granola"
+          }
+        }
+      }
+    },
+    "Grapes": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uvas"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Raisins"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uva"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uvas"
+          }
+        }
+      }
+    },
     "Great start! Come back tomorrow.": {
       "comment": "A message displayed in the workout streak card.",
       "isCommentAutoGenerated": true,
@@ -6159,6 +8175,62 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ótimo começo! Volte amanhã."
+          }
+        }
+      }
+    },
+    "Greek Chickpea Salad": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ensalada griega de garbanzos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salade grecque aux pois chiches"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Insalata greca di ceci"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salada grega de grão-de-bico"
+          }
+        }
+      }
+    },
+    "Greek Yogurt (0%)": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yogur griego (0%)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yaourt grec (0%)"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yogurt greco (0%)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Iogurte grego (0%)"
           }
         }
       }
@@ -6279,6 +8351,62 @@
         }
       }
     },
+    "Green Peas": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chícharos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Petits pois"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Piselli"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ervilhas"
+          }
+        }
+      }
+    },
+    "Green lentils (cooked)": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lentejas verdes (cocidas)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lentilles vertes (cuites)"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lenticchie verdi (cotte)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lentilhas verdes (cozidas)"
+          }
+        }
+      }
+    },
     "Grilled Chicken Salad": {
       "extractionState": "stale",
       "localizations": {
@@ -6304,6 +8432,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Salada de frango grelhado"
+          }
+        }
+      }
+    },
+    "Ground Beef (lean)": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Carne molida (magra)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bœuf haché (maigre)"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manzo macinato (magro)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Carne moída (magra)"
           }
         }
       }
@@ -6366,6 +8522,34 @@
         }
       }
     },
+    "Hearty Lentil Soup": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sopa abundante de lentejas"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Soupe consistante aux lentilles"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zuppa sostanziosa di lenticchie"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sopa farta de lentilhas"
+          }
+        }
+      }
+    },
     "Heat a non-stick pan over medium heat with a little cooking spray.": {
       "extractionState": "stale",
       "localizations": {
@@ -6391,6 +8575,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Aqueça uma frigideira antiaderente em fogo médio com um pouco de óleo em spray."
+          }
+        }
+      }
+    },
+    "Heat black beans with cumin and chili powder in a pan, 5 minutes.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calienta los frijoles negros con comino y chile en polvo, 5 minutos."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chauffe les haricots noirs avec cumin et piment, 5 min."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scalda i fagioli neri con cumino e peperoncino, 5 minuti."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aqueça o feijão preto com cominho e pimenta em pó, 5 minutos."
           }
         }
       }
@@ -6424,6 +8636,34 @@
         }
       }
     },
+    "Heat olive oil in a large pot over medium heat.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calienta el aceite de oliva en una olla grande a fuego medio."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chauffe l'huile d'olive dans une grande casserole à feu moyen."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scalda l'olio d'oliva in una pentola grande a fuoco medio."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aqueça o azeite em uma panela grande em fogo médio."
+          }
+        }
+      }
+    },
     "Heat olive oil in a pan over medium-high heat.": {
       "extractionState": "stale",
       "localizations": {
@@ -6449,6 +8689,62 @@
           "stringUnit": {
             "state": "translated",
             "value": "Aqueça o azeite em uma frigideira em fogo médio-alto."
+          }
+        }
+      }
+    },
+    "Heat olive oil in an oven-safe skillet over medium heat.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calienta aceite de oliva en una sartén apta para horno a fuego medio."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chauffe l'huile dans une poêle allant au four à feu moyen."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scalda l'olio in una padella da forno a fuoco medio."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aqueça o azeite em uma frigideira que vá ao forno em fogo médio."
+          }
+        }
+      }
+    },
+    "Heat sesame oil in a large wok over high heat.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calienta aceite de sésamo en un wok grande a fuego alto."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chauffe l'huile de sésame dans un grand wok à feu vif."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scalda l'olio di sesamo in un wok grande a fuoco alto."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aqueça o óleo de gergelim em uma wok grande em fogo alto."
           }
         }
       }
@@ -6629,6 +8925,34 @@
         }
       }
     },
+    "Hummus": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hummus"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Houmous"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hummus"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hummus"
+          }
+        }
+      }
+    },
     "Hydration Reminder": {
       "extractionState": "stale",
       "localizations": {
@@ -6654,6 +8978,62 @@
           "stringUnit": {
             "state": "translated",
             "value": "Lembrete de Hidratação"
+          }
+        }
+      }
+    },
+    "In a large bowl, combine chickpeas, cucumber, tomatoes, and onion.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En un bowl grande, mezcla garbanzos, pepino, tomates y cebolla."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dans un grand bol, combine pois chiches, concombre, tomates et oignon."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In una ciotola grande, unisci ceci, cetriolo, pomodori e cipolla."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Em uma tigela grande, combine grão-de-bico, pepino, tomates e cebola."
+          }
+        }
+      }
+    },
+    "In a large bowl, combine quinoa, avocado, tomatoes, cucumber, and parsley.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En un bowl grande, mezcla quinoa, aguacate, tomates, pepino y perejil."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dans un grand bol, combine quinoa, avocat, tomates, concombre et persil."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In una ciotola grande, unisci quinoa, avocado, pomodori, cetriolo e prezzemolo."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Em uma tigela grande, misture quinoa, abacate, tomates, pepino e salsa."
           }
         }
       }
@@ -6866,6 +9246,34 @@
       "comment": "A label displayed next to the weight input field in a set row.",
       "isCommentAutoGenerated": true
     },
+    "Kale": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Col rizada"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chou kale"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cavolo riccio"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couve"
+          }
+        }
+      }
+    },
     "Keep it going — don't break the chain!": {
       "comment": "A message that encourages the user to continue their streak.",
       "isCommentAutoGenerated": true,
@@ -6892,6 +9300,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Continue assim — não quebre a corrente!"
+          }
+        }
+      }
+    },
+    "Kiwi": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kiwi"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kiwi"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kiwi"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kiwi"
           }
         }
       }
@@ -6978,6 +9414,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Última atualização: junho de 2026"
+          }
+        }
+      }
+    },
+    "Layer greens, cucumber, bell pepper, and sun-dried tomatoes.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pon capas de hojas verdes, pepino, pimiento y tomates secos."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajoute en couches verdure, concombre, poivron et tomates séchées."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stratifica insalata, cetriolo, peperone e pomodori secchi."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coloque em camadas folhas verdes, pepino, pimentão e tomates secos."
           }
         }
       }
@@ -7069,6 +9533,34 @@
         }
       }
     },
+    "Lemon juice": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jugo de limón"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jus de citron"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Succo di limone"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suco de limão"
+          }
+        }
+      }
+    },
     "Lemon-tahini dressing": {
       "extractionState": "stale",
       "localizations": {
@@ -7094,6 +9586,90 @@
           "stringUnit": {
             "state": "translated",
             "value": "Molho de limão com tahine"
+          }
+        }
+      }
+    },
+    "Lentil Power Bowl": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bowl energético de lentejas"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bol énergétique aux lentilles"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bowl energetico di lenticchie"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bowl energético de lentilhas"
+          }
+        }
+      }
+    },
+    "Lentils (cooked)": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lentejas (cocidas)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lentilles (cuites)"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lenticchie (cotte)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lentilhas (cozidas)"
+          }
+        }
+      }
+    },
+    "Let cooked quinoa cool to room temperature.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deja enfriar la quinoa cocida a temperatura ambiente."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Laisse refroidir le quinoa cuit à température ambiante."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lascia raffreddare la quinoa cotta a temperatura ambiente."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deixe a quinoa cozida esfriar à temperatura ambiente."
           }
         }
       }
@@ -7210,6 +9786,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Levemente Ativo"
+          }
+        }
+      }
+    },
+    "Lightly toast tortillas in a dry pan, 30 sec per side.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tuesta ligeramente las tortillas en sartén seca, 30 seg por lado."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fais griller légèrement les tortillas dans une poêle sèche, 30 sec par côté."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tosta leggermente le tortillas in padella asciutta, 30 sec per lato."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Doure levemente as tortilhas em frigideira seca, 30 seg de cada lado."
           }
         }
       }
@@ -7685,6 +10289,34 @@
         }
       }
     },
+    "Mango": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mango"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mangue"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mango"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manga"
+          }
+        }
+      }
+    },
     "Mash avocado with salt, pepper, and a squeeze of lemon.": {
       "extractionState": "stale",
       "localizations": {
@@ -7796,6 +10428,62 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nome da refeição…"
+          }
+        }
+      }
+    },
+    "Meanwhile, heat olive oil in a large skillet over medium-high heat.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mientras tanto, calienta aceite de oliva en una sartén grande a fuego medio-alto."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pendant ce temps, chauffe l'huile d'olive à feu moyen-vif."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nel frattempo, scalda l'olio d'oliva a fuoco medio-alto."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enquanto isso, aqueça o azeite em uma frigideira grande em fogo médio-alto."
+          }
+        }
+      }
+    },
+    "Mediterranean Hummus Wrap": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wrap mediterráneo de hummus"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wrap méditerranéen au houmous"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wrap mediterraneo all'hummus"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wrap mediterrâneo de hummus"
           }
         }
       }
@@ -7916,6 +10604,34 @@
         }
       }
     },
+    "Mix beans with cooked quinoa.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mezcla los frijoles con la quinoa cocida."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mélange les haricots avec le quinoa cuit."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mescola i fagioli con la quinoa cotta."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Misture o feijão com a quinoa cozida."
+          }
+        }
+      }
+    },
     "Mix tuna, Greek yogurt, celery, mustard, and lemon juice in a bowl.": {
       "extractionState": "stale",
       "localizations": {
@@ -7941,6 +10657,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Misture o atum, o iogurte grego, o aipo, a mostarda e o suco de limão em uma tigela."
+          }
+        }
+      }
+    },
+    "Mixed Salad": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ensalada mixta"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salade mixte"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Insalata mista"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salada mista"
           }
         }
       }
@@ -8003,6 +10747,34 @@
         }
       }
     },
+    "Mixed vegetables (peas, carrots, corn)": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mezcla de verduras (chícharos, zanahoria, maíz)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mélange de légumes (petits pois, carottes, maïs)"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verdure miste (piselli, carote, mais)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mix de legumes (ervilhas, cenoura, milho)"
+          }
+        }
+      }
+    },
     "Moderate exercise 3–5 days/week": {
       "extractionState": "stale",
       "localizations": {
@@ -8061,6 +10833,34 @@
         }
       }
     },
+    "Mozzarella": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mozzarella"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mozzarella"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mozzarella"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mussarela"
+          }
+        }
+      }
+    },
     "Muscle Gain": {
       "extractionState": "stale",
       "localizations": {
@@ -8086,6 +10886,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ganho muscular"
+          }
+        }
+      }
+    },
+    "Mushrooms": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Champiñones"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Champignons"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Funghi"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cogumelos"
           }
         }
       }
@@ -8734,6 +11562,34 @@
         }
       }
     },
+    "Olive Oil": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aceite de oliva"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Huile d'olive"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Olio d'oliva"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Azeite de oliva"
+          }
+        }
+      }
+    },
     "Olive oil": {
       "extractionState": "stale",
       "localizations": {
@@ -8817,6 +11673,62 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ômega-3"
+          }
+        }
+      }
+    },
+    "Onion, diced": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cebolla en cubos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oignon en dés"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cipolla a cubetti"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cebola em cubos"
+          }
+        }
+      }
+    },
+    "Orange": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Naranja"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Orange"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arancia"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Laranja"
           }
         }
       }
@@ -8978,6 +11890,62 @@
         }
       }
     },
+    "Parmesan, grated": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parmesano rallado"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parmesan râpé"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parmigiano grattugiato"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parmesão ralado"
+          }
+        }
+      }
+    },
+    "Pasta (cooked)": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pasta (cocida)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pâtes (cuites)"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pasta (cotta)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Macarrão (cozido)"
+          }
+        }
+      }
+    },
     "Paste RapidAPI key here…": {
       "extractionState": "stale",
       "localizations": {
@@ -9065,6 +12033,62 @@
         }
       }
     },
+    "Peach": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Durazno"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pêche"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pesca"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pêssego"
+          }
+        }
+      }
+    },
+    "Peanut Butter": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crema de cacahuate"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beurre de cacahuète"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Burro di arachidi"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pasta de amendoim"
+          }
+        }
+      }
+    },
     "Peanut butter": {
       "extractionState": "stale",
       "localizations": {
@@ -9148,6 +12172,90 @@
           "stringUnit": {
             "state": "translated",
             "value": "Fure as batatas-doces e leve ao micro-ondas por 8-10 min até ficarem macias. Corte ao meio."
+          }
+        }
+      }
+    },
+    "Pineapple": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Piña"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ananas"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ananas"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abacaxi"
+          }
+        }
+      }
+    },
+    "Pita Bread": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pan pita"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pain pita"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pane pita"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pão pita"
+          }
+        }
+      }
+    },
+    "Place cottage cheese in a bowl.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coloca el queso cottage en un bowl."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mets le fromage cottage dans un bol."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Metti la ricotta in una ciotola."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coloque o queijo cottage em uma tigela."
           }
         }
       }
@@ -9267,6 +12375,34 @@
         }
       }
     },
+    "Pork Loin": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lomo de cerdo"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filet de porc"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lonza di maiale"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lombo de porco"
+          }
+        }
+      }
+    },
     "Portion (grams)": {
       "comment": "A label displayed above a text field that lets the user input the amount of a food item they're adding to their meal.",
       "isCommentAutoGenerated": true,
@@ -9293,6 +12429,90 @@
           "stringUnit": {
             "state": "translated",
             "value": "Porção (gramas)"
+          }
+        }
+      }
+    },
+    "Potato": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Papa"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pomme de terre"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Patata"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Batata"
+          }
+        }
+      }
+    },
+    "Pour dressing over salad and toss gently.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vierte el aderezo y mezcla con cuidado."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verse la vinaigrette et mélange délicatement."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Versa il condimento e mescola delicatamente."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Despeje o molho e misture delicadamente."
+          }
+        }
+      }
+    },
+    "Pour dressing over the salad and toss to combine.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vierte el aderezo sobre la ensalada y mezcla."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verse la vinaigrette sur la salade et mélange."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Versa il condimento sull'insalata e mescola."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Despeje o molho na salada e misture."
           }
         }
       }
@@ -9355,6 +12575,34 @@
         }
       }
     },
+    "Preheat oven to 180°C.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Precalienta el horno a 180°C."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Préchauffe le four à 180°C."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preriscalda il forno a 180°C."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preaqueça o forno a 180°C."
+          }
+        }
+      }
+    },
     "Preheat oven to 200°C. Cube sweet potatoes, toss with 1 tbsp oil and paprika.": {
       "extractionState": "stale",
       "localizations": {
@@ -9380,6 +12628,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Preaqueça o forno a 200°C. Corte as batatas-doces em cubos e misture com 1 c. sopa de azeite e páprica."
+          }
+        }
+      }
+    },
+    "Press tofu, then pan-fry in sesame oil until golden, ~6 min.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prensa el tofu y fríe en aceite de sésamo hasta dorar, ~6 min."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Presse le tofu, puis fais dorer dans l'huile de sésame, ~6 min."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pressa il tofu e rosolalo nell'olio di sesamo fino a dorato, ~6 min."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pressione o tofu e frite no óleo de gergelim até dourar, ~6 min."
           }
         }
       }
@@ -9584,6 +12860,34 @@
         }
       }
     },
+    "Protein Bar": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barra de proteína"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barre protéinée"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barretta proteica"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barra de proteína"
+          }
+        }
+      }
+    },
     "Protein Pancakes": {
       "extractionState": "stale",
       "localizations": {
@@ -9609,6 +12913,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Panquecas de proteína"
+          }
+        }
+      }
+    },
+    "Pumpkin Seeds": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Semillas de calabaza"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Graines de courge"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Semi di zucca"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sementes de abóbora"
           }
         }
       }
@@ -9666,6 +12998,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ações Rápidas"
+          }
+        }
+      }
+    },
+    "Quinoa (cooked)": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quinoa (cocida)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quinoa (cuit)"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quinoa (cotta)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quinoa (cozida)"
           }
         }
       }
@@ -9790,6 +13150,146 @@
         }
       }
     },
+    "Red bell pepper, sliced": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pimiento rojo en tiras"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poivron rouge émincé"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peperone rosso a fette"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pimentão vermelho fatiado"
+          }
+        }
+      }
+    },
+    "Red cabbage, shredded": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repollo morado rallado"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chou rouge râpé"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cavolo rosso grattugiato"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repolho roxo ralado"
+          }
+        }
+      }
+    },
+    "Red lentils, rinsed": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lentejas rojas enjuagadas"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lentilles corail rincées"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lenticchie rosse sciacquate"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lentilhas vermelhas lavadas"
+          }
+        }
+      }
+    },
+    "Red onion, finely diced": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cebolla morada finamente picada"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oignon rouge finement haché"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cipolla rossa tritata fine"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cebola roxa picada"
+          }
+        }
+      }
+    },
+    "Refrigerate 10 min before serving for best flavor.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Refrigera 10 min antes de servir para mejor sabor."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réfrigère 10 min avant de servir pour plus de saveur."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lascia in frigo 10 min prima di servire per più sapore."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Refrigere por 10 min antes de servir para melhor sabor."
+          }
+        }
+      }
+    },
     "Remaining": {
       "extractionState": "stale",
       "localizations": {
@@ -9851,6 +13351,90 @@
         }
       }
     },
+    "Rice Cakes": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tortitas de arroz"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Galettes de riz"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gallette di riso"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bolos de arroz"
+          }
+        }
+      }
+    },
+    "Rice cauliflower in a food processor until rice-sized.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Procesa la coliflor en el procesador hasta tamaño de arroz."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hache le chou-fleur au robot jusqu'à taille de riz."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trita il cavolfiore al frullatore fino a dimensione del riso."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Triture a couve-flor no processador até ficar do tamanho do arroz."
+          }
+        }
+      }
+    },
+    "Roast cubed sweet potato at 200°C for 20 min until tender.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Asa el camote en cubos a 200°C por 20 min hasta tierno."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rôtis la patate douce en cubes à 200°C pendant 20 min."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrostisci la patata dolce a cubetti a 200°C per 20 min."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Asse a batata-doce em cubos a 200°C por 20 min."
+          }
+        }
+      }
+    },
     "Roast sweet potatoes 25-30 min, flipping halfway.": {
       "extractionState": "stale",
       "localizations": {
@@ -9876,6 +13460,90 @@
           "stringUnit": {
             "state": "translated",
             "value": "Asse as batatas-doces por 25-30 min, virando na metade."
+          }
+        }
+      }
+    },
+    "Roasted broccoli": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brócoli asado"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brocoli rôti"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Broccoli arrostiti"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brócolis assado"
+          }
+        }
+      }
+    },
+    "Roasted sweet potato": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Camote asado"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Patate douce rôtie"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Patata dolce arrostita"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Batata-doce assada"
+          }
+        }
+      }
+    },
+    "Roll tightly and slice in half.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enrolla firmemente y corta por la mitad."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Roule serré et coupe en deux."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrotola stretto e taglia a metà."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enrole apertado e corte ao meio."
           }
         }
       }
@@ -10056,6 +13724,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Filé de salmão"
+          }
+        }
+      }
+    },
+    "Salsa": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salsa"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salsa"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salsa"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salsa"
           }
         }
       }
@@ -10263,6 +13959,62 @@
         }
       }
     },
+    "Sardines (canned)": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sardinas (de lata)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sardines (en boîte)"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sardine (in scatola)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sardinhas (em lata)"
+          }
+        }
+      }
+    },
+    "Sauté garlic and ginger for 30 seconds.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sofríe el ajo y jengibre 30 segundos."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fais revenir ail et gingembre 30 sec."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Soffriggi aglio e zenzero 30 secondi."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Refogue alho e gengibre por 30 segundos."
+          }
+        }
+      }
+    },
     "Sauté mushrooms and tomato in olive oil over medium heat for 3 min.": {
       "extractionState": "stale",
       "localizations": {
@@ -10288,6 +14040,62 @@
           "stringUnit": {
             "state": "translated",
             "value": "Refogue os cogumelos e o tomate no azeite em fogo médio por 3 min."
+          }
+        }
+      }
+    },
+    "Sauté mushrooms for 4 minutes until golden.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sofríe los champiñones 4 minutos hasta dorar."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fais revenir les champignons 4 min jusqu'à doré."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Soffriggi i funghi 4 minuti fino a dorati."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Refogue os cogumelos por 4 minutos até dourar."
+          }
+        }
+      }
+    },
+    "Sauté onion, garlic, and carrots for 5 minutes until softened.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sofríe la cebolla, ajo y zanahorias 5 minutos hasta ablandar."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fais revenir oignon, ail et carottes 5 min jusqu'à tendreté."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Soffriggi cipolla, aglio e carote 5 minuti finché si ammorbidiscono."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Refogue cebola, alho e cenouras por 5 min até amaciar."
           }
         }
       }
@@ -11047,6 +14855,62 @@
         }
       }
     },
+    "Serve hot, garnished with green onions if desired.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sirve caliente, decorado con cebollín si deseas."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sers chaud, garni d'oignons verts si désiré."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Servi caldo, guarnito con cipollotti se vuoi."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sirva quente, decorado com cebolinha se desejar."
+          }
+        }
+      }
+    },
+    "Serve immediately for best texture.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sirve de inmediato para mejor textura."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sers immédiatement pour la meilleure texture."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Servi subito per la migliore consistenza."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sirva imediatamente para a melhor textura."
+          }
+        }
+      }
+    },
     "Serve over rice.": {
       "extractionState": "stale",
       "localizations": {
@@ -11253,6 +15117,34 @@
         }
       }
     },
+    "Shrimp": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Camarones"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crevettes"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gamberi"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Camarão"
+          }
+        }
+      }
+    },
     "Simmer 10 more minutes until vegetables are tender.": {
       "extractionState": "stale",
       "localizations": {
@@ -11278,6 +15170,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cozinhe por mais 10 minutos até os legumes ficarem macios."
+          }
+        }
+      }
+    },
+    "Skim Milk": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leche descremada"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lait écrémé"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Latte scremato"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leite desnatado"
           }
         }
       }
@@ -11463,6 +15383,34 @@
         }
       }
     },
+    "Spinach & Mushroom Frittata": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Frittata de espinaca y champiñones"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Frittata aux épinards et champignons"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Frittata di spinaci e funghi"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Frittata de espinafre e cogumelos"
+          }
+        }
+      }
+    },
     "Spoon mixture into lettuce leaves.": {
       "extractionState": "stale",
       "localizations": {
@@ -11492,6 +15440,34 @@
         }
       }
     },
+    "Sports Drink": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bebida deportiva"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Boisson énergétique"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bevanda sportiva"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bebida esportiva"
+          }
+        }
+      }
+    },
     "Spread avocado over toast and top with eggs.": {
       "extractionState": "stale",
       "localizations": {
@@ -11517,6 +15493,90 @@
           "stringUnit": {
             "state": "translated",
             "value": "Espalhe o abacate na torrada e coloque os ovos por cima."
+          }
+        }
+      }
+    },
+    "Spread hummus evenly across the tortilla.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unta el hummus de manera pareja sobre la tortilla."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Étale le houmous uniformément sur la tortilla."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spalma l'hummus uniformemente sulla tortilla."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Espalhe o hummus uniformemente na tortilla."
+          }
+        }
+      }
+    },
+    "Sprinkle feta on top. Bake 10-12 min until set.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Espolvorea el feta encima. Hornea 10-12 min hasta cuajar."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saupoudre de feta. Cuis 10-12 min jusqu'à fixation."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cospargi con feta. Cuoci 10-12 min finché si rapprende."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Polvilhe a feta por cima. Asse por 10-12 min até firmar."
+          }
+        }
+      }
+    },
+    "Sprinkle with slivered almonds and cinnamon.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Espolvorea con almendras fileteadas y canela."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saupoudre d'amandes effilées et de cannelle."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cospargi con mandorle a scaglie e cannella."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Polvilhe com amêndoas laminadas e canela."
           }
         }
       }
@@ -11813,6 +15873,34 @@
         }
       }
     },
+    "Stir occasionally until lentils are tender. Season and serve.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Revuelve de vez en cuando hasta que las lentejas estén tiernas. Sazona y sirve."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remue de temps en temps jusqu'à ce que les lentilles soient tendres. Assaisonne et sers."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mescola di tanto in tanto finché le lenticchie sono tenere. Condisci e servi."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mexa de vez em quando até as lentilhas ficarem macias. Tempere e sirva."
+          }
+        }
+      }
+    },
     "Stir well. Cover and refrigerate overnight (at least 6 hours).": {
       "extractionState": "stale",
       "localizations": {
@@ -11842,6 +15930,62 @@
         }
       }
     },
+    "Strawberries": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fresas"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fraises"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fragole"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Morangos"
+          }
+        }
+      }
+    },
+    "Sun-dried tomatoes": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomates secos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomates séchées"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pomodori secchi"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomates secos"
+          }
+        }
+      }
+    },
     "Support": {
       "extractionState": "stale",
       "localizations": {
@@ -11867,6 +16011,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Suporte"
+          }
+        }
+      }
+    },
+    "Sweet Potato": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Camote"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Patate douce"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Patata dolce"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Batata-doce"
           }
         }
       }
@@ -11925,6 +16097,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Batatas-doces"
+          }
+        }
+      }
+    },
+    "Tahini": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tahini"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tahini"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tahina"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tahine"
           }
         }
       }
@@ -12102,6 +16302,34 @@
         }
       }
     },
+    "Tempeh": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tempeh"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tempeh"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tempeh"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tempeh"
+          }
+        }
+      }
+    },
     "The AI Food Scanner uses Claude (by Anthropic). Food photos are sent through our secure server to Anthropic to estimate nutrition; photos are not stored. Everything else — your logs, workouts, and settings — stays on your device.": {
       "localizations": {
         "es": {
@@ -12217,6 +16445,34 @@
         }
       }
     },
+    "Tilapia": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tilapia"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tilapia"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tilapia"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tilápia"
+          }
+        }
+      }
+    },
     "Toast bread until golden.": {
       "extractionState": "stale",
       "localizations": {
@@ -12302,6 +16558,62 @@
         }
       }
     },
+    "Tofu": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tofu"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tofu"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tofu"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tofu"
+          }
+        }
+      }
+    },
+    "Tofu Buddha Bowl": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buddha bowl de tofu"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buddha bowl au tofu"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buddha bowl di tofu"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buddha bowl de tofu"
+          }
+        }
+      }
+    },
     "Tofu Stir-Fry": {
       "extractionState": "stale",
       "localizations": {
@@ -12327,6 +16639,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tofu salteado"
+          }
+        }
+      }
+    },
+    "Tomato": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomate"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomate"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pomodoro"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomate"
           }
         }
       }
@@ -12360,6 +16700,34 @@
         }
       }
     },
+    "Top with avocado, salsa, and cilantro.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cubre con aguacate, salsa y cilantro."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Garnis d'avocat, salsa et coriandre."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Completa con avocado, salsa e coriandolo."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cubra com abacate, salsa e coentro."
+          }
+        }
+      }
+    },
     "Top with banana slices and a drizzle of peanut butter.": {
       "extractionState": "stale",
       "localizations": {
@@ -12389,6 +16757,34 @@
         }
       }
     },
+    "Top with mixed berries and granola.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cubre con frutos rojos y granola."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Garnis de fruits rouges et granola."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Completa con frutti di bosco e granola."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cubra com frutas vermelhas e granola."
+          }
+        }
+      }
+    },
     "Top with sliced chicken.": {
       "extractionState": "stale",
       "localizations": {
@@ -12414,6 +16810,146 @@
           "stringUnit": {
             "state": "translated",
             "value": "Coloque o frango fatiado por cima."
+          }
+        }
+      }
+    },
+    "Top with sweet potato, avocado, and spinach.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cubre con camote, aguacate y espinaca."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Garnis de patate douce, avocat et épinards."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Completa con patata dolce, avocado e spinaci."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cubra com batata-doce, abacate e espinafre."
+          }
+        }
+      }
+    },
+    "Top with tofu, broccoli, carrot, and cabbage in sections.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cubre con tofu, brócoli, zanahoria y repollo en secciones."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Garnis de tofu, brocoli, carotte et chou par sections."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Completa con tofu, broccoli, carote e cavolo a sezioni."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cubra com tofu, brócolis, cenoura e repolho em seções."
+          }
+        }
+      }
+    },
+    "Tortilla Wrap": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wrap de tortilla"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wrap tortilla"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wrap tortilla"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wrap de tortilla"
+          }
+        }
+      }
+    },
+    "Toss in cherry tomatoes and cook 2 more minutes.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agrega los tomates cherry y cocina 2 minutos más."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajoute les tomates cerises et cuis 2 min de plus."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aggiungi i pomodorini e cuoci altri 2 min."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acrescente os tomates-cereja e cozinhe por mais 2 minutos."
+          }
+        }
+      }
+    },
+    "Toss tofu with soy sauce in the last minute.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agrega salsa de soya al tofu en el último minuto."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajoute la sauce soja au tofu dans la dernière minute."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aggiungi la salsa di soia al tofu nell'ultimo minuto."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicione molho de soja ao tofu no último minuto."
           }
         }
       }
@@ -12529,6 +17065,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tente com uma foto mais clara ou próxima"
+          }
+        }
+      }
+    },
+    "Tuna (canned)": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Atún (de lata)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thon (en boîte)"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tonno (in scatola)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Atum (em lata)"
           }
         }
       }
@@ -12649,6 +17213,34 @@
         }
       }
     },
+    "Turkey Breast": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pechuga de pavo"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blanc de dinde"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Petto di tacchino"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peito de peru"
+          }
+        }
+      }
+    },
     "Turkey breast, diced": {
       "extractionState": "stale",
       "localizations": {
@@ -12703,6 +17295,62 @@
           "stringUnit": {
             "state": "translated",
             "value": "Abaixo do peso"
+          }
+        }
+      }
+    },
+    "Vegan": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vegano"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Végan"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vegano"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vegano"
+          }
+        }
+      }
+    },
+    "Vegetable broth": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Caldo de verduras"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bouillon de légumes"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brodo vegetale"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Caldo de legumes"
           }
         }
       }
@@ -12790,6 +17438,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Omelete de legumes"
+          }
+        }
+      }
+    },
+    "Veggie Pasta Primavera": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pasta primavera de verduras"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pâtes primavera aux légumes"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pasta primavera con verdure"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Macarrão primavera com legumes"
           }
         }
       }
@@ -12883,6 +17559,62 @@
         }
       }
     },
+    "Walnuts": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nueces"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noix"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noci"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nozes"
+          }
+        }
+      }
+    },
+    "Warm the tortilla in a dry pan for 30 seconds per side.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calienta la tortilla en una sartén seca 30 segundos por lado."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réchauffe la tortilla dans une poêle sèche 30 sec par côté."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Riscalda la tortilla in una padella asciutta 30 sec per lato."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aqueça a tortilla em uma frigideira seca por 30 seg de cada lado."
+          }
+        }
+      }
+    },
     "Water Intake": {
       "localizations": {
         "es": {
@@ -12907,6 +17639,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Consumo de Água"
+          }
+        }
+      }
+    },
+    "Watermelon": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sandía"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pastèque"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anguria"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Melancia"
           }
         }
       }
@@ -13113,6 +17873,34 @@
         }
       }
     },
+    "Whey Protein": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Proteína whey"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whey protéine"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Proteine whey"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whey protein"
+          }
+        }
+      }
+    },
     "Whey protein": {
       "extractionState": "stale",
       "localizations": {
@@ -13171,6 +17959,146 @@
         }
       }
     },
+    "Whisk olive oil and lemon juice in a small bowl.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bate el aceite de oliva y jugo de limón en un bowl pequeño."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fouette huile d'olive et jus de citron dans un petit bol."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sbatti olio d'oliva e succo di limone in una ciotolina."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bata azeite e suco de limão em uma tigela pequena."
+          }
+        }
+      }
+    },
+    "Whisk olive oil, lemon juice, and oregano in a small bowl.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bate aceite de oliva, jugo de limón y orégano en un bowl pequeño."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fouette huile d'olive, jus de citron et origan dans un petit bol."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sbatti olio d'oliva, succo di limone e origano in una ciotolina."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bata azeite, suco de limão e orégano em uma tigela pequena."
+          }
+        }
+      }
+    },
+    "Whisk tahini, lemon juice, and 2 tbsp water until smooth.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bate tahini, jugo de limón y 2 cdas de agua hasta homogéneo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fouette tahini, jus de citron et 2 c. à s. d'eau jusqu'à lisse."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sbatti tahina, succo di limone e 2 cucchiai d'acqua fino a liscio."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bata tahine, suco de limão e 2 c. sopa de água até ficar liso."
+          }
+        }
+      }
+    },
+    "White Rice": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arroz blanco"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Riz blanc"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Riso bianco"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arroz branco"
+          }
+        }
+      }
+    },
+    "White Rice (cooked)": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arroz blanco (cocido)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Riz blanc (cuit)"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Riso bianco (cotto)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arroz branco (cozido)"
+          }
+        }
+      }
+    },
     "White rice (cooked)": {
       "extractionState": "stale",
       "localizations": {
@@ -13196,6 +18124,90 @@
           "stringUnit": {
             "state": "translated",
             "value": "Arroz branco (cozido)"
+          }
+        }
+      }
+    },
+    "Whole Milk": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leche entera"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lait entier"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Latte intero"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leite integral"
+          }
+        }
+      }
+    },
+    "Whole Wheat Bread": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pan integral"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pain complet"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pane integrale"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pão integral"
+          }
+        }
+      }
+    },
+    "Whole Wheat Pasta": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pasta integral"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pâtes complètes"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pasta integrale"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Macarrão integral"
           }
         }
       }
@@ -13254,6 +18266,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Macarrão integral"
+          }
+        }
+      }
+    },
+    "Whole wheat tortilla": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tortilla integral"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tortilla complète"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tortilla integrale"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tortilla integral"
           }
         }
       }
@@ -13698,6 +18738,34 @@
         }
       }
     },
+    "Zucchini": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calabacín"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Courgette"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zucchina"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abobrinha"
+          }
+        }
+      }
+    },
     "Zucchini (spiralized or sliced thin)": {
       "extractionState": "stale",
       "localizations": {
@@ -13723,6 +18791,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Abobrinha (em espiral ou fatias finas)"
+          }
+        }
+      }
+    },
+    "Zucchini, sliced": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calabacín en rodajas"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Courgette en rondelles"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zucchina a fette"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abobrinha em rodelas"
           }
         }
       }

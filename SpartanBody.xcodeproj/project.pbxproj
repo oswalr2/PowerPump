@@ -14,35 +14,19 @@
 		AA000001000000000000AA14 /* WatchWorkoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000AA07 /* WatchWorkoutManager.swift */; };
 		AA000001000000000000AA15 /* WatchWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000AA08 /* WatchWorkoutView.swift */; };
 		AA000001000000000000AA16 /* SpartanBodyComplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000AA09 /* SpartanBodyComplication.swift */; };
-		AA000001000000000000AA17 /* SpartanBodyWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = AA000001000000000000AA01 /* SpartanBodyWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AA000001000000000000AA18 /* SpartanBodyComplication.appex in Embed Widget Extensions */ = {isa = PBXBuildFile; fileRef = AA000001000000000000AA02 /* SpartanBodyComplication.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BB000001000000000000BB10 /* SpartanBodyWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000001000000000000BB02 /* SpartanBodyWidgetBundle.swift */; };
 		BB000001000000000000BB11 /* WorkoutActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000001000000000000BB03 /* WorkoutActivityAttributes.swift */; };
 		BB000001000000000000BB12 /* WorkoutActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000001000000000000BB03 /* WorkoutActivityAttributes.swift */; };
-		BB000001000000000000BB13 /* SpartanBodyWidget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BB000001000000000000BB01 /* SpartanBodyWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		AA000001000000000000AA61 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F36D36FF2FB3EF4000CA86B6 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = AA000001000000000000AA40;
-			remoteInfo = SpartanBodyWatch;
-		};
 		AA000001000000000000AA63 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F36D36FF2FB3EF4000CA86B6 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = AA000001000000000000AA41;
 			remoteInfo = SpartanBodyComplication;
-		};
-		BB000001000000000000BB61 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F36D36FF2FB3EF4000CA86B6 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = BB000001000000000000BB40;
-			remoteInfo = SpartanBodyWidget;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -56,28 +40,6 @@
 				AA000001000000000000AA18 /* SpartanBodyComplication.appex in Embed Widget Extensions */,
 			);
 			name = "Embed Widget Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		AA000001000000000000AA37 /* Embed Watch Content */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
-			dstSubfolderSpec = 16;
-			files = (
-				AA000001000000000000AA17 /* SpartanBodyWatch.app in Embed Watch Content */,
-			);
-			name = "Embed Watch Content";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BB000001000000000000BB30 /* Embed App Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				BB000001000000000000BB13 /* SpartanBodyWidget.appex in Embed App Extensions */,
-			);
-			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -257,14 +219,10 @@
 				F36D37032FB3EF4000CA86B6 /* Sources */,
 				F36D37042FB3EF4000CA86B6 /* Frameworks */,
 				F36D37052FB3EF4000CA86B6 /* Resources */,
-				AA000001000000000000AA37 /* Embed Watch Content */,
-				BB000001000000000000BB30 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				AA000001000000000000AA60 /* PBXTargetDependency */,
-				BB000001000000000000BB60 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				F36D37092FB3EF4000CA86B6 /* SpartanBody */,
@@ -399,20 +357,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		AA000001000000000000AA60 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = AA000001000000000000AA40 /* SpartanBodyWatch */;
-			targetProxy = AA000001000000000000AA61 /* PBXContainerItemProxy */;
-		};
 		AA000001000000000000AA62 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = AA000001000000000000AA41 /* SpartanBodyComplication */;
 			targetProxy = AA000001000000000000AA63 /* PBXContainerItemProxy */;
-		};
-		BB000001000000000000BB60 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = BB000001000000000000BB40 /* SpartanBodyWidget */;
-			targetProxy = BB000001000000000000BB61 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -429,10 +377,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "SpartanBody reads your heart rate during workouts.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "SpartanBody saves your workout data to Apple Health.";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.oswaldo.spartanbody;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.oswaldo.spartan2026;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartanbody.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartan2026.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = NO;
@@ -456,10 +404,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "SpartanBody reads your heart rate during workouts.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "SpartanBody saves your workout data to Apple Health.";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.oswaldo.spartanbody;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.oswaldo.spartan2026;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartanbody.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartan2026.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = NO;
@@ -486,7 +434,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartanbody.watchkitapp.complication;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartan2026.watchkitapp.complication;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -513,7 +461,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartanbody.watchkitapp.complication;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartan2026.watchkitapp.complication;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -541,7 +489,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartanbody.widget;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartan2026.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -568,7 +516,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartanbody.widget;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartan2026.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -723,7 +671,7 @@
 				ITSAppUsesNonExemptEncryption = NO;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartanbody;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartan2026;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -766,7 +714,7 @@
 				ITSAppUsesNonExemptEncryption = NO;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartanbody;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartan2026;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

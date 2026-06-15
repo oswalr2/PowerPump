@@ -114,19 +114,16 @@ struct WorkoutsView: View {
                 .foregroundColor(.sbTextPrimary)
                 .padding(.horizontal, 20)
 
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 12) {
-                    ForEach(ProgramLibrary.all) { program in
-                        ProgramCard(program: program) {
-                            store.start(template: program.template)
-                            HapticManager.medium()
-                            showActive = true
-                        }
+            VStack(spacing: 12) {
+                ForEach(ProgramLibrary.all) { program in
+                    ProgramCard(program: program) {
+                        store.start(template: program.template)
+                        HapticManager.medium()
+                        showActive = true
                     }
                 }
-                .padding(.horizontal, 20)
-                .padding(.vertical, 4)
             }
+            .padding(.horizontal, 20)
         }
     }
 
@@ -390,62 +387,57 @@ private struct ProgramCard: View {
     let onStart: () -> Void
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            // Top colour band
-            ZStack(alignment: .bottomLeading) {
-                RoundedRectangle(cornerRadius: 0)
-                    .fill(program.color.opacity(0.15))
-                    .frame(height: 72)
-
-                HStack {
-                    Image(systemName: program.icon)
-                        .font(.system(size: 28, weight: .bold))
-                        .foregroundColor(program.color)
-                        .padding(16)
-                    Spacer()
-                    Text("\(program.estimatedMinutes)m")
-                        .font(SBFont.label(11))
-                        .fontWeight(.semibold)
-                        .foregroundColor(program.color)
-                        .padding(.trailing, 14)
-                        .padding(.bottom, 12)
-                }
+        HStack(spacing: 14) {
+            // Icon on the left
+            ZStack {
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(Color.sbAccent.opacity(0.18))
+                    .frame(width: 64, height: 64)
+                Image(systemName: program.icon)
+                    .font(.system(size: 26, weight: .bold))
+                    .foregroundColor(Color.sbAccent)
             }
 
-            VStack(alignment: .leading, spacing: 6) {
+            // Content
+            VStack(alignment: .leading, spacing: 4) {
                 Text(program.name)
-                    .font(SBFont.heading(16))
+                    .font(SBFont.heading(17))
                     .foregroundColor(.sbTextPrimary)
 
                 Text(program.subtitle)
-                    .font(SBFont.label(11))
+                    .font(SBFont.caption())
                     .foregroundColor(.sbTextSecondary)
                     .lineLimit(2)
 
-                Text("\(program.template.exercises.count) exercises")
-                    .font(SBFont.label(10))
-                    .foregroundColor(.sbTextSecondary)
-                    .padding(.top, 2)
-
-                Button(action: onStart) {
-                    Text("Start")
-                        .font(SBFont.caption())
-                        .fontWeight(.semibold)
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 9)
-                        .background(program.color)
-                        .cornerRadius(10)
+                HStack(spacing: 10) {
+                    Label("\(program.estimatedMinutes) min", systemImage: "clock")
+                    Circle().fill(Color.sbBorder).frame(width: 3, height: 3)
+                    Label("\(program.template.exercises.count)", systemImage: "list.bullet")
                 }
-                .buttonStyle(.plain)
-                .padding(.top, 4)
+                .font(SBFont.label(11))
+                .foregroundColor(.sbTextSecondary)
+                .labelStyle(.titleAndIcon)
+                .padding(.top, 2)
             }
-            .padding(14)
+
+            Spacer()
+
+            // Start button on the right
+            Button(action: onStart) {
+                Image(systemName: "play.fill")
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundColor(.white)
+                    .frame(width: 44, height: 44)
+                    .background(Color.sbAccent)
+                    .clipShape(Circle())
+                    .shadow(color: Color.sbAccent.opacity(0.4), radius: 6, y: 3)
+            }
+            .buttonStyle(.plain)
         }
-        .frame(width: 165)
+        .padding(14)
         .background(Color.sbSurface)
-        .cornerRadius(16)
-        .overlay(RoundedRectangle(cornerRadius: 16).stroke(program.color.opacity(0.3), lineWidth: 1.5))
+        .cornerRadius(18)
+        .overlay(RoundedRectangle(cornerRadius: 18).stroke(Color.sbAccent.opacity(0.25), lineWidth: 1.5))
     }
 }
 

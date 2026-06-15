@@ -1,11 +1,75 @@
+# =========================
 # Xcode
+# =========================
 build/
 DerivedData/
 *.xcuserstate
 xcuserdata/
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
 
+# Build products
+*.app
+*.dSYM.zip
+*.ipa
+
+# Backup files
+*.backup
+*.bak
+*.orig
+
+# Swift Package Manager
+.build/
+Packages/
+*.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/
+
+# Carthage / CocoaPods / Pods (just in case)
+Pods/
+Carthage/Build/
+
+# fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# =========================
 # macOS
+# =========================
 .DS_Store
+.AppleDouble
+.LSOverride
+._*
 
-# Local tooling state
+# =========================
+# Cloudflare / Wrangler
+# =========================
+# Wrangler config can contain personal subdomain IDs — sanitized version stays
+CloudflareWorker/.wrangler/
+CloudflareWorker/node_modules/
+CloudflareWorker/dist/
+CloudflareWorker/.dev.vars
+*.env
+.env.local
+.env.*.local
+
+# =========================
+# IDE / Editor
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# =========================
+# Local tooling
+# =========================
 .voight-agent-id
+
+# =========================
+# OS / Logs
+# =========================
+*.log
+*.tmp

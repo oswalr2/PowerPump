@@ -1,13 +1,41 @@
 import SwiftUI
 
+// Filter shown in the chips row.
+enum RecipeFilter: Hashable {
+    case all
+    case goal(RecipeGoal)
+    case tag(String)
+
+    var label: String {
+        switch self {
+        case .all:          return "All"
+        case .goal(let g):  return g.rawValue
+        case .tag(let t):   return t
+        }
+    }
+}
+
 struct RecipesView: View {
     @ObservedObject private var profile = UserProfile.shared
-    @State private var selectedGoal: RecipeGoal? = nil
+    @State private var selectedFilter: RecipeFilter = .all
     @State private var searchText = ""
+
+    private let filters: [RecipeFilter] = [
+        .all,
+        .goal(.muscleGain),
+        .goal(.weightLoss),
+        .goal(.maintenance),
+        .tag("Vegetarian"),
+        .tag("Vegan"),
+    ]
 
     private var filtered: [Recipe] {
         var list = RecipeDatabase.all
-        if let g = selectedGoal { list = list.filter { $0.goal == g } }
+        switch selectedFilter {
+        case .all:          break
+        case .goal(let g):  list = list.filter { $0.goal == g }
+        case .tag(let t):   list = list.filter { $0.tags.contains(t) }
+        }
         if !searchText.isEmpty {
             list = list.filter {
                 $0.name.localizedCaseInsensitiveContains(searchText)
@@ -73,26 +101,32 @@ struct RecipesView: View {
     private var goalFilter: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 8) {
-                goalChip(nil, label: "All")
-                ForEach(RecipeGoal.allCases, id: \.self) { g in
-                    goalChip(g, label: g.rawValue)
+                ForEach(filters, id: \.self) { f in
+                    filterChip(f)
                 }
             }
             .padding(.horizontal, 20)
         }
     }
 
-    private func goalChip(_ goal: RecipeGoal?, label: String) -> some View {
-        Button {
-            withAnimation(.easeInOut(duration: 0.2)) { selectedGoal = goal }
+    private func filterChip(_ filter: RecipeFilter) -> some View {
+        let selected = selectedFilter == filter
+        return Button {
+            withAnimation(.easeInOut(duration: 0.2)) { selectedFilter = filter }
         } label: {
-            Text(LocalizedStringKey(label))
-                .font(SBFont.caption())
-                .foregroundColor(selectedGoal == goal ? .white : .sbTextSecondary)
-                .padding(.horizontal, 16).padding(.vertical, 8)
-                .background(selectedGoal == goal ? Color.sbAccent : Color.sbSurface)
-                .cornerRadius(20)
-                .overlay(RoundedRectangle(cornerRadius: 20).stroke(selectedGoal == goal ? Color.sbAccent : Color.sbBorder))
+            HStack(spacing: 4) {
+                if case .tag(let t) = filter {
+                    Image(systemName: t == "Vegan" ? "leaf.fill" : "carrot.fill")
+                        .font(.system(size: 10, weight: .bold))
+                }
+                Text(LocalizedStringKey(filter.label))
+                    .font(SBFont.caption())
+            }
+            .foregroundColor(selected ? .white : .sbTextSecondary)
+            .padding(.horizontal, 16).padding(.vertical, 8)
+            .background(selected ? Color.sbAccent : Color.sbSurface)
+            .cornerRadius(20)
+            .overlay(RoundedRectangle(cornerRadius: 20).stroke(selected ? Color.sbAccent : Color.sbBorder))
         }
         .buttonStyle(.plain)
     }
@@ -400,11 +434,12 @@ struct RecipeDetailView: View {
             .font(SBFont.body())
             .foregroundColor(.white)
             .frame(maxWidth: .infinity)
-            .padding(.vertical, 16)
-            .background(Color.sbAccent)
+            .padding(.vertical, 17)
+            .background(LinearGradient.sbAccentGradient)
             .cornerRadius(16)
+            .shadow(color: Color.sbAccent.opacity(0.4), radius: 12, y: 4)
             .padding(.horizontal, 20)
-            .padding(.bottom, 32)
+            .padding(.bottom, 110)
         }
         .buttonStyle(.plain)
         .background(Color.sbBackground.opacity(0.95).ignoresSafeArea())

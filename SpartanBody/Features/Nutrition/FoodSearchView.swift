@@ -182,7 +182,7 @@ struct FoodSearchView: View {
         Button { select(item) } label: {
             HStack(spacing: 14) {
                 VStack(alignment: .leading, spacing: 3) {
-                    Text(item.name)
+                    Text(LocalizedStringKey(item.name))
                         .font(SBFont.body())
                         .foregroundColor(.sbTextPrimary)
                     Text(String(format: "%.0f kcal · P%.0fg C%.0fg F%.0fg (per 100g)",
@@ -294,7 +294,7 @@ struct FoodSearchView: View {
                 .buttonStyle(.plain)
 
                 // Food name
-                Text(item.name)
+                Text(LocalizedStringKey(item.name))
                     .font(SBFont.heading(20))
                     .foregroundColor(.sbTextPrimary)
                     .frame(maxWidth: .infinity, alignment: .leading)

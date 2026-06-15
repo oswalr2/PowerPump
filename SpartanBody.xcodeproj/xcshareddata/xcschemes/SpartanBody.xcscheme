@@ -4,7 +4,7 @@
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
-      buildImplicitDependencies = "YES">
+      buildImplicitDependencies = "NO">
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
@@ -17,34 +17,6 @@
                BlueprintIdentifier = "F36D37062FB3EF4000CA86B6"
                BuildableName = "SpartanBody.app"
                BlueprintName = "SpartanBody"
-               ReferencedContainer = "container:SpartanBody.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "NO"
-            buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AA000001000000000000AA40"
-               BuildableName = "SpartanBodyWatch.app"
-               BlueprintName = "SpartanBodyWatch"
-               ReferencedContainer = "container:SpartanBody.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "NO"
-            buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AA000001000000000000AA41"
-               BuildableName = "SpartanBodyComplication.appex"
-               BlueprintName = "SpartanBodyComplication"
                ReferencedContainer = "container:SpartanBody.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

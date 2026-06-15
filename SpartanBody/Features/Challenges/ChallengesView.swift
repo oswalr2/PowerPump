@@ -114,11 +114,11 @@ struct ActiveChallengeCard: View {
                 HStack(spacing: 12) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 12)
-                            .fill(def.color.opacity(0.15))
+                            .fill(Color.sbAccent.opacity(0.15))
                             .frame(width: 48, height: 48)
                         Image(systemName: def.icon)
                             .font(.system(size: 22, weight: .semibold))
-                            .foregroundColor(def.color)
+                            .foregroundColor(Color.sbAccent)
                     }
 
                     VStack(alignment: .leading, spacing: 2) {
@@ -135,7 +135,7 @@ struct ActiveChallengeCard: View {
                     VStack(alignment: .trailing, spacing: 2) {
                         Text("\(challenge.completedDayKeys.count)/\(challenge.totalDays)")
                             .font(SBFont.heading(18))
-                            .foregroundColor(def.color)
+                            .foregroundColor(Color.sbAccent)
                         Text("days")
                             .font(SBFont.label(10))
                             .foregroundColor(.sbTextSecondary)
@@ -147,7 +147,7 @@ struct ActiveChallengeCard: View {
                     ZStack(alignment: .leading) {
                         RoundedRectangle(cornerRadius: 4).fill(Color.sbBorder).frame(height: 6)
                         RoundedRectangle(cornerRadius: 4)
-                            .fill(def.color)
+                            .fill(Color.sbAccent)
                             .frame(width: geo.size.width * challenge.progress, height: 6)
                             .animation(.spring(), value: challenge.progress)
                     }
@@ -163,7 +163,7 @@ struct ActiveChallengeCard: View {
 
                     ForEach(Array(last7.enumerated()), id: \.offset) { _, date in
                         Circle()
-                            .fill(challenge.isDayComplete(date) ? def.color : Color.sbBorder)
+                            .fill(challenge.isDayComplete(date) ? Color.sbAccent : Color.sbBorder)
                             .frame(width: 10, height: 10)
                     }
                     Spacer()
@@ -178,17 +178,17 @@ struct ActiveChallengeCard: View {
                                 .foregroundColor(.white)
                                 .padding(.horizontal, 14)
                                 .padding(.vertical, 8)
-                                .background(def.color)
+                                .background(Color.sbAccent)
                                 .cornerRadius(10)
                         }
                         .buttonStyle(.plain)
                     } else if todayDone {
                         HStack(spacing: 4) {
                             Image(systemName: "checkmark.circle.fill")
-                                .foregroundColor(def.color)
+                                .foregroundColor(Color.sbAccent)
                             Text("Done today!")
                                 .font(SBFont.caption())
-                                .foregroundColor(def.color)
+                                .foregroundColor(Color.sbAccent)
                         }
                     } else {
                         Text(def.dailyGoalDescription)
@@ -201,7 +201,7 @@ struct ActiveChallengeCard: View {
             .padding(16)
             .background(Color.sbSurface)
             .cornerRadius(16)
-            .overlay(RoundedRectangle(cornerRadius: 16).stroke(def.color.opacity(0.3), lineWidth: 1.5))
+            .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.sbAccent.opacity(0.3), lineWidth: 1.5))
             .swipeActions(edge: .trailing) {
                 Button(role: .destructive) {
                     store.abandon(challenge)
@@ -222,11 +222,11 @@ private struct CompletedBadge: View {
         HStack(spacing: 12) {
             ZStack {
                 RoundedRectangle(cornerRadius: 10)
-                    .fill(definition.color.opacity(0.15))
+                    .fill(Color.sbAccent.opacity(0.15))
                     .frame(width: 40, height: 40)
                 Image(systemName: definition.icon)
                     .font(.system(size: 18, weight: .semibold))
-                    .foregroundColor(definition.color)
+                    .foregroundColor(Color.sbAccent)
             }
             VStack(alignment: .leading, spacing: 1) {
                 Text(definition.name)
@@ -339,11 +339,11 @@ private struct LibraryChallengeRow: View {
         HStack(spacing: 14) {
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(definition.color.opacity(0.12))
+                    .fill(Color.sbAccent.opacity(0.12))
                     .frame(width: 50, height: 50)
                 Image(systemName: definition.icon)
                     .font(.system(size: 22, weight: .semibold))
-                    .foregroundColor(definition.color)
+                    .foregroundColor(Color.sbAccent)
             }
 
             VStack(alignment: .leading, spacing: 3) {
@@ -371,7 +371,7 @@ private struct LibraryChallengeRow: View {
                     .foregroundColor(.white)
                     .padding(.horizontal, 14)
                     .padding(.vertical, 8)
-                    .background(definition.color)
+                    .background(Color.sbAccent)
                     .cornerRadius(10)
             }
             .buttonStyle(.plain)

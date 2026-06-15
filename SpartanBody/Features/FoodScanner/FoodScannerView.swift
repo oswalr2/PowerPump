@@ -1,5 +1,6 @@
 import SwiftUI
 import PhotosUI
+import AVFoundation
 
 struct FoodScannerView: View {
     @Environment(\.dismiss) private var dismiss
@@ -474,33 +475,217 @@ private struct ScannedItemRow: View {
     }
 }
 
-// MARK: - Camera Picker (UIImagePickerController wrapper)
+// MARK: - Custom Camera View (replaces the bare UIImagePickerController UI)
 
-struct CameraPickerView: UIViewControllerRepresentable {
+struct CameraPickerView: View {
     let onImage: (UIImage?) -> Void
+    @Environment(\.dismiss) private var dismiss
+    @State private var capturedImage: UIImage?
 
-    func makeUIViewController(context: Context) -> UIImagePickerController {
-        let picker = UIImagePickerController()
-        picker.sourceType = UIImagePickerController.isSourceTypeAvailable(.camera) ? .camera : .photoLibrary
-        picker.delegate = context.coordinator
-        return picker
+    var body: some View {
+        ZStack {
+            Color.black.ignoresSafeArea()
+
+            FoodCameraView(captured: $capturedImage)
+                .ignoresSafeArea()
+
+            // Top bar: close + hint
+            VStack(spacing: 0) {
+                HStack {
+                    Button {
+                        onImage(nil)
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(.white)
+                            .frame(width: 38, height: 38)
+                            .background(.ultraThinMaterial)
+                            .clipShape(Circle())
+                    }
+                    Spacer()
+                    Text("Center your plate")
+                        .font(SBFont.caption())
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 8)
+                        .background(.ultraThinMaterial)
+                        .clipShape(Capsule())
+                    Spacer()
+                    Color.clear.frame(width: 38, height: 38)
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 12)
+
+                Spacer()
+
+                // Corner brackets framing the food
+                GeometryReader { geo in
+                    let s = min(geo.size.width, geo.size.height) * 0.78
+                    ZStack {
+                        Group {
+                            CameraCorner().path(in: CGRect(x: 0, y: 0, width: 28, height: 28))
+                                .stroke(Color.white, lineWidth: 3)
+                                .frame(width: 28, height: 28)
+                                .position(x: (geo.size.width - s) / 2 + 14,
+                                          y: (geo.size.height - s) / 2 + 14)
+                            CameraCorner().path(in: CGRect(x: 0, y: 0, width: 28, height: 28))
+                                .stroke(Color.white, lineWidth: 3)
+                                .rotationEffect(.degrees(90))
+                                .frame(width: 28, height: 28)
+                                .position(x: (geo.size.width + s) / 2 - 14,
+                                          y: (geo.size.height - s) / 2 + 14)
+                            CameraCorner().path(in: CGRect(x: 0, y: 0, width: 28, height: 28))
+                                .stroke(Color.white, lineWidth: 3)
+                                .rotationEffect(.degrees(-90))
+                                .frame(width: 28, height: 28)
+                                .position(x: (geo.size.width - s) / 2 + 14,
+                                          y: (geo.size.height + s) / 2 - 14)
+                            CameraCorner().path(in: CGRect(x: 0, y: 0, width: 28, height: 28))
+                                .stroke(Color.white, lineWidth: 3)
+                                .rotationEffect(.degrees(180))
+                                .frame(width: 28, height: 28)
+                                .position(x: (geo.size.width + s) / 2 - 14,
+                                          y: (geo.size.height + s) / 2 - 14)
+                        }
+                    }
+                }
+                .allowsHitTesting(false)
+
+                Spacer()
+
+                // Bottom controls
+                VStack(spacing: 16) {
+                    Text("Hold steady. Get the whole plate in frame.")
+                        .font(SBFont.caption())
+                        .foregroundColor(.white.opacity(0.85))
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 40)
+
+                    Button {
+                        HapticManager.medium()
+                        NotificationCenter.default.post(name: .foodCameraCapture, object: nil)
+                    } label: {
+                        ZStack {
+                            Circle()
+                                .stroke(Color.white, lineWidth: 4)
+                                .frame(width: 76, height: 76)
+                            Circle()
+                                .fill(Color.white)
+                                .frame(width: 62, height: 62)
+                        }
+                    }
+                    .padding(.bottom, 36)
+                }
+            }
+        }
+        .onChange(of: capturedImage) { img in
+            guard let img else { return }
+            onImage(img)
+            dismiss()
+        }
+    }
+}
+
+// White corner bracket used to frame the plate
+private struct CameraCorner: Shape {
+    func path(in rect: CGRect) -> Path {
+        var p = Path()
+        p.move(to: CGPoint(x: rect.minX, y: rect.maxY))
+        p.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
+        p.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
+        return p
+    }
+}
+
+extension Notification.Name {
+    static let foodCameraCapture = Notification.Name("sb.foodCameraCapture")
+}
+
+// AVFoundation camera that captures a still photo when notified.
+private struct FoodCameraView: UIViewControllerRepresentable {
+    @Binding var captured: UIImage?
+
+    func makeUIViewController(context: Context) -> FoodCameraController {
+        let vc = FoodCameraController()
+        vc.onCapture = { img in captured = img }
+        return vc
     }
 
-    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
+    func updateUIViewController(_ vc: FoodCameraController, context: Context) {}
+}
 
-    func makeCoordinator() -> Coordinator { Coordinator(onImage: onImage) }
+final class FoodCameraController: UIViewController, AVCapturePhotoCaptureDelegate {
+    var onCapture: ((UIImage) -> Void)?
 
-    final class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-        let onImage: (UIImage?) -> Void
-        init(onImage: @escaping (UIImage?) -> Void) { self.onImage = onImage }
+    private let session = AVCaptureSession()
+    private let photoOutput = AVCapturePhotoOutput()
+    private var previewLayer: AVCaptureVideoPreviewLayer?
 
-        func imagePickerController(_ picker: UIImagePickerController,
-                                   didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-            onImage(info[.originalImage] as? UIImage)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .black
+
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(capture),
+            name: .foodCameraCapture, object: nil)
+
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized: configureSession()
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
+                guard granted else { return }
+                DispatchQueue.main.async { self?.configureSession() }
+            }
+        default: break
         }
+    }
 
-        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-            onImage(nil)
+    private func configureSession() {
+        session.sessionPreset = .photo
+        guard let device = AVCaptureDevice.default(for: .video),
+              let input = try? AVCaptureDeviceInput(device: device),
+              session.canAddInput(input),
+              session.canAddOutput(photoOutput) else { return }
+        session.addInput(input)
+        session.addOutput(photoOutput)
+
+        let preview = AVCaptureVideoPreviewLayer(session: session)
+        preview.videoGravity = .resizeAspectFill
+        preview.frame = view.bounds
+        view.layer.addSublayer(preview)
+        previewLayer = preview
+
+        DispatchQueue.global(qos: .userInitiated).async { [session] in
+            session.startRunning()
         }
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        previewLayer?.frame = view.bounds
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if session.isRunning { session.stopRunning() }
+    }
+
+    @objc private func capture() {
+        let settings = AVCapturePhotoSettings()
+        photoOutput.capturePhoto(with: settings, delegate: self)
+    }
+
+    func photoOutput(_ output: AVCapturePhotoOutput,
+                     didFinishProcessingPhoto photo: AVCapturePhoto,
+                     error: Error?) {
+        guard let data = photo.fileDataRepresentation(),
+              let img = UIImage(data: data) else { return }
+        onCapture?(img)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }

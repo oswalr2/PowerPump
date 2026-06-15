@@ -1,7 +1,7 @@
 import Foundation
 
 struct RecipeDatabase {
-    static let all: [Recipe] = muscleGain + weightLoss + maintenance
+    static let all: [Recipe] = muscleGain + weightLoss + maintenance + plantBased
 
     // MARK: - Muscle Gain
 
@@ -406,5 +406,298 @@ struct RecipeDatabase {
             ],
             nutrition: NutritionInfo(calories: 420, protein: 22, carbs: 48, fat: 14)
         ),
+        Recipe(
+            id: "hummus_wrap",
+            name: "Mediterranean Hummus Wrap",
+            goal: .maintenance,
+            emoji: "🌯",
+            prepMinutes: 8,
+            servings: 1,
+            tags: ["Vegan", "Quick", "No Cook"],
+            ingredients: [
+                Ingredient(amount: "1 large", name: "Whole wheat tortilla"),
+                Ingredient(amount: "4 tbsp", name: "Hummus"),
+                Ingredient(amount: "1/2 cup", name: "Mixed greens"),
+                Ingredient(amount: "1/4", name: "Cucumber, sliced"),
+                Ingredient(amount: "1/4", name: "Red bell pepper, sliced"),
+                Ingredient(amount: "2 tbsp", name: "Sun-dried tomatoes"),
+                Ingredient(amount: "to taste", name: "Salt, pepper, oregano"),
+            ],
+            steps: [
+                "Warm the tortilla in a dry pan for 30 seconds per side.",
+                "Spread hummus evenly across the tortilla.",
+                "Layer greens, cucumber, bell pepper, and sun-dried tomatoes.",
+                "Season with salt, pepper, and oregano.",
+                "Roll tightly and slice in half.",
+            ],
+            nutrition: NutritionInfo(calories: 380, protein: 14, carbs: 52, fat: 14)
+        ),
+        Recipe(
+            id: "lentil_soup",
+            name: "Hearty Lentil Soup",
+            goal: .maintenance,
+            emoji: "🍲",
+            prepMinutes: 35,
+            servings: 4,
+            tags: ["Vegan", "Meal Prep", "Filling"],
+            ingredients: [
+                Ingredient(amount: "300g", name: "Red lentils, rinsed"),
+                Ingredient(amount: "1 medium", name: "Onion, diced"),
+                Ingredient(amount: "2 medium", name: "Carrots, diced"),
+                Ingredient(amount: "2 cloves", name: "Garlic, minced"),
+                Ingredient(amount: "1.5L", name: "Vegetable broth"),
+                Ingredient(amount: "2 tbsp", name: "Olive oil"),
+                Ingredient(amount: "1 tsp each", name: "Cumin, paprika, turmeric"),
+            ],
+            steps: [
+                "Heat olive oil in a large pot over medium heat.",
+                "Sauté onion, garlic, and carrots for 5 minutes until softened.",
+                "Add spices and stir for 1 minute until fragrant.",
+                "Add lentils and broth. Bring to a boil, then simmer 20-25 min.",
+                "Stir occasionally until lentils are tender. Season and serve.",
+            ],
+            nutrition: NutritionInfo(calories: 320, protein: 18, carbs: 48, fat: 6)
+        ),
+        Recipe(
+            id: "veggie_pasta",
+            name: "Veggie Pasta Primavera",
+            goal: .maintenance,
+            emoji: "🍝",
+            prepMinutes: 20,
+            servings: 2,
+            tags: ["Vegetarian", "Quick", "Colorful"],
+            ingredients: [
+                Ingredient(amount: "200g", name: "Whole wheat pasta"),
+                Ingredient(amount: "1 cup", name: "Cherry tomatoes"),
+                Ingredient(amount: "1 medium", name: "Zucchini, sliced"),
+                Ingredient(amount: "1", name: "Red bell pepper, sliced"),
+                Ingredient(amount: "3 tbsp", name: "Olive oil"),
+                Ingredient(amount: "3 cloves", name: "Garlic, minced"),
+                Ingredient(amount: "30g", name: "Parmesan, grated"),
+            ],
+            steps: [
+                "Cook pasta according to package instructions.",
+                "Meanwhile, heat olive oil in a large skillet over medium-high heat.",
+                "Add garlic and sauté for 30 seconds.",
+                "Add zucchini and bell pepper. Cook 4-5 min until tender-crisp.",
+                "Toss in cherry tomatoes and cook 2 more minutes.",
+                "Drain pasta and combine with vegetables. Top with parmesan.",
+            ],
+            nutrition: NutritionInfo(calories: 460, protein: 16, carbs: 68, fat: 14)
+        ),
     ]
+
+    // MARK: - Vegan / Vegetarian — additional options
+
+    static let plantBased: [Recipe] = [
+        Recipe(
+            id: "lentil_power_bowl",
+            name: "Lentil Power Bowl",
+            goal: .muscleGain,
+            emoji: "🥗",
+            prepMinutes: 25,
+            servings: 2,
+            tags: ["Vegan", "High Protein", "Meal Prep"],
+            ingredients: [
+                Ingredient(amount: "200g", name: "Green lentils (cooked)"),
+                Ingredient(amount: "150g", name: "Quinoa (cooked)"),
+                Ingredient(amount: "1/2", name: "Avocado, sliced"),
+                Ingredient(amount: "1 cup", name: "Roasted sweet potato"),
+                Ingredient(amount: "1 cup", name: "Spinach"),
+                Ingredient(amount: "2 tbsp", name: "Tahini"),
+                Ingredient(amount: "1 tbsp", name: "Lemon juice"),
+            ],
+            steps: [
+                "Roast cubed sweet potato at 200°C for 20 min until tender.",
+                "Whisk tahini, lemon juice, and 2 tbsp water until smooth.",
+                "Arrange quinoa and lentils at the base of each bowl.",
+                "Top with sweet potato, avocado, and spinach.",
+                "Drizzle with tahini sauce and serve.",
+            ],
+            nutrition: NutritionInfo(calories: 540, protein: 26, carbs: 72, fat: 18)
+        ),
+        Recipe(
+            id: "black_bean_tacos",
+            name: "Black Bean & Quinoa Tacos",
+            goal: .muscleGain,
+            emoji: "🌮",
+            prepMinutes: 20,
+            servings: 2,
+            tags: ["Vegan", "High Protein", "Budget"],
+            ingredients: [
+                Ingredient(amount: "200g", name: "Black beans (canned, drained)"),
+                Ingredient(amount: "100g", name: "Quinoa (cooked)"),
+                Ingredient(amount: "6 small", name: "Corn tortillas"),
+                Ingredient(amount: "1/2", name: "Avocado, sliced"),
+                Ingredient(amount: "1/2 cup", name: "Salsa"),
+                Ingredient(amount: "1/4 cup", name: "Fresh cilantro"),
+                Ingredient(amount: "1 tsp each", name: "Cumin, chili powder"),
+            ],
+            steps: [
+                "Heat black beans with cumin and chili powder in a pan, 5 minutes.",
+                "Lightly toast tortillas in a dry pan, 30 sec per side.",
+                "Mix beans with cooked quinoa.",
+                "Fill each tortilla with the bean-quinoa mixture.",
+                "Top with avocado, salsa, and cilantro.",
+            ],
+            nutrition: NutritionInfo(calories: 480, protein: 22, carbs: 68, fat: 12)
+        ),
+        Recipe(
+            id: "tofu_buddha_bowl",
+            name: "Tofu Buddha Bowl",
+            goal: .weightLoss,
+            emoji: "🥙",
+            prepMinutes: 25,
+            servings: 1,
+            tags: ["Vegan", "Low Calorie", "Filling"],
+            ingredients: [
+                Ingredient(amount: "150g", name: "Firm tofu, cubed"),
+                Ingredient(amount: "100g", name: "Brown rice (cooked)"),
+                Ingredient(amount: "1 cup", name: "Roasted broccoli"),
+                Ingredient(amount: "1/2", name: "Carrot, julienned"),
+                Ingredient(amount: "1/4", name: "Red cabbage, shredded"),
+                Ingredient(amount: "1 tbsp", name: "Soy sauce (low sodium)"),
+                Ingredient(amount: "1 tsp", name: "Sesame oil"),
+            ],
+            steps: [
+                "Press tofu, then pan-fry in sesame oil until golden, ~6 min.",
+                "Toss tofu with soy sauce in the last minute.",
+                "Arrange rice at the base of a bowl.",
+                "Top with tofu, broccoli, carrot, and cabbage in sections.",
+                "Drizzle with extra soy sauce or sriracha to taste.",
+            ],
+            nutrition: NutritionInfo(calories: 380, protein: 22, carbs: 42, fat: 14)
+        ),
+        Recipe(
+            id: "chickpea_salad",
+            name: "Greek Chickpea Salad",
+            goal: .weightLoss,
+            emoji: "🥗",
+            prepMinutes: 10,
+            servings: 2,
+            tags: ["Vegan", "No Cook", "Quick"],
+            ingredients: [
+                Ingredient(amount: "200g", name: "Chickpeas (canned, drained)"),
+                Ingredient(amount: "1 cup", name: "Cucumber, diced"),
+                Ingredient(amount: "1 cup", name: "Cherry tomatoes, halved"),
+                Ingredient(amount: "1/4", name: "Red onion, finely diced"),
+                Ingredient(amount: "2 tbsp", name: "Olive oil"),
+                Ingredient(amount: "1 tbsp", name: "Lemon juice"),
+                Ingredient(amount: "1 tsp", name: "Dried oregano"),
+            ],
+            steps: [
+                "In a large bowl, combine chickpeas, cucumber, tomatoes, and onion.",
+                "Whisk olive oil, lemon juice, and oregano in a small bowl.",
+                "Pour dressing over the salad and toss to combine.",
+                "Season with salt and pepper.",
+                "Refrigerate 10 min before serving for best flavor.",
+            ],
+            nutrition: NutritionInfo(calories: 280, protein: 12, carbs: 32, fat: 12)
+        ),
+        Recipe(
+            id: "cauliflower_stir_fry",
+            name: "Cauliflower Rice Stir-Fry",
+            goal: .weightLoss,
+            emoji: "🥦",
+            prepMinutes: 15,
+            servings: 2,
+            tags: ["Vegan", "Low Carb", "Quick"],
+            ingredients: [
+                Ingredient(amount: "1 head", name: "Cauliflower, riced"),
+                Ingredient(amount: "1 cup", name: "Mixed vegetables (peas, carrots, corn)"),
+                Ingredient(amount: "2", name: "Eggs (omit for vegan)"),
+                Ingredient(amount: "2 tbsp", name: "Soy sauce (low sodium)"),
+                Ingredient(amount: "1 tbsp", name: "Sesame oil"),
+                Ingredient(amount: "2 cloves", name: "Garlic, minced"),
+                Ingredient(amount: "1 tsp", name: "Ginger, grated"),
+            ],
+            steps: [
+                "Rice cauliflower in a food processor until rice-sized.",
+                "Heat sesame oil in a large wok over high heat.",
+                "Sauté garlic and ginger for 30 seconds.",
+                "Add mixed vegetables and stir-fry 3 minutes.",
+                "Add cauliflower rice and soy sauce. Stir-fry 5 more minutes.",
+                "Serve hot, garnished with green onions if desired.",
+            ],
+            nutrition: NutritionInfo(calories: 220, protein: 10, carbs: 24, fat: 10)
+        ),
+        Recipe(
+            id: "spinach_frittata",
+            name: "Spinach & Mushroom Frittata",
+            goal: .weightLoss,
+            emoji: "🍳",
+            prepMinutes: 20,
+            servings: 2,
+            tags: ["Vegetarian", "Low Carb", "High Protein"],
+            ingredients: [
+                Ingredient(amount: "6", name: "Eggs"),
+                Ingredient(amount: "2 cups", name: "Fresh spinach"),
+                Ingredient(amount: "1 cup", name: "Mushrooms, sliced"),
+                Ingredient(amount: "1/4 cup", name: "Feta cheese, crumbled"),
+                Ingredient(amount: "1 tbsp", name: "Olive oil"),
+                Ingredient(amount: "to taste", name: "Salt, pepper, herbs"),
+            ],
+            steps: [
+                "Preheat oven to 180°C.",
+                "Heat olive oil in an oven-safe skillet over medium heat.",
+                "Sauté mushrooms for 4 minutes until golden.",
+                "Add spinach and cook until wilted, 1 minute.",
+                "Beat eggs with salt and pepper. Pour over vegetables.",
+                "Sprinkle feta on top. Bake 10-12 min until set.",
+            ],
+            nutrition: NutritionInfo(calories: 310, protein: 24, carbs: 6, fat: 22)
+        ),
+        Recipe(
+            id: "cottage_cheese_bowl",
+            name: "Cottage Cheese & Berry Bowl",
+            goal: .muscleGain,
+            emoji: "🫐",
+            prepMinutes: 5,
+            servings: 1,
+            tags: ["Vegetarian", "High Protein", "No Cook"],
+            ingredients: [
+                Ingredient(amount: "200g", name: "Cottage cheese (low fat)"),
+                Ingredient(amount: "1/2 cup", name: "Mixed berries"),
+                Ingredient(amount: "30g", name: "Granola"),
+                Ingredient(amount: "1 tbsp", name: "Almonds, slivered"),
+                Ingredient(amount: "1 tsp", name: "Honey"),
+                Ingredient(amount: "1/4 tsp", name: "Cinnamon"),
+            ],
+            steps: [
+                "Place cottage cheese in a bowl.",
+                "Top with mixed berries and granola.",
+                "Sprinkle with slivered almonds and cinnamon.",
+                "Drizzle with honey.",
+                "Serve immediately for best texture.",
+            ],
+            nutrition: NutritionInfo(calories: 380, protein: 32, carbs: 38, fat: 10)
+        ),
+        Recipe(
+            id: "avocado_quinoa_salad",
+            name: "Avocado & Quinoa Salad",
+            goal: .maintenance,
+            emoji: "🥑",
+            prepMinutes: 15,
+            servings: 2,
+            tags: ["Vegan", "Healthy Fats", "Balanced"],
+            ingredients: [
+                Ingredient(amount: "150g", name: "Quinoa (cooked)"),
+                Ingredient(amount: "1", name: "Avocado, diced"),
+                Ingredient(amount: "1 cup", name: "Cherry tomatoes, halved"),
+                Ingredient(amount: "1/2", name: "Cucumber, diced"),
+                Ingredient(amount: "1/4 cup", name: "Fresh parsley, chopped"),
+                Ingredient(amount: "3 tbsp", name: "Olive oil"),
+                Ingredient(amount: "2 tbsp", name: "Lemon juice"),
+            ],
+            steps: [
+                "Let cooked quinoa cool to room temperature.",
+                "In a large bowl, combine quinoa, avocado, tomatoes, cucumber, and parsley.",
+                "Whisk olive oil and lemon juice in a small bowl.",
+                "Pour dressing over salad and toss gently.",
+                "Season with salt and pepper.",
+            ],
+            nutrition: NutritionInfo(calories: 420, protein: 12, carbs: 42, fat: 22)
+        ),
+    ]
+
 }

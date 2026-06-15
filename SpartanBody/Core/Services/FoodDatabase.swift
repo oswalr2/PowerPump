@@ -142,6 +142,9 @@ struct FoodDatabase {
 
     static func search(_ query: String) -> [FoodItem] {
         guard !query.isEmpty else { return all }
-        return all.filter { $0.name.localizedCaseInsensitiveContains(query) }
+        return all.filter {
+            $0.name.localizedCaseInsensitiveContains(query)
+            || NSLocalizedString($0.name, comment: "").localizedCaseInsensitiveContains(query)
+        }
     }
 }
