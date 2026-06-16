@@ -5,6 +5,7 @@ struct ProfileView: View {
     @ObservedObject private var language = LanguageManager.shared
     @ObservedObject private var health   = HealthKitService.shared
     @State private var showSettings      = false
+    @State private var showRMCalculator  = false
 
     var body: some View {
         NavigationView {
@@ -17,6 +18,7 @@ struct ProfileView: View {
                         statsCard
                         targetsCard
                         healthCard
+                        rmCalculatorButton
                         settingsButton
                         SBSecondaryButton(title: "Edit Profile") {
                             profile.onboardingDone = false
@@ -30,6 +32,37 @@ struct ProfileView: View {
             .navigationBarHidden(true)
         }
         .sheet(isPresented: $showSettings) { SettingsView() }
+        .sheet(isPresented: $showRMCalculator) { RMCalculatorView() }
+    }
+
+    // MARK: - RM Calculator button
+
+    private var rmCalculatorButton: some View {
+        Button {
+            showRMCalculator = true
+        } label: {
+            HStack {
+                Image(systemName: "scalemass.fill")
+                    .foregroundColor(.sbAccent)
+                    .font(.system(size: 16))
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("RM Calculator")
+                        .font(SBFont.body())
+                        .foregroundColor(.sbTextPrimary)
+                    Text("Estimate your max for any rep count")
+                        .font(SBFont.label(11))
+                        .foregroundColor(.sbTextSecondary)
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundColor(.sbTextSecondary.opacity(0.5))
+            }
+            .padding(16)
+            .background(Color.sbSurface)
+            .cornerRadius(16)
+        }
+        .buttonStyle(.plain)
     }
 
     // MARK: - Settings button
