@@ -3,7 +3,7 @@ import SwiftUI
 struct OnboardingView: View {
     @ObservedObject private var profile = UserProfile.shared
     @State private var step = 0
-    private let totalSteps = 5
+    private let totalSteps = 6
 
     var body: some View {
         ZStack {
@@ -21,7 +21,8 @@ struct OnboardingView: View {
                     case 0: WelcomeStep()
                     case 1: GoalStep()
                     case 2: PersonalStep()
-                    case 3: ActivityStep()
+                    case 3: TargetWeightStep()
+                    case 4: ActivityStep()
                     default: SummaryStep(onDone: finishOnboarding)
                     }
                 }
@@ -60,7 +61,7 @@ struct OnboardingView: View {
 
     private var navigationButtons: some View {
         VStack(spacing: 12) {
-            SBPrimaryButton(title: step == 3 ? "See My Plan" : "Continue") {
+            SBPrimaryButton(title: step == 4 ? "See My Plan" : "Continue") {
                 withAnimation(.spring(response: 0.45, dampingFraction: 0.85)) { step += 1 }
                 HapticManager.light()
             }
@@ -222,6 +223,164 @@ private struct GoalCard: View {
             )
         }
         .buttonStyle(.plain)
+    }
+}
+
+// MARK: - Step 3: Target Weight
+
+private struct TargetWeightStep: View {
+    @ObservedObject private var profile = UserProfile.shared
+
+    // Range adapts around the user's current weight so the cursor isn't lost.
+    private var range: ClosedRange<Double> {
+        let lower = max(30, profile.weightKg - 25)
+        let upper = min(250, profile.weightKg + 25)
+        return lower...upper
+    }
+
+    private var deltaKg: Double { profile.targetWeightKg - profile.weightKg }
+    private var percentChange: Int {
+        guard profile.weightKg > 0 else { return 0 }
+        return abs(Int(round(deltaKg / profile.weightKg * 100)))
+    }
+
+    // Difficulty assessment: easy when |%| ≤ 5, moderate ≤ 10, ambitious > 10.
+    private var assessment: (emoji: String, title: String, body: String) {
+        let absPct = abs(percentChange)
+        let lose = deltaKg < 0
+        if absPct == 0 {
+            return ("⚖️", "Maintain your weight",
+                    "Stay consistent with nutrition and training to keep your current shape.")
+        } else if absPct <= 5 {
+            if lose { return ("👌", "Easy goal — lose %d%% of your body weight",
+                              "Small, sustainable changes will get you there without effort.") }
+            return ("👌", "Easy goal — gain %d%% of your body weight",
+                    "A small surplus and consistent training will make this happen.")
+        } else if absPct <= 10 {
+            if lose { return ("👍", "Moderate goal — lose %d%% of your body weight",
+                              "Moderate weight loss can produce a significant improvement in mood and energy.") }
+            return ("👍", "Moderate goal — gain %d%% of your body weight",
+                    "A solid surplus with regular training will build noticeable muscle.")
+        } else {
+            if lose { return ("💪", "Ambitious goal — lose %d%% of your body weight",
+                              "This will take dedication — patience and consistency are key.") }
+            return ("💪", "Ambitious goal — gain %d%% of your body weight",
+                    "This will take dedication — patience and consistency are key.")
+        }
+    }
+
+    var body: some View {
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 22) {
+                VStack(spacing: 6) {
+                    Text("Your target weight")
+                        .font(SBFont.display(28))
+                        .foregroundColor(.sbTextPrimary)
+                        .multilineTextAlignment(.center)
+                    Text("Slide to set the weight you want to reach")
+                        .font(SBFont.body())
+                        .foregroundColor(.sbTextSecondary)
+                        .multilineTextAlignment(.center)
+                }
+
+                VStack(spacing: 14) {
+                    // Big target + small current weight reference on the right
+                    HStack(alignment: .lastTextBaseline, spacing: 16) {
+                        Spacer()
+                        HStack(alignment: .lastTextBaseline, spacing: 4) {
+                            Text(String(format: "%.0f", profile.targetWeightKg))
+                                .font(SBFont.display(56))
+                                .foregroundColor(.sbTextPrimary)
+                                .monospacedDigit()
+                            Text("kg")
+                                .font(SBFont.heading(18))
+                                .foregroundColor(.sbTextSecondary)
+                                .offset(y: 10)
+                        }
+                        if abs(profile.targetWeightKg - profile.weightKg) >= 0.5 {
+                            HStack(spacing: 4) {
+                                Image(systemName: "arrow.left")
+                                    .font(.system(size: 11, weight: .bold))
+                                Text(String(format: "%.0f", profile.weightKg))
+                                    .font(SBFont.heading(20))
+                                    .monospacedDigit()
+                            }
+                            .foregroundColor(.sbTextSecondary.opacity(0.55))
+                            .padding(.bottom, 8)
+                        }
+                        Spacer()
+                    }
+
+                    SBRulerPicker(
+                        value: $profile.targetWeightKg,
+                        range: range, step: 1, majorTickEvery: 10
+                    )
+
+                    deltaIndicator
+                }
+                .padding(16)
+                .background(Color.sbSurface)
+                .cornerRadius(16)
+                .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.sbBorder))
+
+                assessmentCard
+            }
+            .padding(.horizontal, 20)
+            .padding(.bottom, 8)
+        }
+        .onAppear {
+            // First time we land here, default the target to the user's current
+            // weight so the cursor starts in a sensible place.
+            if profile.targetWeightKg == 75 && profile.weightKg != 75 {
+                profile.targetWeightKg = profile.weightKg
+            }
+        }
+    }
+
+    // Visually shows "you are losing/gaining X kg" with a tinted track.
+    private var deltaIndicator: some View {
+        let absKg = abs(deltaKg)
+        let lose = deltaKg < 0
+        let label = absKg < 0.5
+            ? String(localized: "Maintain")
+            : (lose
+                ? String(format: NSLocalizedString("Lose %.0f kg", comment: ""), absKg)
+                : String(format: NSLocalizedString("Gain %.0f kg", comment: ""), absKg))
+        let tint: Color = absKg < 0.5 ? .sbAccent : (lose ? .sbCyan : .sbGreen)
+
+        return HStack {
+            Circle().fill(tint).frame(width: 8, height: 8)
+            Text(label)
+                .font(SBFont.label())
+                .foregroundColor(.sbTextPrimary)
+            Spacer()
+        }
+    }
+
+    private var assessmentCard: some View {
+        let a = assessment
+        let formattedTitle = String(format: NSLocalizedString(a.title, comment: ""), percentChange)
+        let formattedBody  = NSLocalizedString(a.body, comment: "")
+
+        return VStack(alignment: .leading, spacing: 8) {
+            HStack(alignment: .top, spacing: 8) {
+                Text(a.emoji).font(.system(size: 20))
+                Text(formattedTitle)
+                    .font(SBFont.heading(15))
+                    .foregroundColor(.sbTextPrimary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            Text(formattedBody)
+                .font(SBFont.body())
+                .foregroundColor(.sbTextSecondary)
+                .lineSpacing(3)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color.sbSurface)
+        .cornerRadius(16)
+        .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.sbBorder))
     }
 }
 

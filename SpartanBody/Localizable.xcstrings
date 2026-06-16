@@ -1431,6 +1431,62 @@
         }
       }
     },
+    "A small surplus and consistent training will make this happen.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un pequeño superávit y entrenamiento constante harán que suceda."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un petit excédent et un entraînement constant feront le travail."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un piccolo surplus e allenamento costante renderanno tutto possibile."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um pequeno superávit e treino constante farão acontecer."
+          }
+        }
+      }
+    },
+    "A solid surplus with regular training will build noticeable muscle.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un superávit sólido con entrenamiento regular construirá músculo notable."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un excédent solide avec un entraînement régulier vous fera prendre du muscle visiblement."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un solido surplus con allenamento regolare costruirà muscoli evidenti."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um superávit sólido com treino regular vai construir músculo perceptível."
+          }
+        }
+      }
+    },
     "AI Coach": {
       "localizations": {
         "es": {
@@ -2586,6 +2642,62 @@
           "stringUnit": {
             "state": "translated",
             "value": "Amêndoas laminadas"
+          }
+        }
+      }
+    },
+    "Ambitious goal — gain %d%% of your body weight": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meta ambiciosa — ganarás %d%% de tu peso corporal"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Objectif ambitieux — gagnez %d%% de votre poids corporel"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Obiettivo ambizioso — guadagnerai il %d%% del tuo peso corporeo"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meta ambiciosa — ganhará %d%% do seu peso corporal"
+          }
+        }
+      }
+    },
+    "Ambitious goal — lose %d%% of your body weight": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meta ambiciosa — perderás %d%% de tu peso corporal"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Objectif ambitieux — perdez %d%% de votre poids corporel"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Obiettivo ambizioso — perderai il %d%% del tuo peso corporeo"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meta ambiciosa — perderá %d%% do seu peso corporal"
           }
         }
       }
@@ -6824,6 +6936,62 @@
         }
       }
     },
+    "Easy goal — gain %d%% of your body weight": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meta fácil — ganarás %d%% de tu peso corporal"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Objectif facile — gagnez %d%% de votre poids corporel"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Obiettivo facile — guadagnerai il %d%% del tuo peso corporeo"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meta fácil — ganhará %d%% do seu peso corporal"
+          }
+        }
+      }
+    },
+    "Easy goal — lose %d%% of your body weight": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meta fácil — perderás %d%% de tu peso corporal"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Objectif facile — perdez %d%% de votre poids corporel"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Obiettivo facile — perderai il %d%% del tuo peso corporeo"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meta fácil — perderá %d%% do seu peso corporal"
+          }
+        }
+      }
+    },
     "Edamame": {
       "localizations": {
         "es": {
@@ -7999,6 +8167,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Frutas"
+          }
+        }
+      }
+    },
+    "Gain %.0f kg": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ganar %.0f kg"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gagner %.0f kg"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guadagnare %.0f kg"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ganhar %.0f kg"
           }
         }
       }
@@ -10334,6 +10530,34 @@
         }
       }
     },
+    "Lose %.0f kg": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perder %.0f kg"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perdre %.0f kg"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perdere %.0f kg"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perder %.0f kg"
+          }
+        }
+      }
+    },
     "Lose Weight": {
       "extractionState": "stale",
       "localizations": {
@@ -10511,6 +10735,34 @@
         }
       }
     },
+    "Maintain": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantener"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maintenir"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantieni"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manter"
+          }
+        }
+      }
+    },
     "Maintain health & energy levels": {
       "extractionState": "stale",
       "localizations": {
@@ -10536,6 +10788,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mantenha saúde e energia"
+          }
+        }
+      }
+    },
+    "Maintain your weight": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantén tu peso"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maintenez votre poids"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantieni il tuo peso"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantenha seu peso"
           }
         }
       }
@@ -11080,6 +11360,90 @@
           "stringUnit": {
             "state": "translated",
             "value": "Exercício moderado 3–5 dias/semana"
+          }
+        }
+      }
+    },
+    "Moderate goal — gain %d%% of your body weight": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meta moderada — ganarás %d%% de tu peso corporal"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Objectif modéré — gagnez %d%% de votre poids corporel"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Obiettivo moderato — guadagnerai il %d%% del tuo peso corporeo"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meta moderada — ganhará %d%% do seu peso corporal"
+          }
+        }
+      }
+    },
+    "Moderate goal — lose %d%% of your body weight": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meta moderada — perderás %d%% de tu peso corporal"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Objectif modéré — perdez %d%% de votre poids corporel"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Obiettivo moderato — perderai il %d%% del tuo peso corporeo"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meta moderada — perderá %d%% do seu peso corporal"
+          }
+        }
+      }
+    },
+    "Moderate weight loss can produce a significant improvement in mood and energy.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La pérdida moderada de peso puede producir una mejora significativa en el ánimo y la energía."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une perte de poids modérée peut produire une amélioration significative de l'humeur et de l'énergie."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una perdita di peso moderata può produrre un miglioramento significativo dell'umore e dell'energia."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A perda moderada de peso pode produzir uma melhora significativa no humor e na energia."
           }
         }
       }
@@ -15650,6 +16014,62 @@
         }
       }
     },
+    "Slide to set the weight you want to reach": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desliza para ajustar el peso que quieres alcanzar"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Faites glisser pour définir le poids que vous souhaitez atteindre"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scorri per impostare il peso che vuoi raggiungere"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deslize para definir o peso que deseja alcançar"
+          }
+        }
+      }
+    },
+    "Small, sustainable changes will get you there without effort.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cambios pequeños y sostenibles te llevarán ahí sin esfuerzo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De petits changements durables vous y mèneront sans effort."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Piccoli cambiamenti sostenibili ti porteranno lì senza sforzo."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pequenas mudanças sustentáveis vão te levar lá sem esforço."
+          }
+        }
+      }
+    },
     "Snack": {
       "extractionState": "stale",
       "localizations": {
@@ -16172,6 +16592,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Manter a Forma"
+          }
+        }
+      }
+    },
+    "Stay consistent with nutrition and training to keep your current shape.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantén constancia en la nutrición y el entrenamiento para conservar tu forma actual."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restez constant dans la nutrition et l'entraînement pour garder votre forme actuelle."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantieni costanza con nutrizione e allenamento per conservare la tua forma attuale."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantenha consistência na nutrição e treino para conservar sua forma atual."
           }
         }
       }
@@ -16802,6 +17250,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Esta Semana"
+          }
+        }
+      }
+    },
+    "This will take dedication — patience and consistency are key.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esto requerirá dedicación — la paciencia y constancia son clave."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cela demandera de la dédication — patience et constance sont la clé."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Servirà dedizione — pazienza e costanza sono fondamentali."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Isso vai exigir dedicação — paciência e consistência são essenciais."
           }
         }
       }
@@ -19236,6 +19712,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "Seu nome"
+          }
+        }
+      }
+    },
+    "Your target weight": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu peso objetivo"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Votre poids cible"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Il tuo peso obiettivo"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seu peso objetivo"
           }
         }
       }

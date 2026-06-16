@@ -54,6 +54,7 @@ final class UserProfile: ObservableObject {
     @Published var name: String        { didSet { save() } }
     @Published var age: Int            { didSet { save() } }
     @Published var weightKg: Double    { didSet { save() } }
+    @Published var targetWeightKg: Double { didSet { save() } }
     @Published var heightCm: Double    { didSet { save() } }
     @Published var goal: FitnessGoal   { didSet { save() } }
     @Published var activityLevel: ActivityLevel { didSet { save() } }
@@ -67,6 +68,7 @@ final class UserProfile: ObservableObject {
             name          = saved.name
             age           = saved.age
             weightKg      = saved.weightKg
+            targetWeightKg = saved.targetWeightKg ?? saved.weightKg
             heightCm      = saved.heightCm
             goal          = saved.goal
             activityLevel = saved.activityLevel
@@ -75,6 +77,7 @@ final class UserProfile: ObservableObject {
             name          = ""
             age           = 25
             weightKg      = 75
+            targetWeightKg = 75
             heightCm      = 175
             goal          = .gainMuscle
             activityLevel = .moderate
@@ -115,6 +118,7 @@ final class UserProfile: ObservableObject {
 
     private func save() {
         let data = ProfileData(name: name, age: age, weightKg: weightKg,
+                               targetWeightKg: targetWeightKg,
                                heightCm: heightCm, goal: goal,
                                activityLevel: activityLevel, onboardingDone: onboardingDone)
         if let encoded = try? JSONEncoder().encode(data) {
@@ -127,6 +131,7 @@ private struct ProfileData: Codable {
     var name: String
     var age: Int
     var weightKg: Double
+    var targetWeightKg: Double? = nil  // Optional for backward compatibility
     var heightCm: Double
     var goal: FitnessGoal
     var activityLevel: ActivityLevel
