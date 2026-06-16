@@ -394,12 +394,22 @@ private struct PredictionStep: View {
     private var isLoss:  Bool   { deltaKg < 0 }
     private var isMaintenance: Bool { abs(deltaKg) < 0.5 }
 
-    // Weekly rate: ~0.5% of bodyweight for loss (capped at 1 kg/week),
-    // ~0.25 kg/week for gain (lean bulking pace). Maintenance => no change.
+    // Weekly rate, adaptive to BMI (people with more excess weight lose faster
+    // — early water loss, more total body to mobilize from). Within a safe
+    // range of 0.5–1.5 kg/week for loss, 0.35 kg/week for lean gain.
     private var weeklyChangeKg: Double {
         if isMaintenance { return 0 }
-        if isLoss { return min(1.0, profile.weightKg * 0.005) }
-        return 0.25
+        if isLoss {
+            let rate: Double
+            switch profile.bmi {
+            case 30...:    rate = 0.012   // Obese: ~1.2% per week
+            case 25..<30:  rate = 0.010   // Overweight: ~1% per week
+            case 18.5..<25: rate = 0.0085 // Normal: ~0.85% per week
+            default:       rate = 0.006   // Underweight: ~0.6% per week
+            }
+            return min(1.5, max(0.5, profile.weightKg * rate))
+        }
+        return 0.35  // Lean bulking, sustainable pace
     }
 
     private var weeksToTarget: Int {
@@ -438,19 +448,22 @@ private struct PredictionStep: View {
                                 .foregroundColor(.sbTextSecondary)
                         }
                     } else {
-                        HStack(alignment: .lastTextBaseline, spacing: 6) {
-                            Text(String(format: "%.0f", profile.targetWeightKg))
-                                .font(SBFont.display(40))
-                                .foregroundColor(.sbTextPrimary)
-                            Text("kg")
-                                .font(SBFont.heading(20))
-                                .foregroundColor(.sbTextSecondary)
-                            Text("on")
-                                .font(SBFont.heading(20))
-                                .foregroundColor(.sbTextSecondary)
-                            Text(targetDateString)
-                                .font(SBFont.display(38))
-                                .foregroundColor(.sbAccent)
+                        VStack(spacing: 6) {
+                            HStack(alignment: .lastTextBaseline, spacing: 6) {
+                                Text(String(format: "%.0f", profile.targetWeightKg))
+                                    .font(SBFont.display(40))
+                                    .foregroundColor(.sbTextPrimary)
+                                Text("kg")
+                                    .font(SBFont.heading(20))
+                                    .foregroundColor(.sbTextSecondary)
+                                Text("on")
+                                    .font(SBFont.heading(20))
+                                    .foregroundColor(.sbTextSecondary)
+                                Text(targetDateString)
+                                    .font(SBFont.display(38))
+                                    .foregroundColor(.sbAccent)
+                            }
+                            paceBadge
                         }
                     }
                 }
@@ -475,6 +488,30 @@ private struct PredictionStep: View {
             }
             .padding(.bottom, 8)
         }
+    }
+
+    // Small badge: weekly pace and total duration, so the prediction is transparent.
+    private var paceBadge: some View {
+        let weeks = weeksToTarget
+        let months = weeks / 4
+        let extraWeeks = weeks % 4
+        let durationText: String = {
+            if weeks < 4 { return String(format: NSLocalizedString("%d weeks", comment: ""), weeks) }
+            if extraWeeks == 0 { return String(format: NSLocalizedString("%d months", comment: ""), months) }
+            return String(format: NSLocalizedString("%d months, %d weeks", comment: ""), months, extraWeeks)
+        }()
+        let rateText = String(format: NSLocalizedString("%.1f kg/week", comment: ""), weeklyChangeKg)
+        return HStack(spacing: 6) {
+            Image(systemName: "speedometer")
+                .font(.system(size: 11, weight: .semibold))
+            Text("\(rateText) · \(durationText)")
+                .font(SBFont.caption())
+        }
+        .foregroundColor(.sbTextSecondary)
+        .padding(.horizontal, 12)
+        .padding(.vertical, 6)
+        .background(Color.sbSurfaceRaised)
+        .cornerRadius(20)
     }
 
     // MARK: - Chart card
