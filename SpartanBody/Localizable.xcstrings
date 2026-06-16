@@ -6135,6 +6135,34 @@
         }
       }
     },
+    "Current BMI": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IMC actual"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IMC actuel"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BMI attuale"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IMC atual"
+          }
+        }
+      }
+    },
     "Daily Calories": {
       "extractionState": "stale",
       "localizations": {
@@ -20344,6 +20372,34 @@
     },
     "years": {
       "extractionState": "stale",
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "años"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ans"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "anni"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "anos"
+          }
+        }
+      }
+    },
+    "yrs": {
       "localizations": {
         "es": {
           "stringUnit": {

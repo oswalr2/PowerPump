@@ -233,47 +233,119 @@ private struct PersonalStep: View {
 
     var body: some View {
         ScrollView(showsIndicators: false) {
-            VStack(spacing: 28) {
-                VStack(spacing: 8) {
+            VStack(spacing: 22) {
+                VStack(spacing: 6) {
                     Text("About You")
                         .font(SBFont.display(30))
                         .foregroundColor(.sbTextPrimary)
                     Text("Needed to calculate your daily targets")
                         .font(SBFont.body())
                         .foregroundColor(.sbTextSecondary)
+                        .multilineTextAlignment(.center)
                 }
 
-                VStack(spacing: 14) {
-                    // Name field
-                    VStack(alignment: .leading, spacing: 6) {
-                        Label("Name", systemImage: "person")
-                            .font(SBFont.label())
-                            .foregroundColor(.sbTextSecondary)
-                        TextField("Your name", text: $nameText)
-                            .font(SBFont.body())
+                // Name
+                VStack(alignment: .leading, spacing: 6) {
+                    Label("Name", systemImage: "person")
+                        .font(SBFont.label())
+                        .foregroundColor(.sbTextSecondary)
+                    TextField("Your name", text: $nameText)
+                        .font(SBFont.body())
+                        .foregroundColor(.sbTextPrimary)
+                        .padding(14)
+                        .background(Color.sbSurface)
+                        .cornerRadius(12)
+                        .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.sbBorder))
+                        .onChange(of: nameText) { profile.name = $0 }
+                }
+
+                // Age
+                VStack(alignment: .leading, spacing: 6) {
+                    Label("Age", systemImage: "calendar")
+                        .font(SBFont.label())
+                        .foregroundColor(.sbTextSecondary)
+                    HStack {
+                        Spacer()
+                        Text("\(profile.age)")
+                            .font(SBFont.display(48))
                             .foregroundColor(.sbTextPrimary)
-                            .padding(14)
-                            .background(Color.sbSurface)
-                            .cornerRadius(12)
-                            .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.sbBorder))
-                            .onChange(of: nameText) { profile.name = $0 }
+                            .monospacedDigit()
+                        Text("yrs")
+                            .font(SBFont.body())
+                            .foregroundColor(.sbTextSecondary)
+                            .offset(y: 6)
+                        Spacer()
                     }
-
-                    // Age stepper
-                    StepperRow(label: "Age", icon: "calendar", value: Binding(
-                        get: { Double(profile.age) }, set: { profile.age = Int($0) }
-                    ), range: 13...90, step: 1, unit: "yrs")
-
-                    // Weight stepper
-                    StepperRow(label: "Weight", icon: "scalemass", value: $profile.weightKg,
-                               range: 30...250, step: 0.5, unit: "kg")
-
-                    // Height stepper
-                    StepperRow(label: "Height", icon: "ruler", value: $profile.heightCm,
-                               range: 100...230, step: 1, unit: "cm")
+                    SBRulerPicker(
+                        value: Binding(
+                            get: { Double(profile.age) },
+                            set: { profile.age = Int($0) }
+                        ),
+                        range: 13...90, step: 1, majorTickEvery: 5
+                    )
                 }
+                .padding(16)
+                .background(Color.sbSurface)
+                .cornerRadius(16)
+                .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.sbBorder))
+
+                // Weight + BMI bar (the hero card)
+                VStack(alignment: .leading, spacing: 10) {
+                    Label("Weight", systemImage: "scalemass")
+                        .font(SBFont.label())
+                        .foregroundColor(.sbTextSecondary)
+                    HStack {
+                        Spacer()
+                        Text(String(format: "%.0f", profile.weightKg))
+                            .font(SBFont.display(56))
+                            .foregroundColor(.sbTextPrimary)
+                            .monospacedDigit()
+                        Text("kg")
+                            .font(SBFont.heading(18))
+                            .foregroundColor(.sbTextSecondary)
+                            .offset(y: 10)
+                        Spacer()
+                    }
+                    SBRulerPicker(
+                        value: $profile.weightKg,
+                        range: 30...250, step: 1, majorTickEvery: 10
+                    )
+                    Divider().background(Color.sbBorder).padding(.vertical, 6)
+                    SBBMIBar(bmi: profile.bmi)
+                }
+                .padding(16)
+                .background(Color.sbSurface)
+                .cornerRadius(16)
+                .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.sbBorder))
+
+                // Height
+                VStack(alignment: .leading, spacing: 6) {
+                    Label("Height", systemImage: "ruler")
+                        .font(SBFont.label())
+                        .foregroundColor(.sbTextSecondary)
+                    HStack {
+                        Spacer()
+                        Text(String(format: "%.0f", profile.heightCm))
+                            .font(SBFont.display(48))
+                            .foregroundColor(.sbTextPrimary)
+                            .monospacedDigit()
+                        Text("cm")
+                            .font(SBFont.body())
+                            .foregroundColor(.sbTextSecondary)
+                            .offset(y: 6)
+                        Spacer()
+                    }
+                    SBRulerPicker(
+                        value: $profile.heightCm,
+                        range: 100...230, step: 1, majorTickEvery: 10
+                    )
+                }
+                .padding(16)
+                .background(Color.sbSurface)
+                .cornerRadius(16)
+                .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.sbBorder))
             }
-            .padding(.horizontal, 24)
+            .padding(.horizontal, 20)
             .padding(.bottom, 8)
         }
         .onAppear { nameText = profile.name }
