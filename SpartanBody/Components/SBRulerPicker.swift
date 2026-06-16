@@ -1,60 +1,60 @@
 import SwiftUI
 
-// A horizontal scroll ruler the user drags to pick a value. Used for weight,
-// height, and target weight during onboarding — feels closer to a physical
-// dial than a stepper row.
+// Drag-based horizontal ruler picker. Used for weight, height, age in
+// the onboarding — feels closer to a physical dial than a stepper row.
 struct SBRulerPicker: View {
     @Binding var value: Double
     let range: ClosedRange<Double>
     var step: Double = 1
-    var tickSpacing: CGFloat = 8        // pixels between consecutive ticks
-    var majorTickEvery: Int = 10        // labelled tick every N ticks
+    var tickSpacing: CGFloat = 9
+    var majorTickEvery: Int = 10
     var tintColor: Color = .sbAccent
+
+    @State private var dragAnchor: Double? = nil
 
     private var ticks: [Double] {
         stride(from: range.lowerBound, through: range.upperBound, by: step).map { $0 }
     }
 
+    private var indexOfCurrent: Int {
+        let idx = Int(round((value - range.lowerBound) / step))
+        return min(max(idx, 0), ticks.count - 1)
+    }
+
     var body: some View {
         GeometryReader { geo in
-            let halfWidth = geo.size.width / 2
+            ZStack {
+                HStack(spacing: tickSpacing) {
+                    ForEach(Array(ticks.enumerated()), id: \.offset) { idx, tick in
+                        tickMark(idx: idx, value: tick)
+                    }
+                }
+                .frame(height: 50)
+                // Slide the tick row so the chosen value sits under the cursor.
+                .offset(x: geo.size.width / 2 - CGFloat(indexOfCurrent) * tickSpacing)
+                .animation(.easeOut(duration: 0.08), value: value)
 
-            ScrollViewReader { proxy in
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: tickSpacing) {
-                        ForEach(Array(ticks.enumerated()), id: \.offset) { idx, tick in
-                            tickMark(idx: idx, value: tick)
-                                .id(Int(tick))
-                        }
-                    }
-                    .padding(.horizontal, halfWidth)
-                    .background(
-                        // Track the scroll offset and convert it to a value.
-                        GeometryReader { inner in
-                            Color.clear.preference(
-                                key: ScrollOffsetKey.self,
-                                value: -inner.frame(in: .named("ruler")).origin.x
-                            )
-                        }
-                    )
-                }
-                .coordinateSpace(name: "ruler")
-                .onPreferenceChange(ScrollOffsetKey.self) { offset in
-                    let idx = Int(round(offset / tickSpacing))
-                    let clamped = min(max(idx, 0), ticks.count - 1)
-                    let newValue = ticks[clamped]
-                    if abs(newValue - value) >= step / 2 {
-                        value = newValue
-                        HapticManager.selection()
-                    }
-                }
-                .onAppear {
-                    DispatchQueue.main.async {
-                        proxy.scrollTo(Int(value), anchor: .center)
-                    }
-                }
+                centerIndicator
             }
-            .overlay(centerIndicator)
+            .frame(width: geo.size.width, height: 64, alignment: .center)
+            .contentShape(Rectangle())
+            .clipped()
+            .gesture(
+                DragGesture(minimumDistance: 1)
+                    .onChanged { drag in
+                        if dragAnchor == nil { dragAnchor = value }
+                        let anchor = dragAnchor ?? value
+                        let stepsMoved = -drag.translation.width / tickSpacing
+                        let newValue = anchor + Double(stepsMoved) * step
+                        let clamped = min(max(newValue, range.lowerBound), range.upperBound)
+                        let snapped = (round(clamped / step) * step)
+                        if abs(snapped - value) >= step / 2 {
+                            HapticManager.selection()
+                            value = snapped
+                        }
+                    }
+                    .onEnded { _ in dragAnchor = nil }
+            )
         }
         .frame(height: 64)
     }
@@ -69,6 +69,7 @@ struct SBRulerPicker: View {
                 Text("\(Int(tick))")
                     .font(SBFont.label(11))
                     .foregroundColor(.sbTextSecondary.opacity(0.7))
+                    .fixedSize()
             } else {
                 Spacer().frame(height: 14)
             }
@@ -83,13 +84,6 @@ struct SBRulerPicker: View {
             .cornerRadius(1.5)
             .shadow(color: tintColor.opacity(0.5), radius: 6)
             .allowsHitTesting(false)
-    }
-}
-
-private struct ScrollOffsetKey: PreferenceKey {
-    static var defaultValue: CGFloat = 0
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = nextValue()
     }
 }
 
@@ -162,6 +156,7 @@ struct SBBMIBar: View {
                             .frame(width: 7, height: 5)
                     }
                     .offset(x: geo.size.width * position - 14, y: -10)
+                    .animation(.easeOut(duration: 0.15), value: bmi)
                 }
             }
             .frame(height: 8)
