@@ -28,6 +28,7 @@ struct ProgressView: View {
                         headerSection
                         streakCard
                         summaryRow
+                        MonthlyCalendarCard()
                         weightCard
                         workoutsCard
                         nutritionHistoryCard
