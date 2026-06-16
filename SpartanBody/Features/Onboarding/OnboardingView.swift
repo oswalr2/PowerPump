@@ -3,7 +3,7 @@ import SwiftUI
 struct OnboardingView: View {
     @ObservedObject private var profile = UserProfile.shared
     @State private var step = 0
-    private let totalSteps = 6
+    private let totalSteps = 7
 
     var body: some View {
         ZStack {
@@ -22,7 +22,8 @@ struct OnboardingView: View {
                     case 1: GoalStep()
                     case 2: PersonalStep()
                     case 3: TargetWeightStep()
-                    case 4: ActivityStep()
+                    case 4: PredictionStep()
+                    case 5: ActivityStep()
                     default: SummaryStep(onDone: finishOnboarding)
                     }
                 }
@@ -61,7 +62,7 @@ struct OnboardingView: View {
 
     private var navigationButtons: some View {
         VStack(spacing: 12) {
-            SBPrimaryButton(title: step == 4 ? "See My Plan" : "Continue") {
+            SBPrimaryButton(title: step == 5 ? "See My Plan" : "Continue") {
                 withAnimation(.spring(response: 0.45, dampingFraction: 0.85)) { step += 1 }
                 HapticManager.light()
             }
@@ -381,6 +382,268 @@ private struct TargetWeightStep: View {
         .background(Color.sbSurface)
         .cornerRadius(16)
         .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.sbBorder))
+    }
+}
+
+// MARK: - Step 4: Prediction (when will you reach your target)
+
+private struct PredictionStep: View {
+    @ObservedObject private var profile = UserProfile.shared
+
+    private var deltaKg: Double { profile.targetWeightKg - profile.weightKg }
+    private var isLoss:  Bool   { deltaKg < 0 }
+    private var isMaintenance: Bool { abs(deltaKg) < 0.5 }
+
+    // Weekly rate: ~0.5% of bodyweight for loss (capped at 1 kg/week),
+    // ~0.25 kg/week for gain (lean bulking pace). Maintenance => no change.
+    private var weeklyChangeKg: Double {
+        if isMaintenance { return 0 }
+        if isLoss { return min(1.0, profile.weightKg * 0.005) }
+        return 0.25
+    }
+
+    private var weeksToTarget: Int {
+        guard weeklyChangeKg > 0 else { return 0 }
+        return max(1, Int(ceil(abs(deltaKg) / weeklyChangeKg)))
+    }
+
+    private var targetDate: Date {
+        Calendar.current.date(byAdding: .day, value: weeksToTarget * 7, to: .now) ?? .now
+    }
+
+    private var targetDateString: String {
+        let f = DateFormatter()
+        f.locale = Locale(identifier: LanguageManager.shared.selectedCode)
+        f.setLocalizedDateFormatFromTemplate("MMM d")
+        return f.string(from: targetDate)
+    }
+
+    var body: some View {
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 28) {
+                // Title with date highlight
+                VStack(spacing: 4) {
+                    Text(isMaintenance ? "Your maintenance goal" : "We predict you'll be")
+                        .font(SBFont.body())
+                        .foregroundColor(.sbTextSecondary)
+                        .multilineTextAlignment(.center)
+
+                    if isMaintenance {
+                        HStack(alignment: .lastTextBaseline, spacing: 4) {
+                            Text(String(format: "%.0f", profile.weightKg))
+                                .font(SBFont.display(40))
+                                .foregroundColor(.sbTextPrimary)
+                            Text("kg")
+                                .font(SBFont.heading(20))
+                                .foregroundColor(.sbTextSecondary)
+                        }
+                    } else {
+                        HStack(alignment: .lastTextBaseline, spacing: 6) {
+                            Text(String(format: "%.0f", profile.targetWeightKg))
+                                .font(SBFont.display(40))
+                                .foregroundColor(.sbTextPrimary)
+                            Text("kg")
+                                .font(SBFont.heading(20))
+                                .foregroundColor(.sbTextSecondary)
+                            Text("on")
+                                .font(SBFont.heading(20))
+                                .foregroundColor(.sbTextSecondary)
+                            Text(targetDateString)
+                                .font(SBFont.display(38))
+                                .foregroundColor(.sbAccent)
+                        }
+                    }
+                }
+                .padding(.horizontal, 16)
+
+                if isMaintenance {
+                    maintenanceCard
+                } else {
+                    chartCard
+                }
+
+                VStack(spacing: 6) {
+                    Text("Excellent!")
+                        .font(SBFont.heading(20))
+                        .foregroundColor(.sbTextPrimary)
+                    Text("We have a clear understanding of you and your body")
+                        .font(SBFont.body())
+                        .foregroundColor(.sbTextSecondary)
+                        .multilineTextAlignment(.center)
+                }
+                .padding(.horizontal, 20)
+            }
+            .padding(.bottom, 8)
+        }
+    }
+
+    // MARK: - Chart card
+
+    private var chartCard: some View {
+        VStack(spacing: 8) {
+            ZStack {
+                // Curve: smooth S-shape from current weight to target weight.
+                PredictionCurveShape(progress: 1.0, downward: isLoss)
+                    .stroke(
+                        LinearGradient(
+                            colors: [.orange.opacity(0.9), .sbAccent],
+                            startPoint: .leading, endPoint: .trailing),
+                        style: StrokeStyle(lineWidth: 4, lineCap: .round)
+                    )
+                    .frame(height: 220)
+                    .overlay(
+                        PredictionCurveShape(progress: 1.0, downward: isLoss, fill: true)
+                            .fill(
+                                LinearGradient(
+                                    colors: [.orange.opacity(0.18), .clear],
+                                    startPoint: .top, endPoint: .bottom)
+                            )
+                    )
+
+                GeometryReader { geo in
+                    // Start dot (Today)
+                    Circle()
+                        .fill(.orange)
+                        .frame(width: 12, height: 12)
+                        .position(
+                            x: 12,
+                            y: isLoss ? 16 : geo.size.height - 16
+                        )
+
+                    // Vertical dashed line at Today
+                    Path { path in
+                        path.move(to: CGPoint(x: 12, y: isLoss ? 16 : geo.size.height - 16))
+                        path.addLine(to: CGPoint(x: 12, y: geo.size.height))
+                    }
+                    .stroke(Color.orange.opacity(0.4),
+                            style: StrokeStyle(lineWidth: 1, dash: [3, 3]))
+
+                    // End dot (target)
+                    Circle()
+                        .fill(Color.sbAccent)
+                        .frame(width: 12, height: 12)
+                        .position(
+                            x: geo.size.width - 12,
+                            y: isLoss ? geo.size.height - 16 : 16
+                        )
+
+                    // Vertical dashed line at target
+                    Path { path in
+                        path.move(to: CGPoint(x: geo.size.width - 12,
+                                              y: isLoss ? geo.size.height - 16 : 16))
+                        path.addLine(to: CGPoint(x: geo.size.width - 12, y: geo.size.height))
+                    }
+                    .stroke(Color.sbAccent.opacity(0.4),
+                            style: StrokeStyle(lineWidth: 1, dash: [3, 3]))
+
+                    // Trophy bubble above the target dot
+                    VStack(spacing: 2) {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(LinearGradient(colors: [.orange, .yellow],
+                                                     startPoint: .top, endPoint: .bottom))
+                                .frame(width: 42, height: 42)
+                                .shadow(color: .orange.opacity(0.4), radius: 8)
+                            Text("🏆").font(.system(size: 24))
+                        }
+                        Triangle()
+                            .fill(.orange)
+                            .frame(width: 8, height: 6)
+                    }
+                    .position(
+                        x: geo.size.width - 12,
+                        y: isLoss ? geo.size.height - 50 : 50
+                    )
+                }
+            }
+            .frame(height: 220)
+
+            HStack {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Today")
+                        .font(SBFont.caption())
+                        .foregroundColor(.sbTextSecondary)
+                    Text(String(format: "%.0f kg", profile.weightKg))
+                        .font(SBFont.label(10))
+                        .foregroundColor(.sbTextSecondary.opacity(0.6))
+                }
+                Spacer()
+                VStack(alignment: .trailing, spacing: 2) {
+                    Text(targetDateString)
+                        .font(SBFont.caption())
+                        .fontWeight(.semibold)
+                        .foregroundColor(.sbAccent)
+                    Text(String(format: "%.0f kg", profile.targetWeightKg))
+                        .font(SBFont.label(10))
+                        .foregroundColor(.sbAccent.opacity(0.7))
+                }
+            }
+            .padding(.horizontal, 14)
+        }
+        .padding(.vertical, 14)
+        .padding(.horizontal, 14)
+        .background(Color.sbSurface)
+        .cornerRadius(20)
+        .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.sbBorder))
+        .padding(.horizontal, 20)
+    }
+
+    private var maintenanceCard: some View {
+        VStack(spacing: 14) {
+            Text("⚖️").font(.system(size: 56))
+            Text("Maintenance mode")
+                .font(SBFont.heading(16))
+                .foregroundColor(.sbTextPrimary)
+            Text("Your plan will help you stay at your current weight while building healthy habits.")
+                .font(SBFont.body())
+                .foregroundColor(.sbTextSecondary)
+                .multilineTextAlignment(.center)
+        }
+        .padding(28)
+        .background(Color.sbSurface)
+        .cornerRadius(20)
+        .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.sbBorder))
+        .padding(.horizontal, 20)
+    }
+}
+
+// Smooth S-curve from one corner to the diagonally opposite one.
+// Used both as a stroked line and (with fill=true) as an area underneath.
+private struct PredictionCurveShape: Shape {
+    var progress: CGFloat = 1.0
+    var downward: Bool
+    var fill: Bool = false
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        let startY = downward ? 16 : rect.height - 16
+        let endY   = downward ? rect.height - 16 : 16
+        let start  = CGPoint(x: 12, y: startY)
+        let end    = CGPoint(x: rect.width - 12, y: endY)
+
+        let cp1 = CGPoint(x: rect.width * 0.45, y: startY)
+        let cp2 = CGPoint(x: rect.width * 0.55, y: endY)
+
+        path.move(to: start)
+        path.addCurve(to: end, control1: cp1, control2: cp2)
+
+        if fill {
+            path.addLine(to: CGPoint(x: rect.width - 12, y: rect.height))
+            path.addLine(to: CGPoint(x: 12, y: rect.height))
+            path.closeSubpath()
+        }
+        return path
+    }
+}
+
+private struct Triangle: Shape {
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.move(to: CGPoint(x: rect.midX, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
+        path.closeSubpath()
+        return path
     }
 }
 
