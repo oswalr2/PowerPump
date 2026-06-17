@@ -11,13 +11,14 @@ struct BarcodeScanSheet: View {
     @State private var errorText: String?
     @State private var manualCode = ""
     @State private var showManual = false
+    @State private var torchOn    = false
 
     var body: some View {
         NavigationStack {
             ZStack {
                 Color.black.ignoresSafeArea()
 
-                BarcodeCameraView { code in handle(code) }
+                BarcodeCameraView(torchOn: torchOn) { code in handle(code) }
                     .ignoresSafeArea()
 
                 VStack(spacing: 0) {
@@ -33,6 +34,21 @@ struct BarcodeScanSheet: View {
                         .foregroundColor(.white)
                         .padding(.top, 14)
                         .shadow(radius: 4)
+
+                    // Torch toggle — most barcodes live in dim aisles or on
+                    // matte packaging where the camera struggles to lock focus.
+                    Button {
+                        torchOn.toggle()
+                        HapticManager.light()
+                    } label: {
+                        Image(systemName: torchOn ? "flashlight.on.fill" : "flashlight.off.fill")
+                            .font(.system(size: 18, weight: .semibold))
+                            .foregroundColor(torchOn ? .sbAccent : .white)
+                            .frame(width: 46, height: 46)
+                            .background(Color.black.opacity(0.5))
+                            .clipShape(Circle())
+                    }
+                    .padding(.top, 16)
 
                     Spacer()
 
@@ -131,6 +147,7 @@ struct BarcodeScanSheet: View {
 // MARK: - Camera wrapper
 
 private struct BarcodeCameraView: UIViewControllerRepresentable {
+    var torchOn: Bool = false
     let onScan: (String) -> Void
 
     func makeUIViewController(context: Context) -> BarcodeCameraController {
@@ -139,7 +156,9 @@ private struct BarcodeCameraView: UIViewControllerRepresentable {
         return vc
     }
 
-    func updateUIViewController(_ vc: BarcodeCameraController, context: Context) {}
+    func updateUIViewController(_ vc: BarcodeCameraController, context: Context) {
+        vc.setTorch(on: torchOn)
+    }
 }
 
 final class BarcodeCameraController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
@@ -167,17 +186,49 @@ final class BarcodeCameraController: UIViewController, AVCaptureMetadataOutputOb
         }
     }
 
+    private var captureDevice: AVCaptureDevice?
+
     private func configureSession() {
-        guard let device = AVCaptureDevice.default(for: .video),
+        // Prefer the wide / dual camera — its closer minimum focus distance
+        // makes scanning small barcodes much more reliable than the default.
+        let device: AVCaptureDevice? = {
+            if let dual = AVCaptureDevice.default(.builtInDualWideCamera, for: .video, position: .back) {
+                return dual
+            }
+            if let wide = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
+                return wide
+            }
+            return AVCaptureDevice.default(for: .video)
+        }()
+        guard let device,
               let input = try? AVCaptureDeviceInput(device: device),
               session.canAddInput(input) else { return }
+
+        session.beginConfiguration()
         session.addInput(input)
+        // High-resolution preset helps with thin barcodes on dim shelves.
+        if session.canSetSessionPreset(.hd1920x1080) {
+            session.sessionPreset = .hd1920x1080
+        }
 
         let output = AVCaptureMetadataOutput()
-        guard session.canAddOutput(output) else { return }
+        guard session.canAddOutput(output) else {
+            session.commitConfiguration()
+            return
+        }
         session.addOutput(output)
         output.setMetadataObjectsDelegate(self, queue: .main)
-        output.metadataObjectTypes = [.ean13, .ean8, .upce, .code128]
+        // Accept every retail barcode format Apple supports — not just EAN/UPC,
+        // so QR-coded supplements or PDF417 labels also work.
+        output.metadataObjectTypes = [
+            .ean13, .ean8, .upce, .code128, .code39, .code93,
+            .itf14, .interleaved2of5, .qr, .pdf417, .dataMatrix,
+        ]
+
+        session.commitConfiguration()
+
+        configureFocus(on: device)
+        captureDevice = device
 
         let preview = AVCaptureVideoPreviewLayer(session: session)
         preview.videoGravity = .resizeAspectFill
@@ -185,7 +236,76 @@ final class BarcodeCameraController: UIViewController, AVCaptureMetadataOutputOb
         view.layer.addSublayer(preview)
         previewLayer = preview
 
+        // Tap-to-focus: helpful when a label sits to the side of the viewfinder.
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        view.addGestureRecognizer(tap)
+
         startSession()
+    }
+
+    // Continuous autofocus + auto-exposure aimed at the center of the screen
+    // (where the user is positioning the barcode).
+    private func configureFocus(on device: AVCaptureDevice) {
+        do {
+            try device.lockForConfiguration()
+            if device.isFocusModeSupported(.continuousAutoFocus) {
+                device.focusMode = .continuousAutoFocus
+            }
+            if device.isExposureModeSupported(.continuousAutoExposure) {
+                device.exposureMode = .continuousAutoExposure
+            }
+            if device.isAutoFocusRangeRestrictionSupported {
+                device.autoFocusRangeRestriction = .near    // bias for close objects
+            }
+            if device.isSmoothAutoFocusSupported {
+                device.isSmoothAutoFocusEnabled = true
+            }
+            // The viewfinder lives in the middle of the screen — point focus there.
+            let center = CGPoint(x: 0.5, y: 0.5)
+            if device.isFocusPointOfInterestSupported {
+                device.focusPointOfInterest = center
+            }
+            if device.isExposurePointOfInterestSupported {
+                device.exposurePointOfInterest = center
+            }
+            device.unlockForConfiguration()
+        } catch {
+            // Non-fatal: the camera will still work, just less responsive.
+        }
+    }
+
+    func setTorch(on: Bool) {
+        guard let device = captureDevice, device.hasTorch else { return }
+        do {
+            try device.lockForConfiguration()
+            if on {
+                if device.isTorchModeSupported(.on) {
+                    try? device.setTorchModeOn(level: 1.0)
+                }
+            } else {
+                device.torchMode = .off
+            }
+            device.unlockForConfiguration()
+        } catch {}
+    }
+
+    @objc private func handleTap(_ gesture: UITapGestureRecognizer) {
+        guard let device = captureDevice,
+              let preview = previewLayer else { return }
+        let point = gesture.location(in: view)
+        let devicePoint = preview.captureDevicePointConverted(fromLayerPoint: point)
+        do {
+            try device.lockForConfiguration()
+            if device.isFocusPointOfInterestSupported, device.isFocusModeSupported(.autoFocus) {
+                device.focusPointOfInterest = devicePoint
+                device.focusMode = .autoFocus
+            }
+            if device.isExposurePointOfInterestSupported, device.isExposureModeSupported(.autoExpose) {
+                device.exposurePointOfInterest = devicePoint
+                device.exposureMode = .autoExpose
+            }
+            device.unlockForConfiguration()
+        } catch {}
     }
 
     private func startSession() {
@@ -207,6 +327,9 @@ final class BarcodeCameraController: UIViewController, AVCaptureMetadataOutputOb
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        // Always release the torch when the sheet closes, otherwise it stays on
+        // and runs the battery down even after the camera stops.
+        setTorch(on: false)
         if session.isRunning { session.stopRunning() }
     }
 
