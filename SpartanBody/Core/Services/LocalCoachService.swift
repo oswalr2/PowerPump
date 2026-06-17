@@ -343,39 +343,25 @@ struct LocalCoachService {
 
     // MARK: - Day names
 
-    // Day labels for the 7-day plan, rotated so index 0 is TODAY.
-    // The first day reads "Today", the second "Tomorrow", then weekday names —
-    // so a plan generated on Thursday starts on Thursday, not next Monday.
+    // Day labels for the 7-day plan, rotated so index 0 is the actual current
+    // weekday — a plan generated on Thursday starts on Thursday, not Monday.
     private static var days: [String] {
         let weekdays: [String]
-        let todayWord: String
-        let tomorrowWord: String
         switch lang {
         case "es":
             weekdays = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
-            todayWord = "Hoy"; tomorrowWord = "Mañana"
         case "it":
             weekdays = ["Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"]
-            todayWord = "Oggi"; tomorrowWord = "Domani"
         case "pt-BR":
             weekdays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"]
-            todayWord = "Hoje"; tomorrowWord = "Amanhã"
         case "fr":
             weekdays = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
-            todayWord = "Aujourd'hui"; tomorrowWord = "Demain"
         default:
             weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-            todayWord = "Today"; tomorrowWord = "Tomorrow"
         }
         // Calendar weekday: 1 = Sunday … 7 = Saturday → 0-based index.
         let todayIndex = Calendar.current.component(.weekday, from: Date()) - 1
-        return (0..<7).map { offset in
-            switch offset {
-            case 0: return todayWord
-            case 1: return tomorrowWord
-            default: return weekdays[(todayIndex + offset) % 7]
-            }
-        }
+        return (0..<7).map { offset in weekdays[(todayIndex + offset) % 7] }
     }
 
     // MARK: - Weekly schedule (varies by activity level)
