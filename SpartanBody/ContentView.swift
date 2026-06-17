@@ -8,12 +8,20 @@ struct ContentView: View {
     @ObservedObject private var profile  = UserProfile.shared
     @ObservedObject private var language = LanguageManager.shared
 
+    // Local flag because tutorial state is per-install, not part of the
+    // profile that ships in iCloud / app-group sync.
+    @State private var tutorialDone = UserDefaults.standard.bool(forKey: "sb_tutorial_done")
+
     var body: some View {
         Group {
-            if profile.onboardingDone {
-                MainTabView()
-            } else {
+            if !profile.onboardingDone {
                 OnboardingView()
+            } else if !tutorialDone {
+                TutorialView {
+                    tutorialDone = true
+                }
+            } else {
+                MainTabView()
             }
         }
         // The .id() forces SwiftUI to throw away the current view tree and
