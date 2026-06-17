@@ -343,13 +343,38 @@ struct LocalCoachService {
 
     // MARK: - Day names
 
+    // Day labels for the 7-day plan, rotated so index 0 is TODAY.
+    // The first day reads "Today", the second "Tomorrow", then weekday names —
+    // so a plan generated on Thursday starts on Thursday, not next Monday.
     private static var days: [String] {
+        let weekdays: [String]
+        let todayWord: String
+        let tomorrowWord: String
         switch lang {
-        case "es":    return ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
-        case "it":    return ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"]
-        case "pt-BR": return ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"]
-        case "fr":    return ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
-        default:      return ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+        case "es":
+            weekdays = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
+            todayWord = "Hoy"; tomorrowWord = "Mañana"
+        case "it":
+            weekdays = ["Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"]
+            todayWord = "Oggi"; tomorrowWord = "Domani"
+        case "pt-BR":
+            weekdays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"]
+            todayWord = "Hoje"; tomorrowWord = "Amanhã"
+        case "fr":
+            weekdays = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
+            todayWord = "Aujourd'hui"; tomorrowWord = "Demain"
+        default:
+            weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+            todayWord = "Today"; tomorrowWord = "Tomorrow"
+        }
+        // Calendar weekday: 1 = Sunday … 7 = Saturday → 0-based index.
+        let todayIndex = Calendar.current.component(.weekday, from: Date()) - 1
+        return (0..<7).map { offset in
+            switch offset {
+            case 0: return todayWord
+            case 1: return tomorrowWord
+            default: return weekdays[(todayIndex + offset) % 7]
+            }
         }
     }
 
@@ -769,68 +794,85 @@ struct LocalCoachService {
 
     // MARK: - Substitution dictionaries
 
-    // KNEE-friendly: replace any high-impact / deep-knee-flexion movement.
+    // KNEE: the knee should rest, so anything that bends/loads it becomes an
+    // UPPER-BODY or core move that doesn't involve the knee at all.
     private static let kneeSubs: [(String, String)] = [
-        ("Jump Rope",           "March in Place"),
-        ("High Knees",          "March in Place"),
-        ("Burpees",             "Squat-to-Stand"),
-        ("Box Jump",            "Step-up (no jump)"),
-        ("Walking Lunge",       "Hip Thrust"),
-        ("Reverse Lunge",       "Hip Thrust"),
+        ("Jump Rope",           "Seated Shoulder Press"),
+        ("High Knees",          "Seated Shoulder Press"),
+        ("Burpees",             "Push-ups"),
+        ("Box Jump",            "Seated Dumbbell Press"),
+        ("Walking Lunge",       "Glute Bridge"),
+        ("Reverse Lunge",       "Glute Bridge"),
         ("Goblet Squat",        "Glute Bridge"),
         ("Wall Squat",          "Glute Bridge"),
-        ("Squat",               "Leg Press (or Glute Bridge)"),
-        ("Mountain Climbers",   "Plank with Reach"),
-        ("Bicycle Crunch",      "Dead Bug"),
-        ("Step-up",             "Hip Thrust"),
+        ("Pistol Squat",        "Glute Bridge"),
+        ("Leg Press",           "Glute Bridge"),
+        ("Leg Curl",            "Glute Bridge"),
+        ("Romanian Deadlift",   "Glute Bridge"),
+        ("Squat",               "Glute Bridge"),
+        ("Step-up",             "Glute Bridge"),
+        ("Calf Raise",          "Seated Calf Raise"),
+        ("Mountain Climbers",   "Plank"),
+        ("Running",             "Seated Row"),
     ]
 
-    // BACK-friendly: avoid axial loading and heavy hip-hinge pulls.
+    // BACK: protect the spine — no axial loading, no hip-hinge under load.
+    // Swaps go to supported / lying movements that spare the lower back.
     private static let backSubs: [(String, String)] = [
-        ("Romanian Deadlift",   "Hip Thrust"),
-        ("Pendlay Row",         "Dumbbell Row"),
+        ("Romanian Deadlift",   "Leg Extension"),
+        ("Deadlift",            "Leg Extension"),
+        ("Pendlay Row",         "Chest-Supported Row"),
         ("Barbell Row",         "Chest-Supported Row"),
-        ("Deadlift",            "Hip Thrust"),
-        ("Clean & Press",       "Dumbbell Push Press"),
-        ("Back Squat",          "Goblet Squat (light)"),
-        ("Squat 5×5",           "Goblet Squat 3×10"),
-        ("Squat",               "Goblet Squat (light)"),
-        ("Overhead Press",      "Seated Lateral Raise"),
-        ("Pike Push-up",        "Incline Push-up"),
-        ("Russian Twist",       "Side Plank"),
+        ("Bent-over Row",       "Chest-Supported Row"),
+        ("Clean & Press",       "Seated Dumbbell Press"),
+        ("Back Squat",          "Leg Extension"),
+        ("Goblet Squat",        "Leg Extension"),
+        ("Squat",               "Leg Extension"),
+        ("Overhead Press",      "Seated Dumbbell Press"),
+        ("Push Press",          "Seated Dumbbell Press"),
+        ("Russian Twist",       "Dead Bug"),
+        ("Sit-up",              "Dead Bug"),
         ("Crunch",              "Dead Bug"),
         ("Leg Raise",           "Dead Bug"),
-        ("Box Jump",            "Step-up (light)"),
+        ("Good Morning",        "Glute Bridge"),
+        ("Box Jump",            "Seated Calf Raise"),
     ]
 
-    // SHOULDER-friendly: replace overhead and impingement-risk movements.
+    // SHOULDER: rest the shoulder — no pressing/overhead/raises. Swaps focus on
+    // legs, back-via-machine, and arms in a neutral position.
     private static let shoulderSubs: [(String, String)] = [
-        ("Overhead Press",          "Lateral Raise"),
-        ("Arnold Press",            "Front Raise"),
-        ("Pike Push-up",            "Incline Push-up"),
-        ("Bench Press",             "Floor Press"),
-        ("Incline Bench",           "Flat DB Press"),
-        ("Incline DB Press",        "Flat DB Press"),
-        ("Incline Dumbbell Press",  "Flat Dumbbell Press"),
+        ("Overhead Press",          "Leg Press"),
+        ("Arnold Press",            "Leg Press"),
+        ("Push Press",              "Leg Press"),
+        ("Dumbbell Push Press",     "Leg Press"),
+        ("Pike Push-up",            "Glute Bridge"),
+        ("Bench Press",             "Leg Press"),
+        ("Incline Bench",           "Leg Press"),
+        ("Incline DB Press",        "Leg Press"),
+        ("Incline Dumbbell Press",  "Leg Press"),
         ("Close-grip Bench",        "Tricep Pushdown"),
-        ("Lateral Raise",           "Cable Lateral Raise (light)"),
-        ("Push Press",              "Dumbbell Push (light)"),
-        ("Dumbbell Push Press",     "Front Raise"),
+        ("Push-up",                 "Glute Bridge"),
+        ("Lateral Raise",           "Hammer Curl"),
+        ("Front Raise",             "Hammer Curl"),
         ("Skull Crusher",           "Tricep Pushdown"),
-        ("Face Pull",               "Band Pull-Apart"),
+        ("Face Pull",               "Lat Pulldown"),
+        ("Upright Row",             "Lat Pulldown"),
     ]
 
-    // WRIST-friendly: avoid weight-bearing on the wrists.
+    // WRIST: no weight-bearing on the hands and no gripping-heavy work.
     private static let wristSubs: [(String, String)] = [
-        ("Push-up",            "Knee Push-up"),
-        ("Plank",              "Forearm Plank"),
-        ("Mountain Climbers",  "Standing Knee Drives"),
-        ("Burpees",            "Squat-to-Stand"),
-        ("Dumbbell Curl",      "Hammer Curl"),
-        ("Barbell Curl",       "Cable Curl"),
-        ("Skull Crusher",      "Tricep Kickback"),
-        ("Tricep Dip",         "Bench Triceps (light)"),
-        ("Pike Push-up",       "Seated Dumbbell Press"),
+        ("Push-up",            "Leg Press"),
+        ("Plank",              "Dead Bug"),
+        ("Mountain Climbers",  "Glute Bridge"),
+        ("Burpees",            "Glute Bridge"),
+        ("Dumbbell Curl",      "Cable Curl (strap)"),
+        ("Barbell Curl",       "Cable Curl (strap)"),
+        ("Hammer Curl",        "Cable Curl (strap)"),
+        ("Skull Crusher",      "Tricep Pushdown (rope)"),
+        ("Tricep Dip",         "Tricep Pushdown (rope)"),
+        ("Pike Push-up",       "Leg Press"),
+        ("Pull-ups",           "Lat Pulldown (straps)"),
+        ("Deadlift",           "Leg Press"),
     ]
 
     // HOME / no equipment: replace barbells & machines with dumbbell or
@@ -871,111 +913,6 @@ struct LocalCoachService {
         ("Mountain Climbers",   "Marching Plank"),
         ("Clean & Press",       "Dumbbell Push Press (light)"),
     ]
-
-    private static func applyKneeSubstitution(_ ex: String) -> String {
-        let subs: [(String, String)] = [
-            ("Jump Rope", "March in Place"),
-            ("High Knees", "March in Place"),
-            ("Burpees", "March in Place"),
-            ("Box Jump", "Step-up (no jump)"),
-            ("Walking Lunge", "Hip Thrust"),
-            ("Reverse Lunge", "Hip Thrust"),
-            ("Squat 4×15", "Wall Squat 4×15"),
-            ("Squat 4×12", "Wall Squat 4×12"),
-            ("Squat 5×5",  "Leg Press 5×5"),
-            ("Squat 3×12", "Leg Press 3×12"),
-        ]
-        return subs.reduce(ex) { $0.replacingOccurrences(of: $1.0, with: $1.1) }
-    }
-
-    private static func applyHomeSubstitution(_ ex: String) -> String {
-        let subs: [(String, String)] = [
-            ("Barbell Row",      "Dumbbell Row"),
-            ("Barbell Curl",     "Dumbbell Curl"),
-            ("Bench Press",      "Dumbbell Press"),
-            ("Incline Bench",    "Incline Push-ups"),
-            ("Lat Pulldown",     "Resistance Band Pulldown"),
-            ("Cable Fly",        "Dumbbell Fly"),
-            ("Skull Crusher",    "Dumbbell Overhead Extension"),
-            ("Tricep Pushdown",  "Tricep Kickback"),
-            ("Leg Press",        "Goblet Squat"),
-            ("Leg Curl",         "Nordic Curl"),
-            ("Pendlay Row",      "Dumbbell Row"),
-            ("Seated Row",       "Resistance Band Row"),
-            ("Preacher Curl",    "Incline Dumbbell Curl"),
-            ("Clean & Press",    "Dumbbell Clean & Press"),
-            ("Deadlift",         "Romanian Deadlift"),
-        ]
-        return subs.reduce(ex) { $0.replacingOccurrences(of: $1.0, with: $1.1) }
-    }
-
-    private static func applyBackSubstitution(_ ex: String) -> String {
-        let subs: [(String, String)] = [
-            ("Deadlift 4×5",           "Hip Thrust 4×10"),
-            ("Deadlift 4×8",           "Hip Thrust 4×10"),
-            ("Romanian Deadlift 4×8",  "Hip Thrust 4×10"),
-            ("Romanian Deadlift 3×12", "Hip Thrust 3×12"),
-            ("Barbell Row 4×8",        "Dumbbell Row 4×10"),
-            ("Barbell Row 3×10",       "Dumbbell Row 3×12"),
-            ("Overhead Press 4×8",     "Lateral Raise 4×12"),
-            ("Overhead Press 5×5",     "Lateral Raise 4×15"),
-        ]
-        return subs.reduce(ex) { $0.replacingOccurrences(of: $1.0, with: $1.1) }
-    }
-
-    // MARK: - New substitutions
-
-    private static func applyShoulderSubstitution(_ ex: String) -> String {
-        let subs: [(String, String)] = [
-            ("Overhead Press 5×5",      "Lateral Raise 4×15"),
-            ("Overhead Press 4×8",      "Lateral Raise 4×12"),
-            ("Arnold Press 3×12",       "Front Raise 3×15"),
-            ("Pike Push-up 3×12",       "Incline Push-up 3×15"),
-            ("Bench Press 5×5",         "Floor Press 5×5"),
-            ("Bench Press 4×8",         "Floor Press 4×8"),
-            ("Incline DB Press 4×10",   "Flat DB Press 4×10"),
-            ("Incline Dumbbell Press 3×10", "Flat Dumbbell Press 3×10"),
-            ("Close-grip Bench 3×10",   "Tricep Pushdown 3×12"),
-        ]
-        return subs.reduce(ex) { $0.replacingOccurrences(of: $1.0, with: $1.1) }
-    }
-
-    private static func applyWristSubstitution(_ ex: String) -> String {
-        let subs: [(String, String)] = [
-            ("Push-ups 3×8",     "Knee Push-ups 3×8"),
-            ("Push-ups 3×10",    "Knee Push-ups 3×10"),
-            ("Push-ups 3×12",    "Knee Push-ups 3×12"),
-            ("Push-ups 3×15",    "Knee Push-ups 3×15"),
-            ("Push-ups 3×20",    "Knee Push-ups 3×20"),
-            ("Push-ups 4×12",    "Knee Push-ups 4×12"),
-            ("Push-ups 4×15",    "Knee Push-ups 4×15"),
-            ("Plank 3×20 sec",   "Forearm Plank 3×20 sec"),
-            ("Plank 3×25 sec",   "Forearm Plank 3×25 sec"),
-            ("Plank 3×45 sec",   "Forearm Plank 3×45 sec"),
-            ("Plank 3×60 sec",   "Forearm Plank 3×60 sec"),
-            ("Plank 4×60 sec",   "Forearm Plank 4×60 sec"),
-            ("Mountain Climbers 3×30 sec", "Standing Knee Drives 3×30 sec"),
-            ("Mountain Climbers 4×30 sec", "Standing Knee Drives 4×30 sec"),
-            ("Burpees", "Squat-to-Stand"),
-        ]
-        return subs.reduce(ex) { $0.replacingOccurrences(of: $1.0, with: $1.1) }
-    }
-
-    private static func applyBeginnerSubstitution(_ ex: String) -> String {
-        let subs: [(String, String)] = [
-            ("Pull-ups",          "Assisted Pull-ups"),
-            ("Weighted Pull-ups", "Lat Pulldown"),
-            ("Chin-ups",          "Assisted Chin-ups"),
-            ("Burpees",           "Squat-to-Stand"),
-            ("Box Jump",          "Step-up"),
-            ("Deadlift 4×5",      "Romanian Deadlift 3×10"),
-            ("Push-ups 3×15",     "Knee Push-ups 3×10"),
-            ("Push-ups 3×20",     "Knee Push-ups 3×12"),
-            ("Push-ups 4×15",     "Knee Push-ups 3×12"),
-        ]
-        return subs.reduce(ex) { $0.replacingOccurrences(of: $1.0, with: $1.1) }
-    }
-
     private static func mobilityExerciseName() -> String {
         let options: [String]
         switch lang {
