@@ -312,23 +312,41 @@ struct RecipeDetailView: View {
 
                     // Steps
                     sectionHeader("Instructions")
-                    VStack(spacing: 14) {
+                    VStack(spacing: 0) {
+                        let count = recipe.steps.count
                         ForEach(Array(recipe.steps.enumerated()), id: \.offset) { i, step in
                             HStack(alignment: .top, spacing: 14) {
                                 Text("\(i + 1)")
-                                    .font(SBFont.label())
+                                    .font(.system(size: 13, weight: .bold, design: .rounded))
                                     .foregroundColor(.white)
-                                    .frame(width: 26, height: 26)
-                                    .background(Color.sbAccent)
-                                    .clipShape(Circle())
+                                    .monospacedDigit()
+                                    .frame(width: 28, height: 28)
+                                    .background(
+                                        Circle().fill(LinearGradient.sbAccentGradient)
+                                    )
+                                    .shadow(color: Color.sbAccent.opacity(0.35), radius: 4, y: 2)
+
                                 Text(LocalizedStringKey(step))
                                     .font(SBFont.body())
                                     .foregroundColor(.sbTextPrimary)
+                                    .multilineTextAlignment(.leading)
+                                    .lineSpacing(3)
                                     .fixedSize(horizontal: false, vertical: true)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.top, 4)   // align baseline with number circle
+                            }
+                            .padding(.vertical, 12)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                            if i < count - 1 {
+                                Divider()
+                                    .background(Color.sbBorder.opacity(0.5))
+                                    .padding(.leading, 42)   // start after the number circle
                             }
                         }
                     }
-                    .padding(16)
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 4)
                     .background(Color.sbSurface)
                     .cornerRadius(16)
                     .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.sbBorder))
