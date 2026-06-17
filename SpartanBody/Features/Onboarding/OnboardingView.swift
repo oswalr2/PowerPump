@@ -718,6 +718,39 @@ private struct PersonalStep: View {
                         .onChange(of: nameText) { profile.name = $0 }
                 }
 
+                // Sex — drives the BMR formula (Mifflin-St Jeor differs by sex)
+                VStack(alignment: .leading, spacing: 6) {
+                    Label("Sex", systemImage: "person.2")
+                        .font(SBFont.label())
+                        .foregroundColor(.sbTextSecondary)
+                    HStack(spacing: 0) {
+                        ForEach(BiologicalSex.allCases, id: \.self) { option in
+                            let selected = profile.sex == option
+                            Button {
+                                withAnimation(.easeInOut(duration: 0.2)) { profile.sex = option }
+                                HapticManager.selection()
+                            } label: {
+                                HStack(spacing: 6) {
+                                    Image(systemName: option.icon)
+                                        .font(.system(size: 13, weight: .semibold))
+                                    Text(LocalizedStringKey(option.rawValue))
+                                        .font(SBFont.body())
+                                }
+                                .foregroundColor(selected ? .white : .sbTextSecondary)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 12)
+                                .background(selected ? Color.sbAccent : Color.clear)
+                                .cornerRadius(10)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                    .padding(4)
+                    .background(Color.sbSurface)
+                    .cornerRadius(12)
+                    .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.sbBorder))
+                }
+
                 // Age
                 VStack(alignment: .leading, spacing: 6) {
                     Label("Age", systemImage: "calendar")

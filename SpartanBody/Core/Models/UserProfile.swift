@@ -31,6 +31,26 @@ enum FitnessGoal: String, CaseIterable, Codable {
     }
 }
 
+enum BiologicalSex: String, CaseIterable, Codable {
+    case male   = "Male"
+    case female = "Female"
+
+    var icon: String {
+        switch self {
+        case .male:   return "figure.stand"
+        case .female: return "figure.stand.dress"
+        }
+    }
+
+    // Mifflin-St Jeor constant: +5 for males, −161 for females.
+    var bmrConstant: Double {
+        switch self {
+        case .male:   return 5
+        case .female: return -161
+        }
+    }
+}
+
 enum ActivityLevel: String, CaseIterable, Codable {
     case sedentary   = "Sedentary"
     case light       = "Lightly Active"
@@ -53,6 +73,7 @@ final class UserProfile: ObservableObject {
 
     @Published var name: String        { didSet { save() } }
     @Published var age: Int            { didSet { save() } }
+    @Published var sex: BiologicalSex  { didSet { save() } }
     @Published var weightKg: Double    { didSet { save() } }
     @Published var targetWeightKg: Double { didSet { save() } }
     @Published var heightCm: Double    { didSet { save() } }
@@ -67,6 +88,7 @@ final class UserProfile: ObservableObject {
            let saved = try? JSONDecoder().decode(ProfileData.self, from: data) {
             name          = saved.name
             age           = saved.age
+            sex           = saved.sex ?? .male
             weightKg      = saved.weightKg
             targetWeightKg = saved.targetWeightKg ?? saved.weightKg
             heightCm      = saved.heightCm
@@ -76,6 +98,7 @@ final class UserProfile: ObservableObject {
         } else {
             name          = ""
             age           = 25
+            sex           = .male
             weightKg      = 75
             targetWeightKg = 75
             heightCm      = 175
@@ -85,9 +108,9 @@ final class UserProfile: ObservableObject {
         }
     }
 
-    // BMR via Mifflin-St Jeor
+    // BMR via Mifflin-St Jeor (sex-specific constant)
     var bmr: Double {
-        10 * weightKg + 6.25 * heightCm - 5 * Double(age) + 5
+        10 * weightKg + 6.25 * heightCm - 5 * Double(age) + sex.bmrConstant
     }
 
     var dailyCalorieTarget: Int {
@@ -117,7 +140,7 @@ final class UserProfile: ObservableObject {
     }
 
     private func save() {
-        let data = ProfileData(name: name, age: age, weightKg: weightKg,
+        let data = ProfileData(name: name, age: age, sex: sex, weightKg: weightKg,
                                targetWeightKg: targetWeightKg,
                                heightCm: heightCm, goal: goal,
                                activityLevel: activityLevel, onboardingDone: onboardingDone)
@@ -130,8 +153,9 @@ final class UserProfile: ObservableObject {
 private struct ProfileData: Codable {
     var name: String
     var age: Int
+    var sex: BiologicalSex? = nil       // Optional for backward compatibility
     var weightKg: Double
-    var targetWeightKg: Double? = nil  // Optional for backward compatibility
+    var targetWeightKg: Double? = nil   // Optional for backward compatibility
     var heightCm: Double
     var goal: FitnessGoal
     var activityLevel: ActivityLevel
