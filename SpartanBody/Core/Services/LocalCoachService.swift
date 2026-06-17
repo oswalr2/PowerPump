@@ -49,9 +49,84 @@ struct LocalCoachService {
         case .stayFit:
             base = NSLocalizedString("coach.analysis.stayFit", comment: "")
         }
-        let suffix = activitySuffix(activityLevel)
-        let contextNote = contextAnalysisNote(extraContext.lowercased())
-        return [base, suffix, contextNote].filter { !$0.isEmpty }.joined(separator: " ")
+        let metabolic    = metabolicInsight(goal: goal,
+                                            weightKg: weightKg,
+                                            activityLevel: activityLevel)
+        let suffix       = activitySuffix(activityLevel)
+        let contextNote  = contextAnalysisNote(extraContext.lowercased())
+        return [base, metabolic, suffix, contextNote]
+            .filter { !$0.isEmpty }
+            .joined(separator: " ")
+    }
+
+    // Calculates a rough TDEE (Total Daily Energy Expenditure) using the
+    // weight and activity multiplier we already have. We can't reach
+    // UserProfile.shared from this nonisolated context, so we keep it simple:
+    // estimate BMR as ~22 kcal × weight, then scale by activity.
+    private static func metabolicInsight(goal: FitnessGoal,
+                                         weightKg: Double,
+                                         activityLevel: ActivityLevel) -> String {
+        let bmr  = 22.0 * weightKg
+        let tdee = Int(bmr * activityLevel.multiplier)
+
+        // Estimated daily calorie target by goal (same formulas as UserProfile).
+        let target: Int
+        switch goal {
+        case .loseWeight: target = tdee - 500
+        case .gainMuscle: target = tdee + 300
+        case .stayFit:    target = tdee
+        }
+        let delta = target - tdee
+        let action: String
+        switch goal {
+        case .loseWeight:
+            action = String(format: deficitFormat(), abs(delta))
+        case .gainMuscle:
+            action = String(format: surplusFormat(), abs(delta))
+        case .stayFit:
+            action = maintenanceMessage()
+        }
+        return String(format: tdeeFormat(), tdee) + " " + action
+    }
+
+    private static func tdeeFormat() -> String {
+        switch lang {
+        case "es":    return "Tu gasto calórico diario estimado es %d kcal."
+        case "it":    return "Il tuo dispendio calorico giornaliero stimato è %d kcal."
+        case "pt-BR": return "Seu gasto calórico diário estimado é %d kcal."
+        case "fr":    return "Ta dépense calorique quotidienne estimée est de %d kcal."
+        default:      return "Your estimated daily calorie expenditure is %d kcal."
+        }
+    }
+
+    private static func deficitFormat() -> String {
+        switch lang {
+        case "es":    return "Tu plan crea un déficit moderado de %d kcal/día — suficiente para perder grasa sin sacrificar músculo."
+        case "it":    return "Il tuo piano crea un deficit moderato di %d kcal/giorno — sufficiente per perdere grasso senza sacrificare muscolo."
+        case "pt-BR": return "Seu plano cria um déficit moderado de %d kcal/dia — suficiente para perder gordura sem sacrificar músculo."
+        case "fr":    return "Ton plan crée un déficit modéré de %d kcal/jour — suffisant pour perdre du gras sans sacrifier le muscle."
+        default:      return "Your plan creates a moderate %d kcal/day deficit — enough to lose fat without sacrificing muscle."
+        }
+    }
+
+    private static func surplusFormat() -> String {
+        switch lang {
+        case "es":    return "Tu plan añade un superávit de %d kcal/día — ideal para ganar músculo magro minimizando la grasa."
+        case "it":    return "Il tuo piano aggiunge un surplus di %d kcal/giorno — ideale per costruire muscolo magro minimizzando il grasso."
+        case "pt-BR": return "Seu plano adiciona um superávit de %d kcal/dia — ideal para ganhar músculo magro minimizando gordura."
+        case "fr":    return "Ton plan ajoute un surplus de %d kcal/jour — idéal pour construire du muscle maigre en minimisant le gras."
+        default:      return "Your plan adds a %d kcal/day surplus — ideal for building lean muscle while minimizing fat gain."
+        }
+    }
+
+    private static func maintenanceMessage() -> String {
+        switch lang {
+        case "es":    return "Tu plan equilibra calorías y movimiento para mantener tu composición corporal actual."
+        case "it":    return "Il tuo piano bilancia calorie e movimento per mantenere la tua composizione corporea attuale."
+        case "pt-BR": return "Seu plano equilibra calorias e movimento para manter sua composição corporal atual."
+        case "fr":    return "Ton plan équilibre calories et mouvement pour maintenir ta composition corporelle actuelle."
+        default:      return "Your plan balances calories and movement to maintain your current body composition."
+        }
     }
 
     private static func activitySuffix(_ level: ActivityLevel) -> String {
@@ -77,9 +152,15 @@ struct LocalCoachService {
 
     private static func contextAnalysisNote(_ ctx: String) -> String {
         var notes: [String] = []
-        if hasKneeKeyword(ctx)  { notes.append(kneeNote()) }
-        if hasHomeKeyword(ctx)  { notes.append(homeNote()) }
-        if hasBackKeyword(ctx)  { notes.append(backNote()) }
+        if hasKneeKeyword(ctx)     { notes.append(kneeNote()) }
+        if hasShoulderKeyword(ctx) { notes.append(shoulderNote()) }
+        if hasWristKeyword(ctx)    { notes.append(wristNote()) }
+        if hasBackKeyword(ctx)     { notes.append(backNote()) }
+        if hasHomeKeyword(ctx)     { notes.append(homeNote()) }
+        if hasNoTimeKeyword(ctx)   { notes.append(noTimeNote()) }
+        if hasSittingKeyword(ctx)  { notes.append(sittingNote()) }
+        if hasBeginnerKeyword(ctx) { notes.append(beginnerNote()) }
+        if hasVeganKeyword(ctx)    { notes.append(veganNote()) }
         return notes.joined(separator: " ")
     }
 
@@ -110,6 +191,66 @@ struct LocalCoachService {
         case "pt-BR": return "Movimentos com carga espinal pesada foram evitados para proteger suas costas."
         case "fr":    return "Les mouvements avec charge spinale lourde ont été évités pour protéger ton dos."
         default:      return "Heavy spinal loading movements have been avoided to protect your back."
+        }
+    }
+
+    private static func shoulderNote() -> String {
+        switch lang {
+        case "es":    return "Se han ajustado los presses por encima de la cabeza para proteger tus hombros."
+        case "it":    return "I press sopra la testa sono stati adattati per proteggere le spalle."
+        case "pt-BR": return "Os exercícios acima da cabeça foram ajustados para proteger seus ombros."
+        case "fr":    return "Les développés au-dessus de la tête ont été adaptés pour protéger tes épaules."
+        default:      return "Overhead presses have been adjusted to protect your shoulders."
+        }
+    }
+
+    private static func wristNote() -> String {
+        switch lang {
+        case "es":    return "Los ejercicios que cargan las muñecas se han sustituido por alternativas más seguras."
+        case "it":    return "Gli esercizi che caricano i polsi sono stati sostituiti con alternative più sicure."
+        case "pt-BR": return "Exercícios que sobrecarregam os punhos foram substituídos por alternativas mais seguras."
+        case "fr":    return "Les exercices qui sollicitent les poignets ont été remplacés par des alternatives plus sûres."
+        default:      return "Wrist-loading exercises have been replaced with safer alternatives."
+        }
+    }
+
+    private static func noTimeNote() -> String {
+        switch lang {
+        case "es":    return "El plan prioriza rutinas cortas y efectivas de 20-30 minutos."
+        case "it":    return "Il piano dà la priorità a routine brevi ed efficaci di 20-30 minuti."
+        case "pt-BR": return "O plano prioriza rotinas curtas e eficientes de 20-30 minutos."
+        case "fr":    return "Le plan privilégie des séances courtes et efficaces de 20-30 minutes."
+        default:      return "The plan prioritizes short, effective 20-30 minute routines."
+        }
+    }
+
+    private static func sittingNote() -> String {
+        switch lang {
+        case "es":    return "Se han incluido ejercicios de movilidad y estiramientos para contrarrestar el sedentarismo."
+        case "it":    return "Sono stati inclusi esercizi di mobilità e stretching per contrastare la sedentarietà."
+        case "pt-BR": return "Foram incluídos exercícios de mobilidade e alongamento para combater o sedentarismo."
+        case "fr":    return "Des exercices de mobilité et étirements ont été ajoutés pour contrer la sédentarité."
+        default:      return "Mobility and stretching exercises have been added to counter long sitting."
+        }
+    }
+
+    private static func beginnerNote() -> String {
+        switch lang {
+        case "es":    return "Los ejercicios se han simplificado con regresiones para que aprendas la técnica con seguridad."
+        case "it":    return "Gli esercizi sono stati semplificati con regressioni per imparare la tecnica in sicurezza."
+        case "pt-BR": return "Os exercícios foram simplificados com regressões para aprender a técnica com segurança."
+        case "fr":    return "Les exercices ont été simplifiés avec des régressions pour apprendre la technique en toute sécurité."
+        default:      return "Exercises have been simplified with regressions so you can learn proper form safely."
+        }
+    }
+
+    private static func veganNote() -> String {
+        switch lang {
+        case "es":    return "Las recomendaciones nutricionales priorizan proteínas vegetales (legumbres, tofu, tempeh, quinoa)."
+        case "it":    return "Le raccomandazioni nutrizionali danno priorità alle proteine vegetali (legumi, tofu, tempeh, quinoa)."
+        case "pt-BR": return "As recomendações nutricionais priorizam proteínas vegetais (leguminosas, tofu, tempeh, quinoa)."
+        case "fr":    return "Les recommandations nutritionnelles privilégient les protéines végétales (légumineuses, tofu, tempeh, quinoa)."
+        default:      return "Nutrition recommendations prioritize plant proteins (legumes, tofu, tempeh, quinoa)."
         }
     }
 
@@ -371,19 +512,31 @@ struct LocalCoachService {
     // MARK: - ExtraContext processing
 
     private static func applyContext(_ plan: FitnessPlan, context: String) -> FitnessPlan {
-        let hasKnee = hasKneeKeyword(context)
-        let hasHome = hasHomeKeyword(context)
-        let hasBack = hasBackKeyword(context)
+        let hasKnee     = hasKneeKeyword(context)
+        let hasShoulder = hasShoulderKeyword(context)
+        let hasWrist    = hasWristKeyword(context)
+        let hasHome     = hasHomeKeyword(context)
+        let hasBack     = hasBackKeyword(context)
+        let hasBeginner = hasBeginnerKeyword(context)
+        let hasSitting  = hasSittingKeyword(context)
 
-        guard hasKnee || hasHome || hasBack else { return plan }
+        guard hasKnee || hasShoulder || hasWrist || hasHome || hasBack
+              || hasBeginner || hasSitting else { return plan }
 
         let newSchedule = plan.weeklySchedule.map { day -> DayPlan in
-            let modifiedExercises = day.exercises.map { ex -> String in
+            var modifiedExercises = day.exercises.map { ex -> String in
                 var result = ex
-                if hasKnee { result = applyKneeSubstitution(result) }
-                if hasHome { result = applyHomeSubstitution(result) }
-                if hasBack { result = applyBackSubstitution(result) }
+                if hasKnee     { result = applyKneeSubstitution(result) }
+                if hasShoulder { result = applyShoulderSubstitution(result) }
+                if hasWrist    { result = applyWristSubstitution(result) }
+                if hasHome     { result = applyHomeSubstitution(result) }
+                if hasBack     { result = applyBackSubstitution(result) }
+                if hasBeginner { result = applyBeginnerSubstitution(result) }
                 return result
+            }
+            // For sedentary users, append a mobility move to workout days.
+            if hasSitting && day.isWorkout {
+                modifiedExercises.append(mobilityExerciseName())
             }
             return DayPlan(day: day.day, type: day.type, focus: day.focus, exercises: modifiedExercises)
         }
@@ -475,6 +628,41 @@ struct LocalCoachService {
          "bad back", "espalda", "schiena", "costas"].contains { ctx.contains($0) }
     }
 
+    private static func hasShoulderKeyword(_ ctx: String) -> Bool {
+        ["shoulder", "hombro", "spalla", "épaule", "epaule", "ombro"]
+            .contains { ctx.contains($0) }
+    }
+
+    private static func hasWristKeyword(_ ctx: String) -> Bool {
+        ["wrist", "muñeca", "muneca", "polso", "poignet", "punho"]
+            .contains { ctx.contains($0) }
+    }
+
+    private static func hasNoTimeKeyword(_ ctx: String) -> Bool {
+        ["no time", "busy", "poco tiempo", "ocupado", "pas de temps", "occupé",
+         "poco tempo", "occupato", "sem tempo", "ocupado", "rapido", "rapide",
+         "quick", "fast"].contains { ctx.contains($0) }
+    }
+
+    private static func hasSittingKeyword(_ ctx: String) -> Bool {
+        ["sitting", "sedentary", "desk", "office", "sentado", "sedentario",
+         "oficina", "escritorio", "seduto", "scrivania", "assis", "bureau",
+         "sentado", "escritório"].contains { ctx.contains($0) }
+    }
+
+    private static func hasBeginnerKeyword(_ ctx: String) -> Bool {
+        ["beginner", "first time", "new", "principiante", "primera vez", "nuevo",
+         "principiant", "première", "débutant", "debutant", "principiante",
+         "iniziato", "iniciante", "novato", "starting"]
+            .contains { ctx.contains($0) }
+    }
+
+    private static func hasVeganKeyword(_ ctx: String) -> Bool {
+        ["vegan", "vegano", "vegana", "végan", "vegano",
+         "vegetarian", "vegetariano", "vegetariana", "végétarien", "vegetariano"]
+            .contains { ctx.contains($0) }
+    }
+
     private static func applyKneeSubstitution(_ ex: String) -> String {
         let subs: [(String, String)] = [
             ("Jump Rope", "March in Place"),
@@ -526,11 +714,92 @@ struct LocalCoachService {
         return subs.reduce(ex) { $0.replacingOccurrences(of: $1.0, with: $1.1) }
     }
 
+    // MARK: - New substitutions
+
+    private static func applyShoulderSubstitution(_ ex: String) -> String {
+        let subs: [(String, String)] = [
+            ("Overhead Press 5×5",      "Lateral Raise 4×15"),
+            ("Overhead Press 4×8",      "Lateral Raise 4×12"),
+            ("Arnold Press 3×12",       "Front Raise 3×15"),
+            ("Pike Push-up 3×12",       "Incline Push-up 3×15"),
+            ("Bench Press 5×5",         "Floor Press 5×5"),
+            ("Bench Press 4×8",         "Floor Press 4×8"),
+            ("Incline DB Press 4×10",   "Flat DB Press 4×10"),
+            ("Incline Dumbbell Press 3×10", "Flat Dumbbell Press 3×10"),
+            ("Close-grip Bench 3×10",   "Tricep Pushdown 3×12"),
+        ]
+        return subs.reduce(ex) { $0.replacingOccurrences(of: $1.0, with: $1.1) }
+    }
+
+    private static func applyWristSubstitution(_ ex: String) -> String {
+        let subs: [(String, String)] = [
+            ("Push-ups 3×8",     "Knee Push-ups 3×8"),
+            ("Push-ups 3×10",    "Knee Push-ups 3×10"),
+            ("Push-ups 3×12",    "Knee Push-ups 3×12"),
+            ("Push-ups 3×15",    "Knee Push-ups 3×15"),
+            ("Push-ups 3×20",    "Knee Push-ups 3×20"),
+            ("Push-ups 4×12",    "Knee Push-ups 4×12"),
+            ("Push-ups 4×15",    "Knee Push-ups 4×15"),
+            ("Plank 3×20 sec",   "Forearm Plank 3×20 sec"),
+            ("Plank 3×25 sec",   "Forearm Plank 3×25 sec"),
+            ("Plank 3×45 sec",   "Forearm Plank 3×45 sec"),
+            ("Plank 3×60 sec",   "Forearm Plank 3×60 sec"),
+            ("Plank 4×60 sec",   "Forearm Plank 4×60 sec"),
+            ("Mountain Climbers 3×30 sec", "Standing Knee Drives 3×30 sec"),
+            ("Mountain Climbers 4×30 sec", "Standing Knee Drives 4×30 sec"),
+            ("Burpees", "Squat-to-Stand"),
+        ]
+        return subs.reduce(ex) { $0.replacingOccurrences(of: $1.0, with: $1.1) }
+    }
+
+    private static func applyBeginnerSubstitution(_ ex: String) -> String {
+        let subs: [(String, String)] = [
+            ("Pull-ups",          "Assisted Pull-ups"),
+            ("Weighted Pull-ups", "Lat Pulldown"),
+            ("Chin-ups",          "Assisted Chin-ups"),
+            ("Burpees",           "Squat-to-Stand"),
+            ("Box Jump",          "Step-up"),
+            ("Deadlift 4×5",      "Romanian Deadlift 3×10"),
+            ("Push-ups 3×15",     "Knee Push-ups 3×10"),
+            ("Push-ups 3×20",     "Knee Push-ups 3×12"),
+            ("Push-ups 4×15",     "Knee Push-ups 3×12"),
+        ]
+        return subs.reduce(ex) { $0.replacingOccurrences(of: $1.0, with: $1.1) }
+    }
+
+    private static func mobilityExerciseName() -> String {
+        let options: [String]
+        switch lang {
+        case "es":    options = ["Movilidad de cadera 3×30 sec", "Estiramiento de espalda 3×30 sec",
+                                 "Cat-cow 3×10", "World's greatest stretch 2×6"]
+        case "it":    options = ["Mobilità d'anca 3×30 sec", "Stretching schiena 3×30 sec",
+                                 "Cat-cow 3×10", "World's greatest stretch 2×6"]
+        case "pt-BR": options = ["Mobilidade de quadril 3×30 seg", "Alongamento de costas 3×30 seg",
+                                 "Cat-cow 3×10", "World's greatest stretch 2×6"]
+        case "fr":    options = ["Mobilité de hanches 3×30 sec", "Étirement du dos 3×30 sec",
+                                 "Cat-cow 3×10", "World's greatest stretch 2×6"]
+        default:      options = ["Hip mobility 3×30 sec", "Back stretch 3×30 sec",
+                                 "Cat-cow 3×10", "World's greatest stretch 2×6"]
+        }
+        return options.randomElement() ?? options[0]
+    }
+
     // MARK: - Nutrition
 
     private static func nutrition(goal: FitnessGoal, dailyCalories: Int, dailyProtein: Int) -> AINutritionPlan {
-        let carbs = Int(Double(dailyCalories) * 0.45 / 4)
-        let fat   = Int(Double(dailyCalories) * 0.25 / 9)
+        // Macro distribution adapted per goal. Protein calories are subtracted
+        // from the daily budget; the remainder splits into carbs/fat by goal.
+        let proteinCalories = dailyProtein * 4
+        let remaining = max(0, dailyCalories - proteinCalories)
+        let carbRatio: Double
+        let fatRatio:  Double
+        switch goal {
+        case .loseWeight: carbRatio = 0.45; fatRatio = 0.55  // More fat for satiety
+        case .gainMuscle: carbRatio = 0.65; fatRatio = 0.35  // More carbs for performance
+        case .stayFit:    carbRatio = 0.55; fatRatio = 0.45  // Balanced
+        }
+        let carbs = Int(Double(remaining) * carbRatio / 4)
+        let fat   = Int(Double(remaining) * fatRatio / 9)
         return AINutritionPlan(
             calories: dailyCalories, protein: dailyProtein, carbs: carbs, fat: fat,
             tips: nutritionTips(goal: goal)
