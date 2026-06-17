@@ -29,7 +29,7 @@ struct LocalCoachService {
             analysis:       merged,
             weeklySchedule: applyVariety(schedule(goal: goal, activityLevel: activityLevel)),
             nutritionPlan:  nutrition(goal: goal, dailyCalories: dailyCalories, dailyProtein: dailyProtein),
-            tips:           adaptiveTips(history: history, goal: goal),
+            tips:           adaptiveTips(history: history, goal: goal, plantBased: plantBasedMenu),
             motivation:     motivation(goal: goal),
             weeklyMeals:    weeklyMeals(goal: goal, plantBasedOnly: plantBasedMenu)
         )
@@ -98,8 +98,27 @@ struct LocalCoachService {
 
     // Replaces some of the generic tips with personalized advice when the user
     // already has a history. The total tip count stays the same.
-    private static func adaptiveTips(history: AdaptiveContext, goal: FitnessGoal) -> [String] {
+    private static func adaptiveTips(history: AdaptiveContext, goal: FitnessGoal,
+                                     plantBased: Bool = false) -> [String] {
         var baseTips = tips(goal: goal).shuffled()
+
+        // Vegan/vegetarian users shouldn't be told to drink casein or whey.
+        // Swap any dairy/animal-protein tip for a plant-based one.
+        if plantBased {
+            let veganTip = NSLocalizedString("coach.tip.veganProtein", comment: "")
+            let nonVeganMarkers = ["casein", "caseína", "caseina",
+                                   "whey", "lácteo", "lacteo", "dairy",
+                                   "latticini", "laticínio", "laitier"]
+            baseTips = baseTips.map { tip in
+                let low = tip.lowercased()
+                return nonVeganMarkers.contains(where: { low.contains($0) }) ? veganTip : tip
+            }
+            // Guarantee the plant-protein tip appears even if no dairy tip was picked.
+            if !baseTips.contains(veganTip) && !baseTips.isEmpty {
+                baseTips[baseTips.count - 1] = veganTip
+            }
+        }
+
         var injected: [String] = []
 
         if history.currentStreak >= 14 {
@@ -679,28 +698,66 @@ struct LocalCoachService {
 
     // MARK: - Variety (so regenerating doesn't feel identical)
 
-    // Interchangeable exercises with the same target — applied at random
-    // on each generation so two plans rarely look the same.
-    private static let varietySwaps: [(String, String)] = [
-        ("Jump Rope",         "High Knees"),
-        ("Mountain Climbers", "Burpees"),
-        ("Crunch",            "Bicycle Crunch"),
-        ("Walking Lunge",     "Reverse Lunge"),
-        ("Lateral Raise",     "Front Raise"),
-        ("Hammer Curl",       "Dumbbell Curl"),
-        ("Glute Bridge",      "Single-leg Glute Bridge"),
-        ("Cable Fly",         "Dumbbell Fly"),
-        ("Russian Twist",     "Heel Touch"),
-        ("Plank 3",           "Side Plank 3"),
+    // Groups of interchangeable exercises that train the same pattern at a
+    // similar difficulty. On each generation we swap an exercise for a random
+    // sibling in its group — so even the big compound lifts rotate, not just
+    // the accessory moves.
+    private static let exerciseGroups: [[String]] = [
+        // Chest
+        ["Bench Press", "Dumbbell Press", "Incline Bench", "Incline DB Press",
+         "Incline Dumbbell Press", "Flat Dumbbell Press", "Floor Press"],
+        ["Cable Fly", "Dumbbell Fly", "Pec Deck"],
+        ["Push-ups", "Incline Push-up", "Decline Push-up", "Diamond Push-up"],
+        // Back
+        ["Barbell Row", "Dumbbell Row", "Pendlay Row", "Chest-Supported Row", "Seated Row"],
+        ["Pull-ups", "Lat Pulldown", "Chin-ups", "Assisted Pull-ups"],
+        // Shoulders
+        ["Overhead Press", "Seated Dumbbell Press", "Arnold Press", "Push Press"],
+        ["Lateral Raise", "Front Raise", "Cable Lateral Raise"],
+        // Biceps
+        ["Barbell Curl", "Dumbbell Curl", "Hammer Curl", "Preacher Curl", "Incline Dumbbell Curl"],
+        // Triceps
+        ["Skull Crusher", "Tricep Pushdown", "Tricep Dip", "Close-grip Bench", "Overhead Tricep"],
+        // Quads
+        ["Squat", "Goblet Squat", "Leg Press", "Front Squat", "Hack Squat"],
+        ["Walking Lunge", "Reverse Lunge", "Step-up", "Bulgarian Split Squat"],
+        // Hamstrings / glutes
+        ["Romanian Deadlift", "Deadlift", "Good Morning", "Leg Curl"],
+        ["Glute Bridge", "Hip Thrust", "Single-leg Glute Bridge"],
+        // Core
+        ["Crunch", "Bicycle Crunch", "Sit-up", "Cable Crunch"],
+        ["Russian Twist", "Heel Touch", "Bicycle Crunch"],
+        ["Plank", "Side Plank", "Forearm Plank"],
+        ["Leg Raise", "Hanging Leg Raise", "Flutter Kicks"],
+        // Cardio / conditioning
+        ["Jump Rope", "High Knees", "Jumping Jacks"],
+        ["Mountain Climbers", "Burpees", "Squat Thrusts"],
     ]
 
+    // Splits "Bench Press 4×8" into ("Bench Press", " 4×8") so we can swap the
+    // movement while keeping its sets/reps/duration intact.
+    private static func splitExercise(_ ex: String) -> (name: String, suffix: String) {
+        // The rep part starts at the first digit.
+        if let idx = ex.firstIndex(where: { $0.isNumber }) {
+            let name = ex[..<idx].trimmingCharacters(in: .whitespaces)
+            let suffix = String(ex[idx...])
+            return (name, " " + suffix)
+        }
+        return (ex, "")
+    }
+
     private static func applyVariety(_ schedule: [DayPlan]) -> [DayPlan] {
-        // Pick a random subset of swaps for this generation.
-        let active = varietySwaps.filter { _ in Bool.random() }
-        guard !active.isEmpty else { return schedule }
-        return schedule.map { day in
-            let varied = day.exercises.map { ex in
-                active.reduce(ex) { $0.replacingOccurrences(of: $1.0, with: $1.1) }
+        schedule.map { day in
+            let varied = day.exercises.map { ex -> String in
+                let (name, suffix) = splitExercise(ex)
+                // Find the group this movement belongs to (case-insensitive).
+                guard let group = exerciseGroups.first(where: { grp in
+                    grp.contains { $0.caseInsensitiveCompare(name) == .orderedSame }
+                }) else { return ex }
+                // Pick a different sibling when possible.
+                let alternatives = group.filter { $0.caseInsensitiveCompare(name) != .orderedSame }
+                guard let pick = alternatives.randomElement() else { return ex }
+                return pick + suffix
             }
             return DayPlan(day: day.day, type: day.type, focus: day.focus, exercises: varied)
         }
