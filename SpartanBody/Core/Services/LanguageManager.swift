@@ -106,7 +106,7 @@ extension Bundle {
     }
 }
 
-private final class SBLanguageBundle: Bundle {
+private final class SBLanguageBundle: Bundle, @unchecked Sendable {
     override func localizedString(forKey key: String, value: String?, table tableName: String?) -> String {
         if let override = objc_getAssociatedObject(self, &sbBundleKey) as? Bundle {
             return override.localizedString(forKey: key, value: value, table: tableName)

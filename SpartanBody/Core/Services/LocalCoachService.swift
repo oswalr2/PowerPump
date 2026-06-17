@@ -21,16 +21,20 @@ struct LocalCoachService {
         let adaptive = adaptiveAnalysis(history: history, goal: goal)
         let merged = [adaptive, baseAnalysis].filter { !$0.isEmpty }.joined(separator: " ")
 
+        let ctx = extraContext.lowercased()
+        // Vegan/vegetarian users get a plant-based menu, not just a note saying so.
+        let plantBasedMenu = hasVeganKeyword(ctx)
+
         var plan = FitnessPlan(
             analysis:       merged,
             weeklySchedule: applyVariety(schedule(goal: goal, activityLevel: activityLevel)),
             nutritionPlan:  nutrition(goal: goal, dailyCalories: dailyCalories, dailyProtein: dailyProtein),
             tips:           adaptiveTips(history: history, goal: goal),
             motivation:     motivation(goal: goal),
-            weeklyMeals:    weeklyMeals(goal: goal)
+            weeklyMeals:    weeklyMeals(goal: goal, plantBasedOnly: plantBasedMenu)
         )
         if !extraContext.trimmingCharacters(in: .whitespaces).isEmpty {
-            plan = applyContext(plan, context: extraContext.lowercased())
+            plan = applyContext(plan, context: ctx)
         }
         return plan
     }
@@ -617,23 +621,44 @@ struct LocalCoachService {
         let hasBack     = hasBackKeyword(context)
         let hasBeginner = hasBeginnerKeyword(context)
         let hasSitting  = hasSittingKeyword(context)
+        let hasNoTime   = hasNoTimeKeyword(context)
 
         guard hasKnee || hasShoulder || hasWrist || hasHome || hasBack
-              || hasBeginner || hasSitting else { return plan }
+              || hasBeginner || hasSitting || hasNoTime else { return plan }
+
+        // Active substitution sets, applied in priority order. Home equipment
+        // first, then injury swaps, then beginner regressions.
+        var activeSets: [[(String, String)]] = []
+        if hasHome     { activeSets.append(homeSubs) }
+        if hasKnee     { activeSets.append(kneeSubs) }
+        if hasShoulder { activeSets.append(shoulderSubs) }
+        if hasWrist    { activeSets.append(wristSubs) }
+        if hasBack     { activeSets.append(backSubs) }
+        if hasBeginner { activeSets.append(beginnerSubs) }
+
+        // Apply every active set repeatedly until the exercise stops changing.
+        // This is the key fix: one injury's replacement can be another injury's
+        // forbidden move (e.g. shoulder swaps Bench Press → Leg Press, which a
+        // bad knee must then swap to Glute Bridge). A single pass missed that.
+        func makeSafe(_ exercise: String) -> String {
+            var current = exercise
+            for _ in 0..<6 {   // converges well before 6; cap guards against cycles
+                var next = current
+                for set in activeSets {
+                    next = substitute(next, with: set)
+                }
+                if next == current { break }
+                current = next
+            }
+            return current
+        }
 
         let newSchedule = plan.weeklySchedule.map { day -> DayPlan in
-            var modifiedExercises = day.exercises.map { ex -> String in
-                var result = ex
-                // Order matters: home equipment swaps first, then injury-driven
-                // swaps that override any equipment choice. Beginner regressions
-                // last so the simpler movement wins.
-                if hasHome     { result = substitute(result, with: homeSubs) }
-                if hasKnee     { result = substitute(result, with: kneeSubs) }
-                if hasShoulder { result = substitute(result, with: shoulderSubs) }
-                if hasWrist    { result = substitute(result, with: wristSubs) }
-                if hasBack     { result = substitute(result, with: backSubs) }
-                if hasBeginner { result = substitute(result, with: beginnerSubs) }
-                return result
+            var modifiedExercises = day.exercises.map(makeSafe)
+            // Short-on-time: trim each workout to the first 4 (compound) moves so
+            // sessions fit in ~20-30 min — the note promised it, now we deliver it.
+            if hasNoTime && day.isWorkout && modifiedExercises.count > 4 {
+                modifiedExercises = Array(modifiedExercises.prefix(4))
             }
             // For sedentary users, append a mobility move to workout days.
             if hasSitting && day.isWorkout {
@@ -683,7 +708,7 @@ struct LocalCoachService {
 
     // MARK: - Weekly meal suggestions (from the recipe library, goal-matched)
 
-    private static func weeklyMeals(goal: FitnessGoal) -> [DayMeals] {
+    private static func weeklyMeals(goal: FitnessGoal, plantBasedOnly: Bool = false) -> [DayMeals] {
         let recipeGoal: RecipeGoal = {
             switch goal {
             case .loseWeight: return .weightLoss
@@ -692,24 +717,33 @@ struct LocalCoachService {
             }
         }()
 
-        let breakfasts = RecipeDatabase.all
+        // When the user is vegan/vegetarian, only consider plant-based recipes.
+        let pool = plantBasedOnly
+            ? RecipeDatabase.all.filter {
+                $0.tags.contains("Vegan") || $0.tags.contains("Vegetarian")
+              }
+            : RecipeDatabase.all
+
+        let breakfasts = pool
             .filter { $0.tags.contains("Breakfast") }
             .map(\.name).shuffled()
-        let goalMains = RecipeDatabase.all
+        let goalMains = pool
             .filter { $0.goal == recipeGoal && !$0.tags.contains("Breakfast") }
             .map(\.name).shuffled()
-        let otherMains = RecipeDatabase.all
+        let otherMains = pool
             .filter { $0.goal != recipeGoal && !$0.tags.contains("Breakfast") }
             .map(\.name).shuffled()
+        // Fall back to any breakfast in the pool if none are tagged "Breakfast".
         let mains = goalMains + otherMains
+        let safeBreakfasts = breakfasts.isEmpty ? pool.map(\.name).shuffled() : breakfasts
 
-        guard !breakfasts.isEmpty, mains.count >= 2 else { return [] }
+        guard !safeBreakfasts.isEmpty, mains.count >= 2 else { return [] }
 
         let d = days
         return (0..<7).map { i in
             DayMeals(
                 day:       d[i],
-                breakfast: breakfasts[i % breakfasts.count],
+                breakfast: safeBreakfasts[i % safeBreakfasts.count],
                 lunch:     mains[i % mains.count],
                 dinner:    mains[(i + mains.count / 2) % mains.count]
             )
@@ -794,6 +828,7 @@ struct LocalCoachService {
         ("Pistol Squat",        "Glute Bridge"),
         ("Leg Press",           "Glute Bridge"),
         ("Leg Curl",            "Glute Bridge"),
+        ("Leg Extension",       "Glute Bridge"),
         ("Romanian Deadlift",   "Glute Bridge"),
         ("Squat",               "Glute Bridge"),
         ("Step-up",             "Glute Bridge"),
