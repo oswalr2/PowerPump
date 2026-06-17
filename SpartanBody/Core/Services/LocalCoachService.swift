@@ -12,14 +12,20 @@ struct LocalCoachService {
         bmiCategory: String,
         dailyCalories: Int,
         dailyProtein: Int,
-        extraContext: String
+        extraContext: String,
+        history: AdaptiveContext = .empty
     ) -> FitnessPlan {
+        let baseAnalysis = analysis(goal: goal, bmi: bmi, bmiCategory: bmiCategory,
+                                    weightKg: weightKg, activityLevel: activityLevel,
+                                    extraContext: extraContext)
+        let adaptive = adaptiveAnalysis(history: history, goal: goal)
+        let merged = [adaptive, baseAnalysis].filter { !$0.isEmpty }.joined(separator: " ")
+
         var plan = FitnessPlan(
-            analysis:       analysis(goal: goal, bmi: bmi, bmiCategory: bmiCategory, weightKg: weightKg,
-                                     activityLevel: activityLevel, extraContext: extraContext),
+            analysis:       merged,
             weeklySchedule: applyVariety(schedule(goal: goal, activityLevel: activityLevel)),
             nutritionPlan:  nutrition(goal: goal, dailyCalories: dailyCalories, dailyProtein: dailyProtein),
-            tips:           tips(goal: goal).shuffled(),
+            tips:           adaptiveTips(history: history, goal: goal),
             motivation:     motivation(goal: goal),
             weeklyMeals:    weeklyMeals(goal: goal)
         )
@@ -29,9 +35,90 @@ struct LocalCoachService {
         return plan
     }
 
+    // Snapshot of the user's recent activity, passed in so this service stays
+    // free of MainActor isolation issues. The caller (AICoachView) collects it.
+    struct AdaptiveContext {
+        var pastWorkouts: Int            // total completed workouts ever
+        var workoutsLast7Days: Int
+        var currentStreak: Int
+        var longestStreak: Int
+        var avgCaloriesLast7Days: Int    // 0 if not enough data
+        var calorieTarget: Int
+        var weightTrendKg: Double?       // negative = losing, positive = gaining, nil = unknown
+        var hasLoggedWeight: Bool
+
+        static let empty = AdaptiveContext(
+            pastWorkouts: 0, workoutsLast7Days: 0,
+            currentStreak: 0, longestStreak: 0,
+            avgCaloriesLast7Days: 0, calorieTarget: 2000,
+            weightTrendKg: nil, hasLoggedWeight: false)
+    }
+
     // MARK: - Language helper
 
     private static var lang: String { LanguageManager.shared.selectedCode }
+
+    // MARK: - Adaptive layer (uses real user data)
+
+    // Builds a sentence that opens the analysis when we have meaningful user
+    // history. Picks the most positive truth available so the user feels seen.
+    private static func adaptiveAnalysis(history: AdaptiveContext, goal: FitnessGoal) -> String {
+        if history.currentStreak >= 7 {
+            return String(format: NSLocalizedString("coach.adaptive.streak", comment: ""),
+                          history.currentStreak)
+        }
+        if history.pastWorkouts >= 25 {
+            return String(format: NSLocalizedString("coach.adaptive.veteran", comment: ""),
+                          history.pastWorkouts)
+        }
+        if history.workoutsLast7Days >= 4 {
+            return String(format: NSLocalizedString("coach.adaptive.consistent", comment: ""),
+                          history.workoutsLast7Days)
+        }
+        if let trend = history.weightTrendKg, goal == .loseWeight, trend < -0.3 {
+            return String(format: NSLocalizedString("coach.adaptive.lostWeight", comment: ""),
+                          abs(trend))
+        }
+        if let trend = history.weightTrendKg, goal == .gainMuscle, trend > 0.3 {
+            return String(format: NSLocalizedString("coach.adaptive.gainedWeight", comment: ""),
+                          trend)
+        }
+        if history.pastWorkouts == 0 {
+            return NSLocalizedString("coach.adaptive.beginner", comment: "")
+        }
+        if history.workoutsLast7Days == 0 && history.pastWorkouts > 0 {
+            return NSLocalizedString("coach.adaptive.comeback", comment: "")
+        }
+        return ""
+    }
+
+    // Replaces some of the generic tips with personalized advice when the user
+    // already has a history. The total tip count stays the same.
+    private static func adaptiveTips(history: AdaptiveContext, goal: FitnessGoal) -> [String] {
+        var baseTips = tips(goal: goal).shuffled()
+        var injected: [String] = []
+
+        if history.currentStreak >= 14 {
+            injected.append(NSLocalizedString("coach.tip.recovery", comment: ""))
+        }
+        if history.workoutsLast7Days == 0 && history.pastWorkouts > 5 {
+            injected.append(NSLocalizedString("coach.tip.restart", comment: ""))
+        }
+        if history.avgCaloriesLast7Days > 0,
+           history.calorieTarget > 0,
+           history.avgCaloriesLast7Days < Int(Double(history.calorieTarget) * 0.7) {
+            injected.append(NSLocalizedString("coach.tip.eatMore", comment: ""))
+        }
+        if let trend = history.weightTrendKg, abs(trend) < 0.2, history.hasLoggedWeight {
+            injected.append(NSLocalizedString("coach.tip.plateau", comment: ""))
+        }
+
+        // Replace the first N tips with personalized ones (preserve order).
+        for (i, tip) in injected.enumerated() where i < baseTips.count {
+            baseTips[i] = tip
+        }
+        return baseTips
+    }
 
     // MARK: - Analysis
 

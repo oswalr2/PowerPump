@@ -388,8 +388,46 @@ struct AICoachView: View {
 
     // MARK: - Generate (local — no API)
 
+    private func buildAdaptiveContext() -> LocalCoachService.AdaptiveContext {
+        let workouts = WorkoutStore.shared
+        let foodLog  = FoodLogStore.shared
+        let progress = ProgressStore.shared
+        let cal = Calendar.current
+        let today = cal.startOfDay(for: .now)
+        let weekStart = cal.date(byAdding: .day, value: -6, to: today) ?? today
+
+        let last7Workouts = workouts.history.filter {
+            $0.startedAt >= weekStart && $0.finishedAt != nil
+        }.count
+        let totalWorkouts = workouts.history.filter { $0.finishedAt != nil }.count
+
+        let last7Cals = foodLog.dailyCalories(lastDays: 7).filter { $0.calories > 0 }
+        let avgCals = last7Cals.isEmpty ? 0
+            : Int(last7Cals.reduce(0) { $0 + $1.calories } / Double(last7Cals.count))
+
+        let entries = progress.entries(days: 14).sorted { $0.date < $1.date }
+        let weightTrend: Double? = {
+            guard entries.count >= 2 else { return nil }
+            return entries.last!.weightKg - entries.first!.weightKg
+        }()
+
+        return LocalCoachService.AdaptiveContext(
+            pastWorkouts:         totalWorkouts,
+            workoutsLast7Days:    last7Workouts,
+            currentStreak:        workouts.currentStreak,
+            longestStreak:        workouts.longestStreak,
+            avgCaloriesLast7Days: avgCals,
+            calorieTarget:        profile.dailyCalorieTarget,
+            weightTrendKg:        weightTrend,
+            hasLoggedWeight:      !entries.isEmpty)
+    }
+
     private func generate() {
         isGenerating = true
+
+        // Capture adaptive context BEFORE jumping off the main actor.
+        let context = buildAdaptiveContext()
+
         // Brief delay for UX feel
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
             let result = LocalCoachService.generatePlan(
@@ -401,7 +439,8 @@ struct AICoachView: View {
                 bmiCategory:   profile.bmiCategory,
                 dailyCalories: profile.dailyCalorieTarget,
                 dailyProtein:  profile.dailyProteinTarget,
-                extraContext:  extraContext
+                extraContext:  extraContext,
+                history:       context
             )
             withAnimation(.easeInOut(duration: 0.4)) {
                 plan = result

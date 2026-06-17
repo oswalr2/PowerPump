@@ -3161,6 +3161,74 @@
         }
       }
     },
+    "Avg calories/day": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avg calories/day"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cal/día (prom.)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cal/jour (moy.)"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cal/giorno (media)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cal/dia (méd.)"
+          }
+        }
+      }
+    },
+    "Avg water/day": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avg water/day"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agua/día (prom.)"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eau/jour (moy.)"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acqua/giorno (media)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Água/dia (méd.)"
+          }
+        }
+      }
+    },
     "Avg/day": {
       "extractionState": "stale",
       "localizations": {
@@ -8368,6 +8436,40 @@
         }
       }
     },
+    "Gained this week": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gained this week"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subiste esta semana"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pris cette semaine"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Messo su questa settimana"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ganhou esta semana"
+          }
+        }
+      }
+    },
     "Garlic, minced": {
       "extractionState": "stale",
       "localizations": {
@@ -10723,6 +10825,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Perder Peso"
+          }
+        }
+      }
+    },
+    "Lost this week": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lost this week"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bajaste esta semana"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perdu cette semaine"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perso questa settimana"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perdeu esta semana"
           }
         }
       }
@@ -20024,6 +20160,40 @@
         }
       }
     },
+    "Your week in review": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your week in review"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu semana en resumen"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ta semaine en résumé"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La tua settimana in sintesi"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sua semana em resumo"
+          }
+        }
+      }
+    },
     "Zucchini": {
       "localizations": {
         "es": {
@@ -20105,6 +20275,584 @@
           "stringUnit": {
             "state": "translated",
             "value": "Abobrinha em rodelas"
+          }
+        }
+      }
+    },
+    "alert.noFood.body": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Three days without entries. Even a quick snack log keeps your numbers honest."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tres días sin registros. Aunque sea un snack rápido, mantiene tus números reales."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trois jours sans entrée. Même un petit en-cas suffit à garder tes chiffres réels."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tre giorni senza voci. Anche solo uno snack mantiene i tuoi numeri reali."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Três dias sem registros. Mesmo um lanche rápido mantém seus números reais."
+          }
+        }
+      }
+    },
+    "alert.noFood.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Haven't seen you log food"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hace días que no registras comida"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pas vu d'aliments enregistrés"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Non ti vedo registrare cibo"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Faz dias que não registra comida"
+          }
+        }
+      }
+    },
+    "alert.noWorkout.body": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Even a 20-min session restarts the habit. Pick a quick one."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hasta 20 min reactivan el hábito. Elige una rutina rápida."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Même 20 min relancent l'habitude. Choisis une séance rapide."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anche 20 min riavviano l'abitudine. Scegli una rapida."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Até 20 min reativam o hábito. Escolha um rápido."
+          }
+        }
+      }
+    },
+    "alert.noWorkout.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No workouts this week"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin entrenamientos esta semana"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pas de séance cette semaine"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nessun allenamento questa settimana"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sem treinos esta semana"
+          }
+        }
+      }
+    },
+    "alert.onFire.body": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld workouts already — ahead of your plan."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld entrenamientos ya — vas adelantado."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Déjà %lld séances — tu es en avance."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Già %lld allenamenti — sei in anticipo."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Já %lld treinos — você está adiantado."
+          }
+        }
+      }
+    },
+    "alert.onFire.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On fire this week"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En racha esta semana"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En forme cette semaine"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In forma questa settimana"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Em chamas esta semana"
+          }
+        }
+      }
+    },
+    "alert.plateau.body": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Two weeks without movement is normal. Stay the course, the body adjusts."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dos semanas sin movimiento es normal. Sigue el plan, el cuerpo se ajusta."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deux semaines sans mouvement, c'est normal. Tiens bon, le corps s'adapte."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Due settimane senza movimento è normale. Continua, il corpo si adatta."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duas semanas sem mudança é normal. Mantenha o curso, o corpo ajusta."
+          }
+        }
+      }
+    },
+    "alert.plateau.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weight has plateaued"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu peso se estancó"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ton poids stagne"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Il tuo peso si è fermato"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seu peso parou"
+          }
+        }
+      }
+    },
+    "alert.streak.body": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You're in the top tier of users. Keep showing up."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estás en el grupo de los más constantes. Sigue apareciendo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu fais partie des plus assidus. Continue à venir."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sei tra i più costanti. Continua a presentarti."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Você está entre os mais consistentes. Continue aparecendo."
+          }
+        }
+      }
+    },
+    "alert.streak.title": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld-day streak 🔥"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Racha de %lld días 🔥"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Série de %lld jours 🔥"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Serie di %lld giorni 🔥"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sequência de %lld dias 🔥"
+          }
+        }
+      }
+    },
+    "coach.adaptive.beginner": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome — your first plan is built to teach form before pushing weight."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bienvenido — tu primer plan está hecho para enseñar técnica antes que peso."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bienvenue — ton premier plan est conçu pour apprendre la technique avant les charges."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Benvenuto — il tuo primo piano è pensato per imparare la tecnica prima dei pesi."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bem-vindo — seu primeiro plano foi feito para ensinar técnica antes do peso."
+          }
+        }
+      }
+    },
+    "coach.adaptive.comeback": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome back — let's restart smart with lighter volume this week."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bienvenido de vuelta — empecemos con menos volumen esta semana."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bon retour — reprenons doucement avec moins de volume cette semaine."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bentornato — ripartiamo con calma con meno volume questa settimana."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bem-vindo de volta — vamos retomar com menos volume esta semana."
+          }
+        }
+      }
+    },
+    "coach.adaptive.consistent": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You hit %lld workouts this week — strong consistency."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hiciste %lld entrenamientos esta semana — gran constancia."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu as fait %lld séances cette semaine — belle régularité."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hai fatto %lld allenamenti questa settimana — ottima costanza."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Você fez %lld treinos esta semana — ótima consistência."
+          }
+        }
+      }
+    },
+    "coach.adaptive.gainedWeight": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You've gained %.1f kg in two weeks — solid muscle-building pace."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Has ganado %.1f kg en dos semanas — buen ritmo de construcción muscular."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu as pris %.1f kg en deux semaines — bon rythme de prise de muscle."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hai messo su %.1f kg in due settimane — buon ritmo per costruire muscolo."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Você ganhou %.1f kg em duas semanas — ótimo ritmo de ganho muscular."
+          }
+        }
+      }
+    },
+    "coach.adaptive.lostWeight": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You've dropped %.1f kg in the last two weeks — the plan is working."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Has bajado %.1f kg en las últimas dos semanas — el plan funciona."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu as perdu %.1f kg ces deux dernières semaines — le plan fonctionne."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hai perso %.1f kg nelle ultime due settimane — il piano funziona."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Você perdeu %.1f kg nas últimas duas semanas — o plano está funcionando."
+          }
+        }
+      }
+    },
+    "coach.adaptive.streak": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You're on a %lld-day streak — let's keep that momentum."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Llevas %lld días seguidos entrenando — mantengamos ese impulso."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu enchaînes %lld jours d'entraînement — gardons cet élan."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sei a una serie di %lld giorni — manteniamo questo slancio."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Você está em uma sequência de %lld dias — vamos manter esse ritmo."
+          }
+        }
+      }
+    },
+    "coach.adaptive.veteran": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "With %lld workouts already in the book, you're well past the hard part."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Con %lld entrenamientos ya hechos, tienes la parte difícil superada."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avec %lld séances déjà au compteur, le plus dur est derrière toi."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Con %lld allenamenti già fatti, la parte difficile è alle spalle."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Com %lld treinos no histórico, você já passou da parte mais difícil."
           }
         }
       }
@@ -20522,6 +21270,142 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mova-se hoje para continuar se movendo por décadas. Seu corpo agradece."
+          }
+        }
+      }
+    },
+    "coach.tip.eatMore": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your average intake is well below target — under-eating slows results."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu consumo medio está muy por debajo de tu meta — comer poco frena resultados."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ton apport moyen est bien sous l'objectif — manger trop peu freine les résultats."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Il tuo apporto medio è ben sotto l'obiettivo — mangiare troppo poco rallenta i risultati."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seu consumo médio está bem abaixo da meta — comer pouco trava resultados."
+          }
+        }
+      }
+    },
+    "coach.tip.plateau": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weight stalled? Try a refeed day at maintenance every 10-14 days."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Peso estancado? Prueba un día de refeed a calorías de mantenimiento cada 10-14 días."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poids bloqué ? Essaie un jour de refeed à la maintenance tous les 10-14 jours."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peso bloccato? Prova un giorno di refeed a calorie di mantenimento ogni 10-14 giorni."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peso parado? Tente um dia de refeed nas calorias de manutenção a cada 10-14 dias."
+          }
+        }
+      }
+    },
+    "coach.tip.recovery": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Long streaks need recovery weeks — drop volume by 40% every 6-8 weeks."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Las rachas largas necesitan descarga — baja el volumen 40% cada 6-8 semanas."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les longues séries demandent du repos — réduis le volume de 40% toutes les 6-8 semaines."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le serie lunghe richiedono recupero — riduci il volume del 40% ogni 6-8 settimane."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sequências longas precisam de descarga — reduza o volume 40% a cada 6-8 semanas."
+          }
+        }
+      }
+    },
+    "coach.tip.restart": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coming back after a break? Start at 60% of your previous weights to avoid soreness."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Vuelves después de un descanso? Empieza con 60% de tu peso habitual para evitar dolor."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu reprends après une pause ? Commence à 60% de tes charges habituelles pour éviter les courbatures."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Riprendi dopo una pausa? Inizia al 60% dei tuoi pesi abituali per evitare dolori."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voltando após uma pausa? Comece com 60% das suas cargas habituais para evitar dores."
           }
         }
       }
@@ -21056,6 +21940,244 @@
           "stringUnit": {
             "state": "translated",
             "value": "em"
+          }
+        }
+      }
+    },
+    "recap.highlight.calories": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Calorie average matched your target — dial in nutrition is hard, well done."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu promedio coincidió con tu meta — encontrarle el punto a la nutrición no es fácil."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ta moyenne calorique a égalé ta cible — bien joué, ce n'est pas évident."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La tua media calorica ha centrato l'obiettivo — non è facile, bravo."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sua média bateu a meta — encontrar o ponto da nutrição não é fácil, mandou bem."
+          }
+        }
+      }
+    },
+    "recap.highlight.gainedWeight": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Up %.1f kg this week — solid lean-gain pace."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subiste %.1f kg esta semana — buen ritmo de ganancia limpia."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu as pris %.1f kg cette semaine — bon rythme de prise propre."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hai messo su %.1f kg questa settimana — buon ritmo di crescita pulita."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Você ganhou %.1f kg esta semana — ótimo ritmo de ganho limpo."
+          }
+        }
+      }
+    },
+    "recap.highlight.keepGoing": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every day logged is a day forward. Keep going."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cada día registrado es un día de avance. Sigue así."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chaque jour enregistré est un pas en avant. Continue."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ogni giorno registrato è un passo avanti. Continua."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cada dia registrado é um avanço. Continue."
+          }
+        }
+      }
+    },
+    "recap.highlight.lostWeight": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Down %.1f kg this week — the plan is working."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bajaste %.1f kg esta semana — el plan funciona."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu as perdu %.1f kg cette semaine — le plan fonctionne."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hai perso %.1f kg questa settimana — il piano funziona."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Você perdeu %.1f kg esta semana — o plano funciona."
+          }
+        }
+      }
+    },
+    "recap.highlight.streak": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld-day streak — you're in elite territory."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Racha de %lld días — territorio de élite."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Série de %lld jours — territoire d'élite."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Serie di %lld giorni — territorio d'élite."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sequência de %lld dias — território de elite."
+          }
+        }
+      }
+    },
+    "recap.highlight.water": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crushed water targets this week — small win, big impact."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cumpliste la meta de agua esta semana — pequeño hábito, gran impacto."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu as atteint l'objectif eau cette semaine — petit geste, grand impact."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hai centrato l'obiettivo acqua questa settimana — piccolo gesto, grande impatto."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bateu a meta de água esta semana — pequeno hábito, grande impacto."
+          }
+        }
+      }
+    },
+    "recap.highlight.workouts": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld workouts logged — great execution this week."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld entrenamientos registrados — gran ejecución esta semana."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld séances enregistrées — belle exécution cette semaine."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld allenamenti registrati — ottima esecuzione questa settimana."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld treinos registrados — ótima execução esta semana."
           }
         }
       }

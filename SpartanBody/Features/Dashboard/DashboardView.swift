@@ -15,6 +15,20 @@ struct DashboardView: View {
     @State private var showSettings     = false
     @State private var appeared         = false
 
+    // Coach insights — recomputed when the view appears.
+    @State private var coachAlert: CoachInsightsService.CoachAlert?
+    @State private var weeklyRecap: CoachInsightsService.WeeklyRecap =
+        CoachInsightsService.WeeklyRecap(
+            weekRange: "", workoutsDone: 0, workoutsPlanned: 4,
+            avgDailyCalories: 0, calorieTarget: 2000, avgWater: 0,
+            weightChange: nil, highlight: "")
+    // Show the recap on Mondays, or any day if there's actual data to show.
+    private var showWeeklyRecap: Bool {
+        let isMonday = Calendar.current.component(.weekday, from: .now) == 2
+        let hasData  = weeklyRecap.workoutsDone > 0 || weeklyRecap.avgDailyCalories > 0
+        return isMonday && hasData
+    }
+
     private var caloriesConsumed: Int { Int(foodLog.todayCalories) }
     private var caloriesBurned: Int {
         health.isAuthorized && health.activeEnergyToday > 0
@@ -40,6 +54,14 @@ struct DashboardView: View {
                     VStack(spacing: 20) {
                         headerSection
                             .slideIn(appeared, delay: 0.0)
+                        if let alert = coachAlert {
+                            CoachAlertBanner(alert: alert)
+                                .slideIn(appeared, delay: 0.04)
+                        }
+                        if showWeeklyRecap {
+                            WeeklyRecapCard(recap: weeklyRecap)
+                                .slideIn(appeared, delay: 0.06)
+                        }
                         calorieRingSection
                             .slideIn(appeared, delay: 0.08)
                         macroSection
@@ -65,6 +87,8 @@ struct DashboardView: View {
                 appeared = true
             }
             if health.isAuthorized { health.fetchTodayStats() }
+            coachAlert  = CoachInsightsService.currentAlert()
+            weeklyRecap = CoachInsightsService.weeklyRecap()
         }
     }
 
