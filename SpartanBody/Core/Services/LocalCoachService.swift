@@ -613,12 +613,15 @@ struct LocalCoachService {
         let newSchedule = plan.weeklySchedule.map { day -> DayPlan in
             var modifiedExercises = day.exercises.map { ex -> String in
                 var result = ex
-                if hasKnee     { result = applyKneeSubstitution(result) }
-                if hasShoulder { result = applyShoulderSubstitution(result) }
-                if hasWrist    { result = applyWristSubstitution(result) }
-                if hasHome     { result = applyHomeSubstitution(result) }
-                if hasBack     { result = applyBackSubstitution(result) }
-                if hasBeginner { result = applyBeginnerSubstitution(result) }
+                // Order matters: home equipment swaps first, then injury-driven
+                // swaps that override any equipment choice. Beginner regressions
+                // last so the simpler movement wins.
+                if hasHome     { result = substitute(result, with: homeSubs) }
+                if hasKnee     { result = substitute(result, with: kneeSubs) }
+                if hasShoulder { result = substitute(result, with: shoulderSubs) }
+                if hasWrist    { result = substitute(result, with: wristSubs) }
+                if hasBack     { result = substitute(result, with: backSubs) }
+                if hasBeginner { result = substitute(result, with: beginnerSubs) }
                 return result
             }
             // For sedentary users, append a mobility move to workout days.
@@ -749,6 +752,125 @@ struct LocalCoachService {
          "vegetarian", "vegetariano", "vegetariana", "végétarien", "vegetariano"]
             .contains { ctx.contains($0) }
     }
+
+    // Match by exercise name only (preserves sets/reps like "Squat 5×5" or
+    // "Squat 4×12"). Longer keys win so "Romanian Deadlift" beats "Deadlift".
+    private static func substitute(_ ex: String, with subs: [(String, String)]) -> String {
+        let sorted = subs.sorted { $0.0.count > $1.0.count }
+        for (name, replacement) in sorted {
+            if ex.range(of: name, options: [.caseInsensitive]) != nil {
+                return ex.replacingOccurrences(
+                    of: name, with: replacement,
+                    options: [.caseInsensitive])
+            }
+        }
+        return ex
+    }
+
+    // MARK: - Substitution dictionaries
+
+    // KNEE-friendly: replace any high-impact / deep-knee-flexion movement.
+    private static let kneeSubs: [(String, String)] = [
+        ("Jump Rope",           "March in Place"),
+        ("High Knees",          "March in Place"),
+        ("Burpees",             "Squat-to-Stand"),
+        ("Box Jump",            "Step-up (no jump)"),
+        ("Walking Lunge",       "Hip Thrust"),
+        ("Reverse Lunge",       "Hip Thrust"),
+        ("Goblet Squat",        "Glute Bridge"),
+        ("Wall Squat",          "Glute Bridge"),
+        ("Squat",               "Leg Press (or Glute Bridge)"),
+        ("Mountain Climbers",   "Plank with Reach"),
+        ("Bicycle Crunch",      "Dead Bug"),
+        ("Step-up",             "Hip Thrust"),
+    ]
+
+    // BACK-friendly: avoid axial loading and heavy hip-hinge pulls.
+    private static let backSubs: [(String, String)] = [
+        ("Romanian Deadlift",   "Hip Thrust"),
+        ("Pendlay Row",         "Dumbbell Row"),
+        ("Barbell Row",         "Chest-Supported Row"),
+        ("Deadlift",            "Hip Thrust"),
+        ("Clean & Press",       "Dumbbell Push Press"),
+        ("Back Squat",          "Goblet Squat (light)"),
+        ("Squat 5×5",           "Goblet Squat 3×10"),
+        ("Squat",               "Goblet Squat (light)"),
+        ("Overhead Press",      "Seated Lateral Raise"),
+        ("Pike Push-up",        "Incline Push-up"),
+        ("Russian Twist",       "Side Plank"),
+        ("Crunch",              "Dead Bug"),
+        ("Leg Raise",           "Dead Bug"),
+        ("Box Jump",            "Step-up (light)"),
+    ]
+
+    // SHOULDER-friendly: replace overhead and impingement-risk movements.
+    private static let shoulderSubs: [(String, String)] = [
+        ("Overhead Press",          "Lateral Raise"),
+        ("Arnold Press",            "Front Raise"),
+        ("Pike Push-up",            "Incline Push-up"),
+        ("Bench Press",             "Floor Press"),
+        ("Incline Bench",           "Flat DB Press"),
+        ("Incline DB Press",        "Flat DB Press"),
+        ("Incline Dumbbell Press",  "Flat Dumbbell Press"),
+        ("Close-grip Bench",        "Tricep Pushdown"),
+        ("Lateral Raise",           "Cable Lateral Raise (light)"),
+        ("Push Press",              "Dumbbell Push (light)"),
+        ("Dumbbell Push Press",     "Front Raise"),
+        ("Skull Crusher",           "Tricep Pushdown"),
+        ("Face Pull",               "Band Pull-Apart"),
+    ]
+
+    // WRIST-friendly: avoid weight-bearing on the wrists.
+    private static let wristSubs: [(String, String)] = [
+        ("Push-up",            "Knee Push-up"),
+        ("Plank",              "Forearm Plank"),
+        ("Mountain Climbers",  "Standing Knee Drives"),
+        ("Burpees",            "Squat-to-Stand"),
+        ("Dumbbell Curl",      "Hammer Curl"),
+        ("Barbell Curl",       "Cable Curl"),
+        ("Skull Crusher",      "Tricep Kickback"),
+        ("Tricep Dip",         "Bench Triceps (light)"),
+        ("Pike Push-up",       "Seated Dumbbell Press"),
+    ]
+
+    // HOME / no equipment: replace barbells & machines with dumbbell or
+    // bodyweight alternatives.
+    private static let homeSubs: [(String, String)] = [
+        ("Barbell Row",         "Dumbbell Row"),
+        ("Pendlay Row",         "Dumbbell Row"),
+        ("Seated Row",          "Resistance Band Row"),
+        ("Barbell Curl",        "Dumbbell Curl"),
+        ("Preacher Curl",       "Incline Dumbbell Curl"),
+        ("Bench Press",         "Dumbbell Press (floor)"),
+        ("Incline Bench",       "Incline Push-up"),
+        ("Lat Pulldown",        "Resistance Band Pulldown"),
+        ("Cable Fly",           "Dumbbell Fly"),
+        ("Cable Lateral Raise", "Dumbbell Lateral Raise"),
+        ("Tricep Pushdown",     "Tricep Kickback"),
+        ("Skull Crusher",       "Dumbbell Overhead Extension"),
+        ("Leg Press",           "Goblet Squat"),
+        ("Leg Curl",            "Nordic Curl"),
+        ("Hack Squat",          "Goblet Squat"),
+        ("Clean & Press",       "Dumbbell Clean & Press"),
+        ("Deadlift",            "Romanian Deadlift (dumbbells)"),
+        ("Pull-ups",            "Resistance Band Pulldown"),
+    ]
+
+    // BEGINNER: regressions for moves that need solid form first.
+    private static let beginnerSubs: [(String, String)] = [
+        ("Weighted Pull-ups",   "Lat Pulldown"),
+        ("Pull-ups",            "Assisted Pull-ups"),
+        ("Chin-ups",            "Assisted Chin-ups"),
+        ("Burpees",             "Squat-to-Stand"),
+        ("Box Jump",            "Step-up"),
+        ("Pistol Squat",        "Bodyweight Squat"),
+        ("Deadlift",            "Romanian Deadlift (light)"),
+        ("Push-up",             "Knee Push-up"),
+        ("Pike Push-up",        "Incline Push-up"),
+        ("Plank",               "Knee Plank"),
+        ("Mountain Climbers",   "Marching Plank"),
+        ("Clean & Press",       "Dumbbell Push Press (light)"),
+    ]
 
     private static func applyKneeSubstitution(_ ex: String) -> String {
         let subs: [(String, String)] = [
