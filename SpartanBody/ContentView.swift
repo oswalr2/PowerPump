@@ -5,14 +5,22 @@ extension Notification.Name {
 }
 
 struct ContentView: View {
-    @ObservedObject private var profile = UserProfile.shared
+    @ObservedObject private var profile  = UserProfile.shared
+    @ObservedObject private var language = LanguageManager.shared
 
     var body: some View {
-        if profile.onboardingDone {
-            MainTabView()
-        } else {
-            OnboardingView()
+        Group {
+            if profile.onboardingDone {
+                MainTabView()
+            } else {
+                OnboardingView()
+            }
         }
+        // The .id() forces SwiftUI to throw away the current view tree and
+        // build a fresh one whenever the language changes. Without this,
+        // already-rendered Text("...") values keep the old translation.
+        .id(language.selectedCode)
+        .environment(\.locale, language.locale)
     }
 }
 
