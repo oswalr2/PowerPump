@@ -159,6 +159,14 @@ struct RecipesView: View {
     }
 }
 
+// Localized "1 serving" / "N servings" for an integer serving count.
+func servingsText(_ count: Int) -> String {
+    let key = count == 1 ? "1 serving" : "%lld servings"
+    return count == 1
+        ? NSLocalizedString(key, comment: "")
+        : String(format: NSLocalizedString(key, comment: ""), count)
+}
+
 // MARK: - Recipe Card
 
 private struct RecipeCard: View {
@@ -183,7 +191,7 @@ private struct RecipeCard: View {
                     Circle().fill(Color.sbBorder).frame(width: 3, height: 3)
                     Label("\(Int(recipe.nutrition.calories)) kcal", systemImage: "flame")
                     Circle().fill(Color.sbBorder).frame(width: 3, height: 3)
-                    Label("\(recipe.servings) serving\(recipe.servings > 1 ? "s" : "")", systemImage: "person")
+                    Label(servingsText(recipe.servings), systemImage: "person")
                 }
                 .font(SBFont.label(10))
                 .foregroundColor(.sbTextSecondary)
@@ -276,7 +284,7 @@ struct RecipeDetailView: View {
 
                         HStack(spacing: 12) {
                             Label("\(recipe.prepMinutes) min", systemImage: "clock")
-                            Label("\(recipe.servings) serving\(recipe.servings > 1 ? "s" : "")", systemImage: "person.2")
+                            Label(servingsText(recipe.servings), systemImage: "person.2")
                             GoalBadge(goal: recipe.goal)
                         }
                         .font(SBFont.caption())
@@ -381,7 +389,8 @@ struct RecipeDetailView: View {
                     .foregroundColor(.sbTextPrimary)
                 Spacer()
                 Stepper(value: $servings, in: 0.5...5, step: 0.5) {
-                    Text("\(servings, specifier: "%.1f") serving\(servings > 1 ? "s" : "")")
+                    Text(String(format: NSLocalizedString("%@ servings", comment: ""),
+                                String(format: "%.1f", servings)))
                         .font(SBFont.caption())
                         .foregroundColor(.sbTextSecondary)
                 }

@@ -121,7 +121,8 @@ struct ProgressView: View {
                         Image(systemName: "trophy.fill")
                             .font(.system(size: 11))
                             .foregroundColor(Color(hex: "#FFD700"))
-                        Text("Best: \(workoutStore.longestStreak) day\(workoutStore.longestStreak == 1 ? "" : "s")")
+                        Text(String(format: NSLocalizedString("Best: %lld days", comment: ""),
+                                    workoutStore.longestStreak))
                             .font(SBFont.label(11))
                             .foregroundColor(.sbTextSecondary)
                     }
