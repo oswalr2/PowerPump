@@ -38,6 +38,7 @@ struct SettingsView: View {
                             hydrationReminderRow
                             mealsReminderRow
                             sleepReminderRow
+                            weighInReminderRow
                         }
                     } header: {
                         sectionHeader("Notifications")
@@ -213,6 +214,23 @@ struct SettingsView: View {
                 DatePicker("", selection: $notif.sleepTime, displayedComponents: .hourAndMinute)
                     .labelsHidden()
                     .tint(.sbAccent)
+            }
+        }
+        .listRowBackground(Color.sbSurface)
+    }
+
+    private var weighInReminderRow: some View {
+        NotifRow(icon: "scalemass.fill", title: "Weekly Weigh-In", isOn: $notif.weighInEnabled) {
+            if notif.weighInEnabled {
+                HStack {
+                    Text("Mondays")
+                        .font(SBFont.caption())
+                        .foregroundColor(.sbTextSecondary)
+                    Spacer()
+                    DatePicker("", selection: $notif.weighInTime, displayedComponents: .hourAndMinute)
+                        .labelsHidden()
+                        .tint(.sbAccent)
+                }
             }
         }
         .listRowBackground(Color.sbSurface)

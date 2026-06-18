@@ -75,6 +75,31 @@ final class HealthKitService: ObservableObject {
             DispatchQueue.main.async { self?.activeEnergyToday = v }
         }
         fetchWeeklyHeartRate()
+        fetchLatestBodyMass()
+    }
+
+    /// Pulls the most recent body-mass sample from Apple Health (e.g. from a
+    /// smart scale or the Health app) and forwards it to UserProfile +
+    /// ProgressStore so the rest of the app sees it as a fresh weigh-in.
+    func fetchLatestBodyMass() {
+        guard isAvailable,
+              let type = HKQuantityType.quantityType(forIdentifier: .bodyMass) else { return }
+        let sort = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: false)
+        let query = HKSampleQuery(sampleType: type,
+                                  predicate: nil,
+                                  limit: 1,
+                                  sortDescriptors: [sort]) { _, samples, _ in
+            guard let s = samples?.first as? HKQuantitySample else { return }
+            let kg = s.quantity.doubleValue(for: .gramUnit(with: .kilo))
+            let date = s.endDate
+            DispatchQueue.main.async {
+                ProgressStore.shared.addEntry(weightKg: kg, date: date)
+                if abs(UserProfile.shared.weightKg - kg) > 0.05 {
+                    UserProfile.shared.weightKg = kg
+                }
+            }
+        }
+        hk.execute(query)
     }
 
     func fetchWeeklyHeartRate() {

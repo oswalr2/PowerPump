@@ -16556,6 +16556,136 @@
         }
       }
     },
+    "Weekly Weigh-In": {
+      "localizations": {
+        "es": { "stringUnit": { "state": "translated", "value": "Pesaje semanal" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Pesée hebdomadaire" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Pesata settimanale" } },
+        "pt-BR": { "stringUnit": { "state": "translated", "value": "Pesagem semanal" } }
+      }
+    },
+    "Mondays": {
+      "localizations": {
+        "es": { "stringUnit": { "state": "translated", "value": "Lunes" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Lundis" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Lunedì" } },
+        "pt-BR": { "stringUnit": { "state": "translated", "value": "Segundas" } }
+      }
+    },
+    "Log Weight": {
+      "localizations": {
+        "es": { "stringUnit": { "state": "translated", "value": "Registrar peso" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Enregistrer poids" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Registra peso" } },
+        "pt-BR": { "stringUnit": { "state": "translated", "value": "Registrar peso" } }
+      }
+    },
+    "Save Weight": {
+      "localizations": {
+        "es": { "stringUnit": { "state": "translated", "value": "Guardar peso" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Enregistrer le poids" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Salva peso" } },
+        "pt-BR": { "stringUnit": { "state": "translated", "value": "Salvar peso" } }
+      }
+    },
+    "Enter your current weight to keep your progress accurate": {
+      "localizations": {
+        "es": { "stringUnit": { "state": "translated", "value": "Introduce tu peso actual para mantener tu progreso al día" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Saisissez votre poids actuel pour suivre votre progression" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Inserisci il tuo peso attuale per tenere traccia dei progressi" } },
+        "pt-BR": { "stringUnit": { "state": "translated", "value": "Insira seu peso atual para manter o progresso preciso" } }
+      }
+    },
+    "Enter a value between 20 and 400 kg": {
+      "localizations": {
+        "es": { "stringUnit": { "state": "translated", "value": "Introduce un valor entre 20 y 400 kg" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Saisissez une valeur entre 20 et 400 kg" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Inserisci un valore tra 20 e 400 kg" } },
+        "pt-BR": { "stringUnit": { "state": "translated", "value": "Insira um valor entre 20 e 400 kg" } }
+      }
+    },
+    "Last entry": {
+      "localizations": {
+        "es": { "stringUnit": { "state": "translated", "value": "Último registro" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Dernière entrée" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Ultima voce" } },
+        "pt-BR": { "stringUnit": { "state": "translated", "value": "Última entrada" } }
+      }
+    },
+    "Weight Progress": {
+      "localizations": {
+        "es": { "stringUnit": { "state": "translated", "value": "Progreso de peso" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Évolution du poids" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Progresso del peso" } },
+        "pt-BR": { "stringUnit": { "state": "translated", "value": "Progresso do peso" } }
+      }
+    },
+    "Weekly Heart Rate": {
+      "localizations": {
+        "es": { "stringUnit": { "state": "translated", "value": "Frecuencia cardíaca semanal" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Fréquence cardiaque hebdomadaire" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Frequenza cardiaca settimanale" } },
+        "pt-BR": { "stringUnit": { "state": "translated", "value": "Frequência cardíaca semanal" } }
+      }
+    },
+    "At current pace": {
+      "localizations": {
+        "es": { "stringUnit": { "state": "translated", "value": "Al ritmo actual" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Au rythme actuel" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Al ritmo attuale" } },
+        "pt-BR": { "stringUnit": { "state": "translated", "value": "No ritmo atual" } }
+      }
+    },
+    "Maintaining weight": {
+      "localizations": {
+        "es": { "stringUnit": { "state": "translated", "value": "Manteniendo el peso" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Maintien du poids" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Peso costante" } },
+        "pt-BR": { "stringUnit": { "state": "translated", "value": "Mantendo o peso" } }
+      }
+    },
+    "No weight history yet": {
+      "localizations": {
+        "es": { "stringUnit": { "state": "translated", "value": "Aún no hay historial de peso" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Pas encore d'historique de poids" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Nessuno storico del peso ancora" } },
+        "pt-BR": { "stringUnit": { "state": "translated", "value": "Ainda sem histórico de peso" } }
+      }
+    },
+    "Tap Log Weight to start your history.": {
+      "localizations": {
+        "es": { "stringUnit": { "state": "translated", "value": "Toca Registrar peso para empezar tu historial." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Appuyez sur Enregistrer poids pour démarrer votre historique." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Tocca Registra peso per iniziare lo storico." } },
+        "pt-BR": { "stringUnit": { "state": "translated", "value": "Toque em Registrar peso para começar seu histórico." } }
+      }
+    },
+    "Target": {
+      "localizations": {
+        "es": { "stringUnit": { "state": "translated", "value": "Meta" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Objectif" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Obiettivo" } },
+        "pt-BR": { "stringUnit": { "state": "translated", "value": "Meta" } }
+      }
+    },
+    "notif.weighin.title": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Weekly weigh-in" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Pesaje semanal" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Pesée hebdomadaire" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Pesata settimanale" } },
+        "pt-BR": { "stringUnit": { "state": "translated", "value": "Pesagem semanal" } }
+      }
+    },
+    "notif.weighin.body": {
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Time to log this week's weight to keep your progress on track." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Hora de registrar tu peso de esta semana para seguir tu progreso." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Il est temps d'enregistrer votre poids de la semaine pour suivre vos progrès." } },
+        "it": { "stringUnit": { "state": "translated", "value": "È ora di registrare il tuo peso settimanale per monitorare i progressi." } },
+        "pt-BR": { "stringUnit": { "state": "translated", "value": "Hora de registrar o peso desta semana para acompanhar seu progresso." } }
+      }
+    },
     "Slide to set the weight you want to reach": {
       "localizations": {
         "es": {

@@ -33,6 +33,10 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
     @Published var sleepEnabled: Bool         { didSet { save(); if sleepEnabled { ensureAuthorized { self.scheduleSleep() } } else { scheduleSleep() } } }
     @Published var sleepTime: Date            { didSet { save(); scheduleSleep() } }
 
+    // Weekly weigh-in
+    @Published var weighInEnabled: Bool       { didSet { save(); if weighInEnabled { ensureAuthorized { self.scheduleWeighIn() } } else { scheduleWeighIn() } } }
+    @Published var weighInTime: Date          { didSet { save(); scheduleWeighIn() } }
+
     private let ud = UserDefaults.standard
 
     private override init() {
@@ -40,6 +44,7 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
         hydrationEnabled   = ud.bool(forKey: "nb_hydration_on")
         mealsEnabled       = ud.bool(forKey: "nb_meals_on")
         sleepEnabled       = ud.bool(forKey: "nb_sleep_on")
+        weighInEnabled     = ud.bool(forKey: "nb_weighin_on")
         hydrationEveryHours = ud.integer(forKey: "nb_hydration_hours").nonZero(default: 2)
 
         workoutTime   = ud.date("nb_workout_time")   ?? Self.time(hour: 7,  minute: 0)
@@ -47,6 +52,7 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
         lunchTime     = ud.date("nb_lunch_time")     ?? Self.time(hour: 12, minute: 30)
         dinnerTime    = ud.date("nb_dinner_time")    ?? Self.time(hour: 19, minute: 0)
         sleepTime     = ud.date("nb_sleep_time")     ?? Self.time(hour: 22, minute: 30)
+        weighInTime   = ud.date("nb_weighin_time")   ?? Self.time(hour: 8,  minute: 0)
 
         super.init()
         UNUserNotificationCenter.current().delegate = self
@@ -106,6 +112,24 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
         scheduleHydration()
         scheduleMeals()
         scheduleSleep()
+        scheduleWeighIn()
+    }
+
+    // Monday at the user-configured time. Uses a calendar trigger with
+    // weekday = 2 (Monday in Gregorian) so iOS handles the weekly cadence.
+    private func scheduleWeighIn() {
+        cancel(ids: ["sb.weighin"])
+        guard weighInEnabled, isAuthorized else { return }
+        let cal = Calendar.current
+        var comps = DateComponents()
+        comps.weekday = 2
+        comps.hour    = cal.component(.hour,   from: weighInTime)
+        comps.minute  = cal.component(.minute, from: weighInTime)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: true)
+        add(id: "sb.weighin",
+            title: NSLocalizedString("notif.weighin.title", comment: ""),
+            body:  NSLocalizedString("notif.weighin.body",  comment: ""),
+            trigger: trigger)
     }
 
     private func scheduleWorkout() {
@@ -202,12 +226,14 @@ final class NotificationManager: NSObject, ObservableObject, UNUserNotificationC
         ud.set(hydrationEnabled,     forKey: "nb_hydration_on")
         ud.set(mealsEnabled,         forKey: "nb_meals_on")
         ud.set(sleepEnabled,         forKey: "nb_sleep_on")
+        ud.set(weighInEnabled,       forKey: "nb_weighin_on")
         ud.set(hydrationEveryHours,  forKey: "nb_hydration_hours")
         ud.setDate(workoutTime,      forKey: "nb_workout_time")
         ud.setDate(breakfastTime,    forKey: "nb_breakfast_time")
         ud.setDate(lunchTime,        forKey: "nb_lunch_time")
         ud.setDate(dinnerTime,       forKey: "nb_dinner_time")
         ud.setDate(sleepTime,        forKey: "nb_sleep_time")
+        ud.setDate(weighInTime,      forKey: "nb_weighin_time")
     }
 
     private static func time(hour: Int, minute: Int) -> Date {

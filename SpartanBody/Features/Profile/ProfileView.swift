@@ -6,6 +6,7 @@ struct ProfileView: View {
     @ObservedObject private var health   = HealthKitService.shared
     @State private var showSettings      = false
     @State private var showRMCalculator  = false
+    @State private var showLogWeight     = false
 
     var body: some View {
         NavigationView {
@@ -16,6 +17,7 @@ struct ProfileView: View {
                     VStack(spacing: 20) {
                         avatarSection
                         statsCard
+                        weightHistorySection
                         targetsCard
                         healthCard
                         if health.isAuthorized {
@@ -44,9 +46,15 @@ struct ProfileView: View {
                 }
             }
             .navigationBarHidden(true)
+            .onAppear {
+                if health.isAuthorized { health.fetchTodayStats() }
+            }
         }
         .sheet(isPresented: $showSettings) { SettingsView() }
         .sheet(isPresented: $showRMCalculator) { RMCalculatorView() }
+        .sheet(isPresented: $showLogWeight) {
+            LogWeightSheet().presentationDetents([.medium])
+        }
     }
 
     // MARK: - RM Calculator button
@@ -133,10 +141,26 @@ struct ProfileView: View {
     private var statsCard: some View {
         SBCard {
             VStack(spacing: 16) {
-                Text("Your Stats")
-                    .font(SBFont.heading())
-                    .foregroundColor(.sbTextPrimary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                HStack {
+                    Text("Your Stats")
+                        .font(SBFont.heading())
+                        .foregroundColor(.sbTextPrimary)
+                    Spacer()
+                    Button {
+                        showLogWeight = true
+                    } label: {
+                        HStack(spacing: 4) {
+                            Image(systemName: "plus.circle.fill").font(.system(size: 12))
+                            Text("Log Weight").font(SBFont.label(11))
+                        }
+                        .foregroundColor(.sbAccent)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 6)
+                        .background(Color.sbAccent.opacity(0.15))
+                        .cornerRadius(10)
+                    }
+                    .buttonStyle(.plain)
+                }
 
                 HStack(spacing: 0) {
                     SBStatBox(value: "\(Int(profile.weightKg))", label: "Weight", unit: "kg").frame(maxWidth: .infinity)
@@ -154,6 +178,23 @@ struct ProfileView: View {
                 }
             }
         }
+    }
+
+    // MARK: - Weight history
+
+    private var weightHistorySection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 6) {
+                Image(systemName: "scalemass.fill")
+                    .foregroundColor(.sbAccent)
+                    .font(.system(size: 16))
+                Text("Weight Progress")
+                    .font(SBFont.heading())
+                    .foregroundColor(.sbTextPrimary)
+            }
+            WeightChartCard()
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     // MARK: - Targets
