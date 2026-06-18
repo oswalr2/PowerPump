@@ -7,16 +7,8 @@ struct ProgressView: View {
     @ObservedObject private var foodLog        = FoodLogStore.shared
     @ObservedObject private var profile        = UserProfile.shared
 
-    @State private var selectedPeriod: ChartPeriod = .month
     @State private var showLogWeight  = false
-    @State private var weightInput    = ""
 
-    enum ChartPeriod: String, CaseIterable {
-        case week = "1W", month = "1M", threeMonths = "3M"
-        var days: Int { switch self { case .week: 7; case .month: 30; case .threeMonths: 90 } }
-    }
-
-    private var weightEntries: [WeightEntry] { progressStore.entries(days: selectedPeriod.days) }
     private var recentSessions: [WorkoutSession] { Array(workoutStore.history.prefix(7).reversed()) }
 
     var body: some View {
@@ -29,7 +21,7 @@ struct ProgressView: View {
                         streakCard
                         summaryRow
                         MonthlyCalendarCard()
-                        weightCard
+                        weightSection
                         workoutsCard
                         nutritionHistoryCard
                         achievementsCard
@@ -41,7 +33,9 @@ struct ProgressView: View {
             }
             .navigationBarHidden(true)
         }
-        .sheet(isPresented: $showLogWeight) { logWeightSheet }
+        .sheet(isPresented: $showLogWeight) {
+            LogWeightSheet().presentationDetents([.medium])
+        }
     }
 
     // MARK: - Header
@@ -53,8 +47,6 @@ struct ProgressView: View {
                 .foregroundColor(.sbTextPrimary)
             Spacer()
             Button {
-                weightInput = String(format: "%.1f",
-                    progressStore.latestWeight ?? profile.weightKg)
                 showLogWeight = true
             } label: {
                 HStack(spacing: 5) {
@@ -197,95 +189,21 @@ struct ProgressView: View {
         }
     }
 
-    // MARK: - Weight Card
+    // MARK: - Weight Section
 
-    private var weightCard: some View {
-        SBCard {
-            VStack(spacing: 16) {
-                HStack(alignment: .top) {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Body Weight")
-                            .font(SBFont.heading())
-                            .foregroundColor(.sbTextPrimary)
-
-                        if let w = progressStore.latestWeight {
-                            HStack(alignment: .lastTextBaseline, spacing: 3) {
-                                Text(String(format: "%.1f", w))
-                                    .font(SBFont.display(26))
-                                    .foregroundColor(.sbAccent)
-                                Text("kg")
-                                    .font(SBFont.caption())
-                                    .foregroundColor(.sbTextSecondary)
-                                if let change = progressStore.weightChange {
-                                    changeTag(change)
-                                }
-                            }
-                        } else {
-                            Text("Tap + to log your weight")
-                                .font(SBFont.caption())
-                                .foregroundColor(.sbTextSecondary)
-                        }
-                    }
-                    Spacer()
-                    periodPicker
-                }
-
-                if weightEntries.count >= 2 {
-                    weightChart
-                } else {
-                    emptyChart(
-                        icon: "chart.line.uptrend.xyaxis",
-                        message: "Log weight on a few days to see your trend"
-                    )
-                }
+    private var weightSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(spacing: 6) {
+                Image(systemName: "scalemass.fill")
+                    .foregroundColor(.sbAccent)
+                    .font(.system(size: 16))
+                Text("Weight Progress")
+                    .font(SBFont.heading())
+                    .foregroundColor(.sbTextPrimary)
             }
+            WeightChartCard()
         }
-    }
-
-    private var weightChart: some View {
-        Chart(weightEntries) { entry in
-            AreaMark(
-                x: .value("Date", entry.date),
-                y: .value("kg", entry.weightKg)
-            )
-            .foregroundStyle(
-                LinearGradient(
-                    colors: [Color.sbAccent.opacity(0.25), .clear],
-                    startPoint: .top, endPoint: .bottom
-                )
-            )
-
-            LineMark(
-                x: .value("Date", entry.date),
-                y: .value("kg", entry.weightKg)
-            )
-            .foregroundStyle(Color.sbAccent)
-            .lineStyle(StrokeStyle(lineWidth: 2.5))
-
-            PointMark(
-                x: .value("Date", entry.date),
-                y: .value("kg", entry.weightKg)
-            )
-            .foregroundStyle(Color.sbAccent)
-            .symbolSize(30)
-        }
-        .chartXAxis { weightXAxis }
-        .chartYAxis { sbYAxis }
-        .frame(height: 160)
-    }
-
-    @AxisContentBuilder
-    private var weightXAxis: some AxisContent {
-        let stride: Calendar.Component = .day
-        let count = selectedPeriod == .week ? 2
-                  : selectedPeriod == .month ? 7 : 14
-        AxisMarks(values: .stride(by: stride, count: count)) { _ in
-            AxisGridLine(stroke: StrokeStyle(lineWidth: 0.5))
-                .foregroundStyle(Color.sbBorder)
-            AxisValueLabel(format: .dateTime.day().month(.abbreviated))
-                .foregroundStyle(Color.sbTextSecondary)
-                .font(SBFont.label(10))
-        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     // MARK: - Workouts Card
@@ -407,28 +325,6 @@ struct ProgressView: View {
 
     // MARK: - Shared helpers
 
-    private var periodPicker: some View {
-        HStack(spacing: 2) {
-            ForEach(ChartPeriod.allCases, id: \.self) { p in
-                Button {
-                    withAnimation(.easeInOut(duration: 0.2)) { selectedPeriod = p }
-                } label: {
-                    Text(p.rawValue)
-                        .font(SBFont.label(11))
-                        .foregroundColor(selectedPeriod == p ? .white : .sbTextSecondary)
-                        .padding(.horizontal, 9)
-                        .padding(.vertical, 5)
-                        .background(selectedPeriod == p ? Color.sbAccent : Color.clear)
-                        .cornerRadius(6)
-                }
-                .buttonStyle(.plain)
-            }
-        }
-        .padding(3)
-        .background(Color.sbSurfaceRaised)
-        .cornerRadius(9)
-    }
-
     @AxisContentBuilder
     private var sbYAxis: some AxisContent {
         AxisMarks { value in
@@ -458,81 +354,6 @@ struct ProgressView: View {
         .frame(maxWidth: .infinity)
     }
 
-    private func changeTag(_ change: Double) -> some View {
-        HStack(spacing: 2) {
-            Image(systemName: change <= 0 ? "arrow.down" : "arrow.up")
-            Text(String(format: "%.1f", abs(change)))
-        }
-        .font(SBFont.label(11))
-        .foregroundColor(change <= 0 ? .sbGreen : .sbRed)
-        .padding(.horizontal, 7)
-        .padding(.vertical, 3)
-        .background((change <= 0 ? Color.sbGreen : Color.sbRed).opacity(0.12))
-        .cornerRadius(6)
-    }
-
-    // MARK: - Log Weight Sheet
-
-    private var logWeightSheet: some View {
-        VStack(spacing: 24) {
-            Capsule()
-                .fill(Color.sbBorder)
-                .frame(width: 36, height: 4)
-                .padding(.top, 12)
-
-            Text("Log Weight")
-                .font(SBFont.heading())
-                .foregroundColor(.sbTextPrimary)
-
-            HStack(alignment: .lastTextBaseline, spacing: 6) {
-                TextField("0.0", text: $weightInput)
-                    .font(SBFont.display(52))
-                    .foregroundColor(.sbAccent)
-                    .keyboardType(.decimalPad)
-                    .multilineTextAlignment(.center)
-                    .frame(maxWidth: 180)
-                Text("kg")
-                    .font(SBFont.heading(22))
-                    .foregroundColor(.sbTextSecondary)
-            }
-
-            HStack(spacing: 10) {
-                ForEach([-1.0, -0.5, 0.5, 1.0], id: \.self) { delta in
-                    Button {
-                        let cleaned = weightInput.replacingOccurrences(of: ",", with: ".")
-                        if let cur = Double(cleaned) {
-                            weightInput = String(format: "%.1f", max(20, cur + delta))
-                        }
-                    } label: {
-                        Text(delta > 0 ? "+\(String(format: "%.1f", delta))"
-                                      :     String(format: "%.1f", delta))
-                            .font(SBFont.caption())
-                            .foregroundColor(.sbAccent)
-                            .padding(.horizontal, 14)
-                            .padding(.vertical, 9)
-                            .background(Color.sbSurfaceRaised)
-                            .cornerRadius(8)
-                    }
-                    .buttonStyle(.plain)
-                }
-            }
-
-            SBPrimaryButton(title: "Save") {
-                let cleaned = weightInput.replacingOccurrences(of: ",", with: ".")
-                if let kg = Double(cleaned), kg > 20 {
-                    HapticManager.success()
-                    progressStore.addEntry(weightKg: kg)
-                }
-                showLogWeight = false
-            }
-            .padding(.horizontal, 20)
-
-            Spacer()
-        }
-        .frame(maxWidth: .infinity)
-        .background(Color.sbBackground)
-        .presentationDetents([.height(380)])
-    }
 }
 
 // MARK: - Summary Pill
