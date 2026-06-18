@@ -4,13 +4,13 @@ import Charts
 struct HeartRateChartCard: View {
     let samples: [HeartRateSample]
 
-    private var avgBPM: Double {
-        guard !samples.isEmpty else { return 0 }
-        return samples.reduce(0) { $0 + $1.bpm } / Double(samples.count)
-    }
-
     private var minBPM: Double { samples.map(\.bpm).min() ?? 0 }
     private var maxBPM: Double { samples.map(\.bpm).max() ?? 0 }
+
+    private var headerValue: String {
+        guard !samples.isEmpty else { return "-- " }
+        return "\(Int(minBPM))–\(Int(maxBPM)) "
+    }
 
     private var weekRange: String {
         let cal = Calendar.current
@@ -24,170 +24,74 @@ struct HeartRateChartCard: View {
 
     var body: some View {
         SBCard {
-            VStack(alignment: .leading, spacing: 12) {
-                // Header
-                HStack(alignment: .center) {
-                    Label {
-                        Text("Weekly Heart Rate")
-                            .font(SBFont.heading())
-                            .foregroundColor(.sbTextPrimary)
-                    } icon: {
-                        Image(systemName: "heart.fill")
-                            .foregroundColor(.sbRed)
-                    }
-                    Spacer()
-                    VStack(alignment: .trailing, spacing: 2) {
-                        if samples.isEmpty {
-                            Text("-- lpm")
-                                .font(SBFont.heading(18))
+            VStack(alignment: .leading, spacing: 14) {
+                HStack(alignment: .top) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        HStack(spacing: 4) {
+                            Text(headerValue)
+                                .font(SBFont.heading(22))
+                                .foregroundColor(.sbTextPrimary)
+                                .monospacedDigit()
+                            Text("lpm")
+                                .font(SBFont.body())
                                 .foregroundColor(.sbTextSecondary)
-                                .monospacedDigit()
-                        } else {
-                            Text("\(Int(avgBPM)) lpm")
-                                .font(SBFont.heading(18))
-                                .foregroundColor(.sbRed)
-                                .monospacedDigit()
                         }
                         Text(weekRange)
-                            .font(SBFont.label(10))
+                            .font(SBFont.label(11))
                             .foregroundColor(.sbTextSecondary)
                     }
+                    Spacer()
                 }
 
-                if samples.isEmpty {
-                    emptyChart
-                } else {
-                    filledChart
-                    minMaxRow
-                }
+                chart
             }
         }
     }
 
-    // MARK: - Empty state
-
-    private var emptyChart: some View {
-        VStack(spacing: 8) {
-            Chart {
-                ForEach(placeholderDays, id: \.self) { day in
-                    BarMark(
-                        x: .value("Day", day),
-                        y: .value("BPM", 0)
-                    )
-                }
-            }
-            .frame(height: 110)
-            .chartXAxis {
-                AxisMarks(values: placeholderDays) { val in
-                    AxisValueLabel {
-                        if let s = val.as(String.self) {
-                            Text(s)
-                                .font(SBFont.label(10))
-                                .foregroundColor(.sbTextSecondary)
-                        }
-                    }
-                }
-            }
-            .chartYAxis(.hidden)
-            .overlay(
-                Text("No heart rate data this week")
-                    .font(SBFont.caption())
-                    .foregroundColor(.sbTextSecondary.opacity(0.6))
-            )
-        }
-    }
-
-    // MARK: - Filled chart
-
-    private var filledChart: some View {
-        Chart(samples) { sample in
-            BarMark(
-                x: .value("Day", dayLabel(for: sample.date)),
-                y: .value("BPM", sample.bpm)
-            )
-            .foregroundStyle(
-                LinearGradient(
-                    colors: [Color.sbRed.opacity(0.9), Color.sbRed.opacity(0.5)],
-                    startPoint: .top,
-                    endPoint: .bottom
+    private var chart: some View {
+        Chart {
+            ForEach(samples) { sample in
+                BarMark(
+                    x: .value("Day", sample.date, unit: .day),
+                    yStart: .value("Min", max(sample.bpm - 8, 0)),
+                    yEnd:   .value("Max", sample.bpm + 8),
+                    width: .fixed(6)
                 )
-            )
-            .cornerRadius(6)
-
-            RuleMark(y: .value("Avg", avgBPM))
-                .lineStyle(StrokeStyle(lineWidth: 1.5, dash: [5, 4]))
-                .foregroundStyle(Color.sbRed.opacity(0.45))
+                .foregroundStyle(Color.sbRed)
+                .clipShape(Capsule())
+            }
         }
-        .frame(height: 120)
+        .frame(height: 180)
+        .chartYScale(domain: 0...200)
+        .chartXScale(domain: weekDomain)
         .chartXAxis {
-            AxisMarks { val in
-                AxisValueLabel {
-                    if let s = val.as(String.self) {
-                        Text(s)
-                            .font(SBFont.label(10))
-                            .foregroundColor(.sbTextSecondary)
-                    }
-                }
+            AxisMarks(values: .stride(by: .day)) { val in
+                AxisValueLabel(format: .dateTime.weekday(.narrow),
+                               centered: true)
+                    .font(SBFont.label(11))
+                    .foregroundStyle(Color.sbTextSecondary)
             }
         }
         .chartYAxis {
-            AxisMarks(position: .trailing, values: .automatic(desiredCount: 3)) { val in
+            AxisMarks(position: .trailing, values: [0, 100, 200]) { val in
                 AxisGridLine(stroke: StrokeStyle(lineWidth: 0.4))
-                    .foregroundStyle(Color.sbTextSecondary.opacity(0.2))
+                    .foregroundStyle(Color.sbTextSecondary.opacity(0.18))
                 AxisValueLabel {
-                    if let v = val.as(Double.self) {
-                        Text("\(Int(v))")
-                            .font(SBFont.label(9))
-                            .foregroundColor(.sbTextSecondary.opacity(0.6))
+                    if let v = val.as(Int.self) {
+                        Text("\(v)")
+                            .font(SBFont.label(10))
+                            .foregroundColor(.sbTextSecondary.opacity(0.7))
                     }
                 }
             }
         }
     }
 
-    private var minMaxRow: some View {
-        HStack {
-            Label {
-                Text("Min: \(Int(minBPM)) lpm")
-                    .font(SBFont.label(11))
-                    .foregroundColor(.sbTextSecondary)
-            } icon: {
-                Image(systemName: "arrow.down.heart")
-                    .font(.system(size: 10))
-                    .foregroundColor(.sbAccent)
-            }
-            Spacer()
-            Label {
-                Text("Avg: \(Int(avgBPM)) lpm")
-                    .font(SBFont.label(11))
-                    .foregroundColor(.sbTextSecondary)
-            } icon: {
-                Image(systemName: "waveform.path.ecg")
-                    .font(.system(size: 10))
-                    .foregroundColor(.sbRed)
-            }
-            Spacer()
-            Label {
-                Text("Max: \(Int(maxBPM)) lpm")
-                    .font(SBFont.label(11))
-                    .foregroundColor(.sbTextSecondary)
-            } icon: {
-                Image(systemName: "arrow.up.heart")
-                    .font(.system(size: 10))
-                    .foregroundColor(.sbRed)
-            }
-        }
-        .padding(.top, 4)
-    }
-
-    // MARK: - Helpers
-
-    private func dayLabel(for date: Date) -> String {
+    private var weekDomain: ClosedRange<Date> {
         let cal = Calendar.current
-        let weekday = cal.component(.weekday, from: date)
-        let labels = ["D", "L", "M", "X", "J", "V", "S"]
-        return labels[weekday % 7]
+        let today = cal.startOfDay(for: .now)
+        let start = cal.date(byAdding: .day, value: -6, to: today) ?? today
+        let end   = cal.date(byAdding: .day, value: 1,  to: today) ?? today
+        return start...end
     }
-
-    private var placeholderDays: [String] { ["L", "M", "X", "J", "V", "S", "D"] }
 }

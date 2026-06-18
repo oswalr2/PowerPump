@@ -19,7 +19,18 @@ struct ProfileView: View {
                         targetsCard
                         healthCard
                         if health.isAuthorized {
-                            HeartRateChartCard(samples: health.weeklyHeartRate)
+                            VStack(alignment: .leading, spacing: 10) {
+                                HStack(spacing: 6) {
+                                    Image(systemName: "heart.fill")
+                                        .foregroundColor(.sbRed)
+                                        .font(.system(size: 16))
+                                    Text("Weekly Heart Rate")
+                                        .font(SBFont.heading())
+                                        .foregroundColor(.sbTextPrimary)
+                                }
+                                HeartRateChartCard(samples: health.weeklyHeartRate)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
                         }
                         rmCalculatorButton
                         settingsButton
