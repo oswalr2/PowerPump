@@ -18,6 +18,9 @@ struct ProfileView: View {
                         statsCard
                         targetsCard
                         healthCard
+                        if health.isAuthorized {
+                            HeartRateChartCard(samples: health.weeklyHeartRate)
+                        }
                         rmCalculatorButton
                         settingsButton
                         SBSecondaryButton(title: "Edit Profile") {

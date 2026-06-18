@@ -1,6 +1,12 @@
 import HealthKit
 import Foundation
 
+struct HeartRateSample: Identifiable {
+    let id   = UUID()
+    let date: Date
+    let bpm:  Double
+}
+
 final class HealthKitService: ObservableObject {
     static let shared = HealthKitService()
     private let hk = HKHealthStore()
@@ -9,6 +15,7 @@ final class HealthKitService: ObservableObject {
     @Published var isAuthorized = false
     @Published var stepsToday:        Int    = 0
     @Published var activeEnergyToday: Double = 0
+    @Published var weeklyHeartRate:   [HeartRateSample] = []
 
     // MARK: - Types
 
@@ -26,6 +33,7 @@ final class HealthKitService: ObservableObject {
         .stepCount,
         .activeEnergyBurned,
         .bodyMass,
+        .heartRate,
     ]
 
     private var shareTypes: Set<HKSampleType> {
@@ -66,6 +74,40 @@ final class HealthKitService: ObservableObject {
         fetchSum(.activeEnergyBurned, unit: .kilocalorie()) { [weak self] v in
             DispatchQueue.main.async { self?.activeEnergyToday = v }
         }
+        fetchWeeklyHeartRate()
+    }
+
+    func fetchWeeklyHeartRate() {
+        guard let hrType = HKQuantityType.quantityType(forIdentifier: .heartRate) else { return }
+        let cal       = Calendar.current
+        let today     = cal.startOfDay(for: .now)
+        guard let weekStart = cal.date(byAdding: .day, value: -6, to: today) else { return }
+
+        let interval   = DateComponents(day: 1)
+        let predicate  = HKQuery.predicateForSamples(withStart: weekStart, end: .now)
+        let anchorDate = cal.startOfDay(for: weekStart)
+
+        let query = HKStatisticsCollectionQuery(
+            quantityType: hrType,
+            quantitySamplePredicate: predicate,
+            options: .discreteAverage,
+            anchorDate: anchorDate,
+            intervalComponents: interval
+        )
+
+        query.initialResultsHandler = { [weak self] _, results, _ in
+            guard let results else { return }
+            var samples: [HeartRateSample] = []
+            results.enumerateStatistics(from: weekStart, to: .now) { stat, _ in
+                if let qty = stat.averageQuantity() {
+                    let bpm = qty.doubleValue(for: HKUnit(from: "count/min"))
+                    samples.append(HeartRateSample(date: stat.startDate, bpm: bpm))
+                }
+            }
+            DispatchQueue.main.async { self?.weeklyHeartRate = samples }
+        }
+
+        hk.execute(query)
     }
 
     private func fetchSum(_ id: HKQuantityTypeIdentifier, unit: HKUnit, completion: @escaping (Double) -> Void) {

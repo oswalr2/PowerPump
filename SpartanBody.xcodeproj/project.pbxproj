@@ -656,7 +656,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_NSCameraUsageDescription = "SpartanBody uses the camera to analyze your exercise form and scan food.";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "SpartanBody reads your steps and active energy to show your daily activity.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "SpartanBody reads your steps, active energy, and heart rate to show your daily activity and weekly heart rate history.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "SpartanBody saves your workouts, nutrition, and water intake to Apple Health.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "SpartanBody accesses your photos to scan food and estimate nutrition.";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
@@ -697,7 +697,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_NSCameraUsageDescription = "SpartanBody uses the camera to analyze your exercise form and scan food.";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "SpartanBody reads your steps and active energy to show your daily activity.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "SpartanBody reads your steps, active energy, and heart rate to show your daily activity and weekly heart rate history.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "SpartanBody saves your workouts, nutrition, and water intake to Apple Health.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "SpartanBody accesses your photos to scan food and estimate nutrition.";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
