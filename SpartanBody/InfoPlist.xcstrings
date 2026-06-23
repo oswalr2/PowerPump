@@ -1,110 +1,282 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "CFBundleName" : {
-      "comment" : "Bundle name",
-      "extractionState" : "extracted_with_value",
+    "CFBundleDisplayName" : {
+      "comment" : "Bundle display name",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "SpartanBody"
+            "state" : "translated",
+            "value" : "PowerPump"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump"
+          }
+        }
+      }
+    },
+    "CFBundleName" : {
+      "comment" : "Bundle name",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump"
+          }
+        }
+      }
+    },
+    "NSLocationWhenInUseUsageDescription" : {
+      "comment" : "Privacy - Location Usage Description",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump uses your location to map your runs and walks, and to measure distance and pace."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump usa tu ubicación para trazar tu ruta al correr o caminar y medir distancia y ritmo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump utilise votre position pour tracer votre course ou marche et mesurer la distance et l'allure."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump usa la tua posizione per tracciare le tue corse o camminate e misurare distanza e ritmo."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump usa sua localização para traçar suas corridas e caminhadas e medir distância e ritmo."
+          }
+        }
+      }
+    },
+    "NSMotionUsageDescription" : {
+      "comment" : "Privacy - Motion Usage Description",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump uses motion data to detect activity and count steps during your runs and walks."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump usa datos de movimiento para detectar la actividad y contar pasos al correr o caminar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump utilise les données de mouvement pour détecter l'activité et compter vos pas."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump usa i dati di movimento per rilevare l'attività e contare i passi."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump usa dados de movimento para detectar atividade e contar passos."
           }
         }
       }
     },
     "NSCameraUsageDescription" : {
       "comment" : "Privacy - Camera Usage Description",
-      "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "SpartanBody uses the camera to analyze your exercise form and scan food."
+            "state" : "translated",
+            "value" : "PowerPump uses the camera to analyze your exercise form and scan food."
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "SpartanBody usa la cámara para analizar tu forma de ejercicio y escanear alimentos."
+            "state" : "translated",
+            "value" : "PowerPump usa la cámara para analizar tu forma de ejercicio y escanear alimentos."
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "SpartanBody utilise la caméra pour analyser votre forme pendant les exercices et scanner les aliments."
+            "state" : "translated",
+            "value" : "PowerPump utilise la caméra pour analyser votre forme pendant les exercices et scanner les aliments."
           }
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "SpartanBody usa la fotocamera per analizzare la forma negli esercizi e scansionare il cibo."
+            "state" : "translated",
+            "value" : "PowerPump usa la fotocamera per analizzare la forma negli esercizi e scansionare il cibo."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "SpartanBody usa a câmera para analisar sua forma nos exercícios e escanear alimentos."
+            "state" : "translated",
+            "value" : "PowerPump usa a câmera para analisar sua forma nos exercícios e escanear alimentos."
           }
         }
       }
     },
     "NSHealthShareUsageDescription" : {
       "comment" : "Privacy - Health Share Usage Description",
-      "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "SpartanBody reads your steps and active energy to show your daily activity."
+            "state" : "translated",
+            "value" : "PowerPump reads your steps, active energy, and heart rate to show your daily activity and weekly heart rate history."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump lee tus pasos, energía activa y frecuencia cardíaca para mostrar tu actividad diaria y el historial semanal."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump lit vos pas, votre énergie active et votre fréquence cardiaque pour afficher votre activité quotidienne et l'historique hebdomadaire."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump legge i tuoi passi, l'energia attiva e la frequenza cardiaca per mostrare la tua attività giornaliera e la cronologia settimanale."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump lê seus passos, energia ativa e frequência cardíaca para mostrar sua atividade diária e histórico semanal."
           }
         }
       }
     },
     "NSHealthUpdateUsageDescription" : {
       "comment" : "Privacy - Health Update Usage Description",
-      "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "SpartanBody saves your workouts, nutrition, and water intake to Apple Health."
+            "state" : "translated",
+            "value" : "PowerPump saves your workouts, nutrition, and water intake to Apple Health."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump guarda tus entrenamientos, nutrición y consumo de agua en Apple Salud."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump enregistre vos entraînements, votre nutrition et votre consommation d'eau dans Apple Santé."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump salva i tuoi allenamenti, nutrizione e consumo d'acqua su Apple Salute."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PowerPump salva seus treinos, nutrição e consumo de água no Apple Saúde."
           }
         }
       }
     },
     "NSPhotoLibraryUsageDescription" : {
       "comment" : "Privacy - Photo Library Usage Description",
-      "extractionState" : "extracted_with_value",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "SpartanBody accesses your photos to scan food and estimate nutrition."
+            "state" : "translated",
+            "value" : "PowerPump accesses your photos to scan food and estimate nutrition."
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "SpartanBody accede a tus fotos para escanear alimentos y estimar la nutrición."
+            "state" : "translated",
+            "value" : "PowerPump accede a tus fotos para escanear alimentos y estimar la nutrición."
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "SpartanBody accède à vos photos pour scanner les aliments et estimer les valeurs nutritionnelles."
+            "state" : "translated",
+            "value" : "PowerPump accède à vos photos pour scanner les aliments et estimer les valeurs nutritionnelles."
           }
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "SpartanBody accede alle tue foto per scansionare il cibo e stimare i valori nutrizionali."
+            "state" : "translated",
+            "value" : "PowerPump accede alle tue foto per scansionare il cibo e stimare i valori nutrizionali."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "SpartanBody acessa suas fotos para escanear alimentos e estimar a nutrição."
+            "state" : "translated",
+            "value" : "PowerPump acessa suas fotos para escanear alimentos e estimar a nutrição."
           }
         }
       }

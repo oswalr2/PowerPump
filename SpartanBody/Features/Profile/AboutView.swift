@@ -28,7 +28,7 @@ struct AboutView: View {
                                     .font(.system(size: 40, weight: .semibold))
                                     .foregroundColor(.sbAccent)
                             }
-                            Text("SpartanBody")
+                            Text("PowerPump")
                                 .font(SBFont.display(26))
                                 .foregroundColor(.sbTextPrimary)
                             Text(appVersion)
@@ -44,14 +44,14 @@ struct AboutView: View {
                                     showPrivacy = true
                                 }
                                 Divider().background(Color.sbBorder)
-                                aboutRow(icon: "star.fill", label: "Rate SpartanBody", color: .orange) {
+                                aboutRow(icon: "star.fill", label: "Rate PowerPump", color: .orange) {
                                     if let url = URL(string: "itms-apps://itunes.apple.com/app/id\(Config.appStoreID)?action=write-review") {
                                         UIApplication.shared.open(url)
                                     }
                                 }
                                 Divider().background(Color.sbBorder)
                                 aboutRow(icon: "envelope.fill", label: "Contact Support") {
-                                    if let url = URL(string: "mailto:\(Config.supportEmail)?subject=SpartanBody%20Support") {
+                                    if let url = URL(string: "mailto:\(Config.supportEmail)?subject=PowerPump%20Support") {
                                         UIApplication.shared.open(url)
                                     }
                                 }
@@ -77,7 +77,7 @@ struct AboutView: View {
                         .cornerRadius(16)
                         .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.sbBorder))
 
-                        Text("© 2026 SpartanBody. All rights reserved.")
+                        Text("© 2026 PowerPump. All rights reserved.")
                             .font(SBFont.label(11))
                             .foregroundColor(Color.sbTextSecondary.opacity(0.5))
                             .padding(.bottom, 40)
@@ -132,22 +132,22 @@ struct PrivacyPolicyView: View {
                             .foregroundColor(.sbTextSecondary)
 
                         policySection("Data We Collect",
-                            "SpartanBody stores all your fitness data (workouts, nutrition logs, goals, measurements) locally on your device only. We do not operate any backend servers or databases.")
+                            "PowerPump stores all your fitness data (workouts, nutrition logs, goals, measurements) locally on your device only. We do not operate any backend servers or databases.")
 
                         policySection("AI Features & Third Parties",
                             "When you use the AI Food Scanner or AI Coach, images or text are sent securely to Anthropic's API (claude.ai) to generate responses. Anthropic's privacy policy applies to this data. We do not retain or store these images or AI responses on any server we control.")
 
                         policySection("Camera & Photos",
-                            "Camera and photo access is used exclusively to analyze food for nutrition estimation and to assess exercise form in real time. Images are processed on-device or via Anthropic's API and are never stored by SpartanBody.")
+                            "Camera and photo access is used exclusively to analyze food for nutrition estimation and to assess exercise form in real time. Images are processed on-device or via Anthropic's API and are never stored by PowerPump.")
 
                         policySection("Notifications",
                             "If you enable notifications, reminders are scheduled locally on your device using iOS's notification system. No notification data is transmitted to any server.")
 
                         policySection("Analytics & Tracking",
-                            "SpartanBody does not use any third-party analytics, advertising SDKs, or tracking tools. We do not track you across apps or websites.")
+                            "PowerPump does not use any third-party analytics, advertising SDKs, or tracking tools. We do not track you across apps or websites.")
 
                         policySection("Data Deletion",
-                            "All your data lives on your device. You can delete it at any time by deleting the SpartanBody app.")
+                            "All your data lives on your device. You can delete it at any time by deleting the PowerPump app.")
 
                         policySection("Contact",
                             "For privacy questions or concerns, contact us at \(Config.supportEmail).")

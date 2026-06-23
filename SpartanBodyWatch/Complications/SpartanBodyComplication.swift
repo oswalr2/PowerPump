@@ -32,7 +32,7 @@ struct SpartanBodyProvider: TimelineProvider {
     }
 
     private func currentEntry() -> CalorieEntry {
-        let defaults = UserDefaults(suiteName: "group.com.oswaldo.spartanbody")
+        let defaults = UserDefaults(suiteName: "group.com.oswaldo.powerpump")
         let calories  = defaults?.integer(forKey: "watch_calories")      ?? 0
         let target    = defaults?.integer(forKey: "watch_calorieTarget") ?? 2000
         let streak    = defaults?.integer(forKey: "watch_streak")        ?? 0
@@ -48,7 +48,7 @@ struct SpartanBodyComplicationWidget: Widget {
         StaticConfiguration(kind: "SpartanBodyComplication", provider: SpartanBodyProvider()) { entry in
             SpartanBodyComplicationView(entry: entry)
         }
-        .configurationDisplayName("SpartanBody")
+        .configurationDisplayName("PowerPump")
         .description("Calorie progress ring")
         .supportedFamilies([.accessoryCircular, .accessoryRectangular, .accessoryCorner])
     }

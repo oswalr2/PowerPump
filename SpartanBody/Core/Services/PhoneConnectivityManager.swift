@@ -5,7 +5,7 @@ import WidgetKit
 final class PhoneConnectivityManager: NSObject {
     static let shared = PhoneConnectivityManager()
 
-    private let groupID = "group.com.oswaldo.spartanbody"
+    private let groupID = "group.com.oswaldo.powerpump"
 
     override private init() {
         super.init()

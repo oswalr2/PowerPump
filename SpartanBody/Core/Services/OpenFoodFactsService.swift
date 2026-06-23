@@ -34,7 +34,7 @@ final class OpenFoodFactsService {
         }
 
         var request = URLRequest(url: url)
-        request.setValue("SpartanBody-iOS/1.0 (support@spartanbody.app)", forHTTPHeaderField: "User-Agent")
+        request.setValue("PowerPump-iOS/1.0", forHTTPHeaderField: "User-Agent")
         request.timeoutInterval = 15
 
         let data: Data

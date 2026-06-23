@@ -17,7 +17,7 @@ private extension Color {
     static let wCyan   = Color(red: 0.20, green: 0.84, blue: 0.91)   // #32D5E8
 }
 
-private let appGroupID = "group.com.oswaldo.spartanbody"
+private let appGroupID = "group.com.oswaldo.powerpump"
 
 // MARK: - Dashboard widget (home screen + lock screen)
 
@@ -69,7 +69,7 @@ struct SpartanDashboardWidget: Widget {
         StaticConfiguration(kind: "SpartanDashboard", provider: DashboardProvider()) { entry in
             DashboardWidgetView(entry: entry)
         }
-        .configurationDisplayName("SpartanBody")
+        .configurationDisplayName("PowerPump")
         .description("Calories, streak, and water at a glance.")
         .supportedFamilies([.systemSmall, .systemMedium,
                             .accessoryCircular, .accessoryRectangular, .accessoryInline])
@@ -196,7 +196,7 @@ struct DashboardWidgetView: View {
         VStack(alignment: .leading, spacing: 1) {
             HStack(spacing: 4) {
                 Image(systemName: "bolt.fill").font(.system(size: 11, weight: .bold))
-                Text("SpartanBody").font(.system(size: 13, weight: .bold, design: .rounded))
+                Text("PowerPump").font(.system(size: 13, weight: .bold, design: .rounded))
             }
             Text("\(entry.calories) / \(entry.calorieTarget) kcal")
                 .font(.system(size: 13, weight: .semibold, design: .rounded))

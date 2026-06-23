@@ -375,12 +375,12 @@
 				DEVELOPMENT_TEAM = NWUY84K2DU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "SpartanBody reads your heart rate during workouts.";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "SpartanBody saves your workout data to Apple Health.";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.oswaldo.spartan2026;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "PowerPump reads your heart rate during workouts.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "PowerPump saves your workout data to Apple Health.";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.oswaldo.powerpump;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartan2026.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.powerpump.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = NO;
@@ -402,12 +402,12 @@
 				DEVELOPMENT_TEAM = NWUY84K2DU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "SpartanBody reads your heart rate during workouts.";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "SpartanBody saves your workout data to Apple Health.";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.oswaldo.spartan2026;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "PowerPump reads your heart rate during workouts.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "PowerPump saves your workout data to Apple Health.";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.oswaldo.powerpump;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartan2026.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.powerpump.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = NO;
@@ -427,14 +427,14 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NWUY84K2DU;
 				INFOPLIST_FILE = SpartanBodyWatch/Complications/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = SpartanBodyComplication;
+				INFOPLIST_KEY_CFBundleDisplayName = "PowerPump Complication";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartan2026.watchkitapp.complication;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.powerpump.watchkitapp.complication;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -454,14 +454,14 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NWUY84K2DU;
 				INFOPLIST_FILE = SpartanBodyWatch/Complications/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = SpartanBodyComplication;
+				INFOPLIST_KEY_CFBundleDisplayName = "PowerPump Complication";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartan2026.watchkitapp.complication;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.powerpump.watchkitapp.complication;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -481,7 +481,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NWUY84K2DU;
 				INFOPLIST_FILE = SpartanBodyWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = SpartanBody;
+				INFOPLIST_KEY_CFBundleDisplayName = PowerPump;
+				INFOPLIST_KEY_CFBundleName = PowerPump;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -489,7 +490,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartan2026.widget;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.powerpump.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -508,7 +509,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NWUY84K2DU;
 				INFOPLIST_FILE = SpartanBodyWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = SpartanBody;
+				INFOPLIST_KEY_CFBundleDisplayName = PowerPump;
+				INFOPLIST_KEY_CFBundleName = PowerPump;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -516,7 +518,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartan2026.widget;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.powerpump.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -654,11 +656,15 @@
 				DEVELOPMENT_TEAM = NWUY84K2DU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = PowerPump;
+				INFOPLIST_KEY_CFBundleName = PowerPump;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
-				INFOPLIST_KEY_NSCameraUsageDescription = "SpartanBody uses the camera to analyze your exercise form and scan food.";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "SpartanBody reads your steps, active energy, and heart rate to show your daily activity and weekly heart rate history.";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "SpartanBody saves your workouts, nutrition, and water intake to Apple Health.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "SpartanBody accesses your photos to scan food and estimate nutrition.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "PowerPump uses the camera to analyze your exercise form and scan food.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "PowerPump reads your steps, active energy, and heart rate to show your daily activity and weekly heart rate history.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "PowerPump saves your workouts, nutrition, and water intake to Apple Health.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "PowerPump uses your location to map your runs and walks, and to measure distance and pace.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "PowerPump uses motion data to detect activity and count steps during your runs and walks.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "PowerPump accesses your photos to scan food and estimate nutrition.";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -671,7 +677,7 @@
 				ITSAppUsesNonExemptEncryption = NO;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartan2026;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.powerpump;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -695,11 +701,15 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = PowerPump;
+				INFOPLIST_KEY_CFBundleName = PowerPump;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
-				INFOPLIST_KEY_NSCameraUsageDescription = "SpartanBody uses the camera to analyze your exercise form and scan food.";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "SpartanBody reads your steps, active energy, and heart rate to show your daily activity and weekly heart rate history.";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "SpartanBody saves your workouts, nutrition, and water intake to Apple Health.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "SpartanBody accesses your photos to scan food and estimate nutrition.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "PowerPump uses the camera to analyze your exercise form and scan food.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "PowerPump reads your steps, active energy, and heart rate to show your daily activity and weekly heart rate history.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "PowerPump saves your workouts, nutrition, and water intake to Apple Health.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "PowerPump uses your location to map your runs and walks, and to measure distance and pace.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "PowerPump uses motion data to detect activity and count steps during your runs and walks.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "PowerPump accesses your photos to scan food and estimate nutrition.";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -714,7 +724,7 @@
 				ITSAppUsesNonExemptEncryption = NO;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.spartan2026;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oswaldo.powerpump;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

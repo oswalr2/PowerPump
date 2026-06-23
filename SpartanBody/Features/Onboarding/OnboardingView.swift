@@ -89,42 +89,45 @@ struct OnboardingView: View {
 // MARK: - Step 0: Welcome
 
 private struct WelcomeStep: View {
+    @Environment(\.colorScheme) private var colorScheme
     @State private var appeared = false
     @State private var pulse = false
+
+    private var ringOpacity: Double { colorScheme == .dark ? 0.12 : 0.18 }
+    private var haloOpacity: Double { colorScheme == .dark ? 0.55 : 0.22 }
+    private var haloRadius: CGFloat { colorScheme == .dark ? 32 : 18 }
 
     var body: some View {
         VStack(spacing: 32) {
             ZStack {
-                // Pulsing background circles
-                ForEach([0.8, 1.0, 1.2], id: \.self) { scale in
+                // Thin pulsing rings (cleaner on both light and dark backgrounds
+                // than filled blobs of accent color, which look smudgy on white).
+                ForEach([0.85, 1.05, 1.25], id: \.self) { scale in
                     Circle()
-                        .fill(Color.sbAccent.opacity(0.06))
+                        .stroke(Color.sbAccent.opacity(ringOpacity), lineWidth: 1)
                         .frame(width: 180, height: 180)
-                        .scaleEffect(pulse ? scale * 1.15 : scale)
+                        .scaleEffect(pulse ? scale * 1.12 : scale)
+                        .opacity(pulse ? 0 : 1)
                         .animation(
-                            .easeInOut(duration: 2.2).repeatForever(autoreverses: true)
-                                .delay((scale - 0.8) * 0.4),
+                            .easeOut(duration: 2.4).repeatForever(autoreverses: false)
+                                .delay((scale - 0.85) * 0.6),
                             value: pulse
                         )
                 }
 
-                Circle()
-                    .fill(Color.sbAccentDim)
-                    .frame(width: 130, height: 130)
+                Image("PowerPumpLogo")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 160, height: 160)
+                    .shadow(color: Color.sbAccent.opacity(haloOpacity), radius: haloRadius, x: 0, y: 0)
                     .scaleEffect(appeared ? 1 : 0.3)
-                    .animation(.spring(response: 0.7, dampingFraction: 0.6), value: appeared)
-
-                Image(systemName: "bolt.fill")
-                    .font(.system(size: 56, weight: .black))
-                    .foregroundColor(.sbAccent)
-                    .scaleEffect(appeared ? 1 : 0.2)
                     .opacity(appeared ? 1 : 0)
-                    .animation(.spring(response: 0.6, dampingFraction: 0.6).delay(0.15), value: appeared)
+                    .animation(.spring(response: 0.7, dampingFraction: 0.6), value: appeared)
             }
             .frame(height: 220)
 
             VStack(spacing: 14) {
-                Text("SPARTAN BODY")
+                Text("POWERPUMP")
                     .font(SBFont.display(38))
                     .foregroundColor(.sbTextPrimary)
                     .tracking(4)
