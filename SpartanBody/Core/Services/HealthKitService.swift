@@ -27,6 +27,7 @@ final class HealthKitService: ObservableObject {
         .dietaryFatTotal,
         .dietaryWater,
         .bodyMass,
+        .distanceWalkingRunning,
     ]
 
     private static let readIDs: [HKQuantityTypeIdentifier] = [
@@ -159,6 +160,29 @@ final class HealthKitService: ObservableObject {
                                 duration: session.duration,
                                 totalEnergyBurned: energy,
                                 totalDistance: nil,
+                                metadata: nil)
+        hk.save(workout) { _, _ in }
+    }
+
+    // MARK: - Write: Run / Walk / Hike
+
+    func saveRun(_ session: RunSession) {
+        guard isAvailable, let end = session.endedAt else { return }
+        let activity: HKWorkoutActivityType = {
+            switch session.activity {
+            case .run:  return .running
+            case .walk: return .walking
+            case .hike: return .hiking
+            }
+        }()
+        let energy = HKQuantity(unit: .kilocalorie(), doubleValue: Double(session.calories))
+        let distance = HKQuantity(unit: .meter(), doubleValue: session.distanceMeters)
+        let workout = HKWorkout(activityType: activity,
+                                start: session.startedAt,
+                                end: end,
+                                duration: session.movingSeconds,
+                                totalEnergyBurned: energy,
+                                totalDistance: distance,
                                 metadata: nil)
         hk.save(workout) { _, _ in }
     }

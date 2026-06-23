@@ -4,6 +4,8 @@ struct WorkoutsView: View {
     @ObservedObject private var store = WorkoutStore.shared
     @State private var showActive = false
     @State private var showSaveRoutine = false
+    @State private var showRunning = false
+    @State private var showRunningPrograms = false
     @State private var routineName = ""
 
     var body: some View {
@@ -22,6 +24,10 @@ struct WorkoutsView: View {
 
                         startButton
 
+                        runCard
+
+                        runningProgramsCard
+
                         programsSection
 
                         exerciseLibraryLink
@@ -39,6 +45,12 @@ struct WorkoutsView: View {
         }
         .fullScreenCover(isPresented: $showActive) {
             ActiveWorkoutView(isPresented: $showActive)
+        }
+        .fullScreenCover(isPresented: $showRunning) {
+            RunningView()
+        }
+        .sheet(isPresented: $showRunningPrograms) {
+            RunningProgramsView()
         }
     }
 
@@ -100,6 +112,86 @@ struct WorkoutsView: View {
             .padding(18)
             .background(Color.sbAccent)
             .cornerRadius(16)
+        }
+        .buttonStyle(.plain)
+        .padding(.horizontal, 20)
+    }
+
+    // MARK: - Walking & Running Programs
+
+    private var runningProgramsCard: some View {
+        Button {
+            HapticManager.medium()
+            showRunningPrograms = true
+        } label: {
+            HStack(spacing: 14) {
+                ZStack {
+                    Circle()
+                        .fill(LinearGradient(
+                            colors: [Color.sbAccent.opacity(0.35), Color.sbAccent.opacity(0.12)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        ))
+                        .frame(width: 48, height: 48)
+                    Image(systemName: "calendar.badge.checkmark")
+                        .font(.system(size: 22, weight: .semibold))
+                        .foregroundColor(.sbAccent)
+                }
+                VStack(alignment: .leading, spacing: 3) {
+                    Text("Walk & Run Programs")
+                        .font(SBFont.heading(16))
+                        .foregroundColor(.sbTextPrimary)
+                    Text("Lose weight · 5K · Pace · Voice coach")
+                        .font(SBFont.caption())
+                        .foregroundColor(.sbTextSecondary)
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundColor(.sbTextSecondary.opacity(0.6))
+            }
+            .padding(16)
+            .background(Color.sbSurface)
+            .cornerRadius(16)
+            .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.sbAccent.opacity(0.25), lineWidth: 1))
+        }
+        .buttonStyle(.plain)
+        .padding(.horizontal, 20)
+    }
+
+    // MARK: - Run / Walk
+
+    private var runCard: some View {
+        Button {
+            HapticManager.medium()
+            showRunning = true
+        } label: {
+            HStack(spacing: 14) {
+                ZStack {
+                    Circle()
+                        .fill(Color.sbAccent.opacity(0.18))
+                        .frame(width: 48, height: 48)
+                    Image(systemName: "figure.run")
+                        .font(.system(size: 22, weight: .semibold))
+                        .foregroundColor(.sbAccent)
+                }
+                VStack(alignment: .leading, spacing: 3) {
+                    Text("Run / Walk")
+                        .font(SBFont.heading(16))
+                        .foregroundColor(.sbTextPrimary)
+                    Text("GPS · Live route · Pace & calories")
+                        .font(SBFont.caption())
+                        .foregroundColor(.sbTextSecondary)
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundColor(.sbTextSecondary.opacity(0.6))
+            }
+            .padding(16)
+            .background(Color.sbSurface)
+            .cornerRadius(16)
+            .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.sbAccent.opacity(0.25), lineWidth: 1))
         }
         .buttonStyle(.plain)
         .padding(.horizontal, 20)
