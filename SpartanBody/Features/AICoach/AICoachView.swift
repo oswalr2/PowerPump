@@ -48,7 +48,7 @@ struct AICoachView: View {
                             .font(.system(size: 36, weight: .bold))
                             .foregroundColor(.sbAccent)
                     }
-                    Text("Spartan Coach")
+                    Text("PowerPump Coach")
                         .font(SBFont.display(28))
                         .foregroundColor(.sbTextPrimary)
                     Text(LocalizedStringKey(CoachL.subtitle))

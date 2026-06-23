@@ -108,9 +108,18 @@ extension Bundle {
 
 private final class SBLanguageBundle: Bundle, @unchecked Sendable {
     override func localizedString(forKey key: String, value: String?, table tableName: String?) -> String {
+        let primary: String
         if let override = objc_getAssociatedObject(self, &sbBundleKey) as? Bundle {
-            return override.localizedString(forKey: key, value: value, table: tableName)
+            primary = override.localizedString(forKey: key, value: value, table: tableName)
+        } else {
+            primary = super.localizedString(forKey: key, value: value, table: tableName)
         }
-        return super.localizedString(forKey: key, value: value, table: tableName)
+        // Fall back to the inline ProgramStrings table when xcstrings has no
+        // entry for this key (NSLocalizedString returns the key itself).
+        if primary == key {
+            let inline = ProgramStrings.value(key)
+            if inline != key { return inline }
+        }
+        return primary
     }
 }

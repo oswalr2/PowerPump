@@ -4,6 +4,7 @@ struct SettingsView: View {
     @ObservedObject private var theme    = ThemeManager.shared
     @ObservedObject private var language = LanguageManager.shared
     @ObservedObject private var notif    = NotificationManager.shared
+    @ObservedObject private var coach    = RunningCoach.shared
     @Environment(\.dismiss) private var dismiss
 
     @State private var showAbout    = false
@@ -42,6 +43,14 @@ struct SettingsView: View {
                         }
                     } header: {
                         sectionHeader("Notifications")
+                    }
+
+                    // MARK: Voice & Vibration
+                    Section {
+                        voiceCoachRow
+                        vibrationRow
+                    } header: {
+                        sectionHeader("Voice & Vibration")
                     }
 
                     // MARK: Support
@@ -215,6 +224,36 @@ struct SettingsView: View {
                     .labelsHidden()
                     .tint(.sbAccent)
             }
+        }
+        .listRowBackground(Color.sbSurface)
+    }
+
+    private var voiceCoachRow: some View {
+        HStack {
+            Image(systemName: "waveform")
+                .foregroundColor(.sbAccent)
+                .frame(width: 24)
+            Text("Voice Coach")
+                .foregroundColor(.sbTextPrimary)
+            Spacer()
+            Toggle("", isOn: $coach.voiceEnabled)
+                .labelsHidden()
+                .tint(.sbAccent)
+        }
+        .listRowBackground(Color.sbSurface)
+    }
+
+    private var vibrationRow: some View {
+        HStack {
+            Image(systemName: "iphone.radiowaves.left.and.right")
+                .foregroundColor(.sbAccent)
+                .frame(width: 24)
+            Text("Vibration")
+                .foregroundColor(.sbTextPrimary)
+            Spacer()
+            Toggle("", isOn: $coach.vibrationEnabled)
+                .labelsHidden()
+                .tint(.sbAccent)
         }
         .listRowBackground(Color.sbSurface)
     }
