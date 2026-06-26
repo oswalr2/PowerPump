@@ -6,6 +6,7 @@ struct WorkoutsView: View {
     @State private var showSaveRoutine = false
     @State private var showRunning = false
     @State private var showRunningPrograms = false
+    @State private var showSports = false
     @State private var routineName = ""
 
     var body: some View {
@@ -27,6 +28,8 @@ struct WorkoutsView: View {
                         runCard
 
                         runningProgramsCard
+
+                        sportsCard
 
                         programsSection
 
@@ -51,6 +54,9 @@ struct WorkoutsView: View {
         }
         .sheet(isPresented: $showRunningPrograms) {
             RunningProgramsView()
+        }
+        .sheet(isPresented: $showSports) {
+            SportsCatalogView()
         }
     }
 
@@ -112,6 +118,48 @@ struct WorkoutsView: View {
             .padding(18)
             .background(Color.sbAccent)
             .cornerRadius(16)
+        }
+        .buttonStyle(.plain)
+        .padding(.horizontal, 20)
+    }
+
+    // MARK: - Sports
+
+    private var sportsCard: some View {
+        Button {
+            HapticManager.medium()
+            showSports = true
+        } label: {
+            HStack(spacing: 14) {
+                ZStack {
+                    Circle()
+                        .fill(LinearGradient(
+                            colors: [Color.sbGreen.opacity(0.32), Color.sbGreen.opacity(0.08)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        ))
+                        .frame(width: 48, height: 48)
+                    Image(systemName: "trophy.fill")
+                        .font(.system(size: 22, weight: .semibold))
+                        .foregroundColor(.sbGreen)
+                }
+                VStack(alignment: .leading, spacing: 3) {
+                    Text("Sports")
+                        .font(SBFont.heading(16))
+                        .foregroundColor(.sbTextPrimary)
+                    Text("Cycling · Yoga · Swim · Diving · 30+ more")
+                        .font(SBFont.caption())
+                        .foregroundColor(.sbTextSecondary)
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundColor(.sbTextSecondary.opacity(0.6))
+            }
+            .padding(16)
+            .background(Color.sbSurface)
+            .cornerRadius(16)
+            .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.sbGreen.opacity(0.25), lineWidth: 1))
         }
         .buttonStyle(.plain)
         .padding(.horizontal, 20)

@@ -187,6 +187,33 @@ final class HealthKitService: ObservableObject {
         hk.save(workout) { _, _ in }
     }
 
+    // MARK: - Write: Generic Sport
+
+    /// Saves a finished sport session as an HKWorkout with the sport's
+    /// HealthKit activity type, total moving time, distance (if any) and
+    /// energy burned.  Distance is only attached for activities that
+    /// actually track it via GPS.
+    func saveSport(_ activity: SportActivity,
+                   startedAt: Date,
+                   endedAt: Date,
+                   movingSeconds: TimeInterval,
+                   distanceMeters: Double,
+                   calories: Int) {
+        guard isAvailable else { return }
+        let energy = HKQuantity(unit: .kilocalorie(), doubleValue: Double(calories))
+        let distance: HKQuantity? = (activity.usesGPS && distanceMeters > 0)
+            ? HKQuantity(unit: .meter(), doubleValue: distanceMeters)
+            : nil
+        let workout = HKWorkout(activityType: activity.hkType,
+                                start: startedAt,
+                                end: endedAt,
+                                duration: movingSeconds,
+                                totalEnergyBurned: energy,
+                                totalDistance: distance,
+                                metadata: nil)
+        hk.save(workout) { _, _ in }
+    }
+
     // MARK: - Write: Nutrition
 
     func saveMealEntry(calories: Double, protein: Double, carbs: Double, fat: Double) {
