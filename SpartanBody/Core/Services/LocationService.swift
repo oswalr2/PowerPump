@@ -22,9 +22,19 @@ final class LocationService: NSObject, ObservableObject, CLLocationManagerDelega
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.distanceFilter = 5      // metres between updates
         manager.activityType = .fitness
-        // Pauses + background updates need the "Always" entitlement; we ship
-        // with "When In Use" only for now, so leave these off.
         manager.pausesLocationUpdatesAutomatically = false
+        // Only enable background updates if the bundle actually declares
+        // "location" in UIBackgroundModes — otherwise CoreLocation throws
+        // an NSException and the whole app crashes the moment we try to
+        // start a session.  Until we wire the Background Modes capability
+        // through Xcode UI, foreground-only tracking is the safe default.
+        let bgModes = Bundle.main.object(forInfoDictionaryKey: "UIBackgroundModes") as? [String]
+        if bgModes?.contains("location") == true {
+            manager.allowsBackgroundLocationUpdates = true
+            if #available(iOS 11.0, *) {
+                manager.showsBackgroundLocationIndicator = true
+            }
+        }
         authorizationStatus = manager.authorizationStatus
     }
 

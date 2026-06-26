@@ -13,7 +13,14 @@ final class RunStore: ObservableObject {
     private let location = LocationService.shared
     private var subscriptions: Set<AnyCancellable> = []
     private var ticker: Timer?
-    private var lastTick: Date?
+    /// When the active session started. Used to compute moving time from a
+    /// reference Date instead of timer ticks, so background freezes don't
+    /// cause the clock to drift.
+    private var sessionStartedAt: Date?
+    /// Accumulated paused duration in seconds.
+    private var pausedAccum: TimeInterval = 0
+    /// When the current pause began (nil if not paused).
+    private var pauseStartedAt: Date?
 
     private init() {
         loadHistory()
@@ -29,33 +36,39 @@ final class RunStore: ObservableObject {
         guard activeSession == nil else { return }
         var session = RunSession(activity: activity)
         session.startedAt = .now
+        sessionStartedAt = session.startedAt
+        pausedAccum = 0
+        pauseStartedAt = nil
         activeSession = session
         isPaused = false
-        lastTick = .now
         location.startTracking()
         startTicker()
     }
 
     func pause() {
         guard activeSession != nil, !isPaused else { return }
+        syncMovingSeconds()           // commit elapsed time before freezing the clock
         isPaused = true
-        flushTick()
-        stopTicker()
+        pauseStartedAt = .now
     }
 
     func resume() {
         guard activeSession != nil, isPaused else { return }
+        if let pStart = pauseStartedAt {
+            pausedAccum += Date().timeIntervalSince(pStart)
+        }
+        pauseStartedAt = nil
         isPaused = false
-        lastTick = .now
-        startTicker()
     }
 
     func finish() -> RunSession? {
         guard var session = activeSession else { return nil }
-        flushTick()
+        syncMovingSeconds()
         stopTicker()
         location.stopTracking()
         session.endedAt = .now
+        // Snapshot the latest moving time and route into the returned struct.
+        session.movingSeconds = activeSession?.movingSeconds ?? session.movingSeconds
         // Persist + sync to Health, but only if we got somewhere meaningful.
         // A 5-second misfire shouldn't pollute history.
         if session.movingSeconds > 10 && session.distanceMeters > 20 {
@@ -65,23 +78,45 @@ final class RunStore: ObservableObject {
         }
         activeSession = nil
         isPaused = false
+        sessionStartedAt = nil
+        pauseStartedAt = nil
+        pausedAccum = 0
         return session
     }
 
     func discard() {
-        flushTick()
         stopTicker()
         location.stopTracking()
         activeSession = nil
         isPaused = false
+        sessionStartedAt = nil
+        pauseStartedAt = nil
+        pausedAccum = 0
     }
 
-    // MARK: - Ticker (moving time)
+    // MARK: - Time tracking (date-based, survives background)
+
+    /// Recomputes movingSeconds from the absolute timestamps. This is correct
+    /// even after iOS suspended the app for minutes: when we come back, the
+    /// elapsed time is whatever Date()-startedAt-pausedAccum yields.
+    private func syncMovingSeconds() {
+        guard var session = activeSession, let start = sessionStartedAt else { return }
+        let now = Date()
+        var pause = pausedAccum
+        if isPaused, let pStart = pauseStartedAt {
+            pause += now.timeIntervalSince(pStart)
+        }
+        session.movingSeconds = max(0, now.timeIntervalSince(start) - pause)
+        activeSession = session
+    }
 
     private func startTicker() {
         ticker?.invalidate()
+        // The timer keeps the UI fresh while in foreground; in background iOS
+        // suspends it but syncMovingSeconds() will catch up the next time a
+        // location update or willEnterForeground arrives.
         ticker = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-            Task { @MainActor in self?.flushTick() }
+            Task { @MainActor in self?.syncMovingSeconds() }
         }
     }
 
@@ -90,18 +125,15 @@ final class RunStore: ObservableObject {
         ticker = nil
     }
 
-    private func flushTick() {
-        guard !isPaused, var session = activeSession, let last = lastTick else { return }
-        let now = Date()
-        session.movingSeconds += now.timeIntervalSince(last)
-        activeSession = session
-        lastTick = now
-    }
-
     // MARK: - Location handling
 
     private func handle(location new: CLLocation) {
         guard !isPaused, var session = activeSession else { return }
+
+        // Always update moving time on a location event so the clock keeps
+        // advancing even when the foreground Timer is suspended.
+        syncMovingSeconds()
+        if let refreshed = activeSession { session = refreshed }
 
         let point = RunRoutePoint(
             latitude:  new.coordinate.latitude,

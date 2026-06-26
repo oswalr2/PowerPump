@@ -79,12 +79,12 @@ private struct ProgramCatalogCard: View {
                     .foregroundColor(.sbTextSecondary)
             }
 
-            Text(LocalizedStringKey(program.nameKey))
+            Text(verbatim: PT(program.nameKey))
                 .font(SBFont.display(22))
                 .foregroundColor(.sbTextPrimary)
                 .multilineTextAlignment(.leading)
 
-            Text(LocalizedStringKey(program.subtitleKey))
+            Text(verbatim: PT(program.subtitleKey))
                 .font(SBFont.caption())
                 .foregroundColor(.sbTextSecondary)
 
@@ -108,7 +108,7 @@ struct LevelDots: View {
 
     var body: some View {
         HStack(spacing: 6) {
-            Text(LocalizedStringKey(label))
+            Text(verbatim: PT(label))
                 .font(SBFont.label(10))
                 .foregroundColor(.sbTextSecondary)
                 .textCase(.uppercase)

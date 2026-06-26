@@ -29,7 +29,7 @@ struct RunningProgramDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {
-                Text(LocalizedStringKey(program.nameKey))
+                Text(verbatim: PT(program.nameKey))
                     .font(SBFont.heading(14))
                     .foregroundColor(.sbTextPrimary)
                     .textCase(.uppercase)
@@ -53,7 +53,7 @@ struct RunningProgramDetailView: View {
                     .foregroundColor(.sbTextPrimary)
                     .textCase(.uppercase)
             }
-            Text(LocalizedStringKey(program.nameKey))
+            Text(verbatim: PT(program.nameKey))
                 .font(SBFont.display(28))
                 .foregroundColor(.sbTextPrimary)
             HStack(spacing: 24) {
@@ -153,7 +153,7 @@ struct RunningProgramDetailView: View {
     private var badgesGrid: some View {
         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
             ForEach(program.badgeKeys, id: \.self) { key in
-                Text(LocalizedStringKey(key))
+                Text(verbatim: PT(key))
                     .font(SBFont.label(11))
                     .fontWeight(.semibold)
                     .foregroundColor(.sbTextPrimary)
@@ -174,7 +174,7 @@ struct RunningProgramDetailView: View {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundColor(.sbAccent)
                         .font(.system(size: 18))
-                    Text(LocalizedStringKey(key))
+                    Text(verbatim: PT(key))
                         .font(SBFont.body())
                         .foregroundColor(.sbTextPrimary)
                     Spacer()
@@ -217,10 +217,10 @@ struct RunningProgramDetailView: View {
                         .font(SBFont.heading(15))
                         .foregroundColor(.sbTextPrimary)
                 }
-                Text(LocalizedStringKey(phase.titleKey))
+                Text(verbatim: PT(phase.titleKey))
                     .font(SBFont.heading(18))
                     .foregroundColor(.sbTextPrimary)
-                Text(LocalizedStringKey(phase.bodyKey))
+                Text(verbatim: PT(phase.bodyKey))
                     .font(SBFont.caption())
                     .foregroundColor(.sbTextSecondary)
                     .lineSpacing(3)
@@ -313,7 +313,7 @@ struct RunningProgramDetailView: View {
     private func actionPill(text: String, color: Color, icon: String) -> some View {
         HStack(spacing: 6) {
             Image(systemName: icon).font(.system(size: 12, weight: .bold))
-            Text(LocalizedStringKey(text))
+            Text(verbatim: PT(text))
                 .font(SBFont.heading(14))
                 .fontWeight(.bold)
         }
@@ -355,7 +355,7 @@ struct RunningProgramDetailView: View {
     }
 
     private func sectionTitle(_ key: String) -> some View {
-        Text(LocalizedStringKey(key))
+        Text(verbatim: PT(key))
             .font(SBFont.heading(18))
             .foregroundColor(.sbTextPrimary)
             .textCase(.uppercase)

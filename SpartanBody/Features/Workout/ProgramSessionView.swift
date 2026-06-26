@@ -7,6 +7,7 @@ import MapKit
 /// day complete when finished.
 struct ProgramSessionView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.scenePhase) private var scenePhase
     @ObservedObject private var location = LocationService.shared
     @ObservedObject private var coach    = RunningCoach.shared
     @ObservedObject private var run      = RunStore.shared
@@ -21,6 +22,11 @@ struct ProgramSessionView: View {
     @State private var totalElapsed: TimeInterval = 0
     @State private var isPaused = true
     @State private var didStart = false
+    // Date-based anchors so the clock keeps advancing correctly when the
+    // app is backgrounded or the screen is locked.
+    @State private var sessionStartedAt: Date?
+    @State private var pausedAccum: TimeInterval = 0
+    @State private var pauseStartedAt: Date?
     @State private var didAnnounceHalfway = false
     @State private var didCountdown3 = false
     @State private var didCountdown2 = false
@@ -28,6 +34,7 @@ struct ProgramSessionView: View {
     @State private var didFinish = false
     @State private var showFinishConfirm = false
     @State private var timer: Timer?
+    @State private var finishedSession: RunSession?
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -53,6 +60,12 @@ struct ProgramSessionView: View {
         .onAppear { ensureAuth() }
         .onDisappear { stopTimer() }
         .onChange(of: location.authorizationStatus) { _ in ensureAuth() }
+        .onChange(of: scenePhase) { phase in
+            // When the user comes back to the foreground, force a tick so
+            // the UI immediately reflects the time that elapsed while we
+            // were in the background.
+            if phase == .active && didStart && !isPaused { tick(0) }
+        }
         .alert(LocalizedStringKey("Finish session?"), isPresented: $showFinishConfirm) {
             Button(LocalizedStringKey("Discard"), role: .destructive) {
                 cancelAndDismiss()
@@ -63,6 +76,14 @@ struct ProgramSessionView: View {
             Button(LocalizedStringKey("Cancel"), role: .cancel) {}
         } message: {
             Text(LocalizedStringKey("Save your progress for this day?"))
+        }
+        .fullScreenCover(item: $finishedSession, onDismiss: { dismiss() }) { session in
+            RunSummaryView(
+                session: session,
+                programContext: "\(PT(program.nameKey)) · " +
+                    String(format: NSLocalizedString("Week %lld · Day %lld", comment: ""),
+                           weekNumber, day.dayNumber)
+            )
         }
     }
 
@@ -82,7 +103,7 @@ struct ProgramSessionView: View {
             }
             Spacer()
             VStack(spacing: 2) {
-                Text(LocalizedStringKey(program.nameKey))
+                Text(verbatim: PT(program.nameKey))
                     .font(SBFont.label(11))
                     .foregroundColor(.white.opacity(0.85))
                     .textCase(.uppercase)
@@ -180,7 +201,7 @@ struct ProgramSessionView: View {
             HStack(spacing: 8) {
                 Image(systemName: current.kind.icon)
                     .font(.system(size: 18, weight: .bold))
-                Text(LocalizedStringKey(current.kind.labelKey))
+                Text(verbatim: PT(current.kind.labelKey))
                     .font(SBFont.heading(18))
                     .textCase(.uppercase)
             }
@@ -197,7 +218,7 @@ struct ProgramSessionView: View {
                         .foregroundColor(.sbTextSecondary)
                     Image(systemName: next.kind.icon)
                         .foregroundColor(.sbTextSecondary)
-                    Text(LocalizedStringKey(next.kind.labelKey))
+                    Text(verbatim: PT(next.kind.labelKey))
                         .foregroundColor(.sbTextPrimary)
                         .fontWeight(.semibold)
                     Text("· \(formatted(seconds: next.duration))")
@@ -238,7 +259,7 @@ struct ProgramSessionView: View {
                 .font(SBFont.heading(18))
                 .foregroundColor(.sbTextPrimary)
                 .monospacedDigit()
-            Text(LocalizedStringKey(title))
+            Text(verbatim: PT(title))
                 .font(SBFont.label(9))
                 .foregroundColor(.sbTextSecondary)
                 .textCase(.uppercase)
@@ -267,12 +288,19 @@ struct ProgramSessionView: View {
                 Button {
                     HapticManager.light()
                     if isPaused {
+                        if let p = pauseStartedAt {
+                            pausedAccum += Date().timeIntervalSince(p)
+                        }
+                        pauseStartedAt = nil
                         coach.announceResume()
                         isPaused = false
+                        run.resume()
                         startTimer()
                     } else {
+                        pauseStartedAt = Date()
                         coach.announcePause()
                         isPaused = true
+                        run.pause()
                         stopTimer()
                     }
                 } label: {
@@ -334,6 +362,9 @@ struct ProgramSessionView: View {
         currentIndex = 0
         elapsedInCurrent = 0
         totalElapsed = 0
+        sessionStartedAt = Date()
+        pausedAccum = 0
+        pauseStartedAt = nil
         location.startTracking()
         run.start(activity: .run)
         coach.announceInterval(current, isFirst: true)
@@ -344,14 +375,19 @@ struct ProgramSessionView: View {
     private func completeAndDismiss() {
         stopTimer()
         location.stopTracking()
-        _ = run.finish()
+        let session = run.finish()
         let globalDay = progress.globalDay(in: program,
                                            weekNumber: weekNumber,
                                            dayNumber: day.dayNumber)
         progress.markComplete(globalDay, in: program)
         coach.announceFinish()
         coach.cueFinish()
-        dismiss()
+        // Show summary if we got a real route, otherwise just dismiss.
+        if let session, session.route.count >= 2 {
+            finishedSession = session
+        } else {
+            dismiss()
+        }
     }
 
     private func cancelAndDismiss() {
@@ -377,9 +413,60 @@ struct ProgramSessionView: View {
 
     @MainActor
     private func tick(_ dt: TimeInterval) {
-        guard didStart, !isPaused, !didFinish else { return }
-        elapsedInCurrent += dt
-        totalElapsed += dt
+        guard didStart, !isPaused, !didFinish, let start = sessionStartedAt else { return }
+
+        // Compute total elapsed from the absolute start date. This is correct
+        // whether the timer fired on time or after a long background gap.
+        let realElapsed = max(0, Date().timeIntervalSince(start) - pausedAccum)
+        totalElapsed = realElapsed
+
+        // Find which interval we're in by walking the cumulative durations.
+        // If the user backgrounded the app long enough to skip past one or
+        // more intervals, we'll advance through them sequentially below.
+        var cumSum: TimeInterval = 0
+        var newIndex = 0
+        var newInCurrent: TimeInterval = 0
+        for (i, interval) in day.intervals.enumerated() {
+            let end = cumSum + TimeInterval(interval.duration)
+            if realElapsed < end {
+                newIndex = i
+                newInCurrent = realElapsed - cumSum
+                break
+            }
+            cumSum = end
+            newIndex = i + 1
+        }
+
+        // We've walked past the last interval → session is finished.
+        if newIndex >= day.intervals.count {
+            elapsedInCurrent = TimeInterval(current.duration)
+            stopTimer()
+            didFinish = true
+            location.stopTracking()
+            let session = run.finish()
+            let globalDay = progress.globalDay(in: program,
+                                               weekNumber: weekNumber,
+                                               dayNumber: day.dayNumber)
+            progress.markComplete(globalDay, in: program)
+            coach.announceFinish()
+            coach.cueFinish()
+            if let session, session.route.count >= 2 {
+                finishedSession = session
+            }
+            return
+        }
+
+        // Crossed into a new interval — announce it.
+        if newIndex != currentIndex {
+            currentIndex = newIndex
+            didAnnounceHalfway = false
+            didCountdown3 = false
+            didCountdown2 = false
+            didCountdown1 = false
+            coach.announceInterval(current, isFirst: false)
+            coach.cueIntervalChange()
+        }
+        elapsedInCurrent = newInCurrent
 
         let remaining = current.duration - Int(elapsedInCurrent)
         let half = current.duration / 2
@@ -394,34 +481,10 @@ struct ProgramSessionView: View {
         if !didCountdown3 && remaining == 3 { didCountdown3 = true; coach.cueCountdown() }
         if !didCountdown2 && remaining == 2 { didCountdown2 = true; coach.cueCountdown() }
         if !didCountdown1 && remaining == 1 { didCountdown1 = true; coach.cueCountdown() }
-
-        if remaining <= 0 { advanceInterval() }
     }
 
-    private func advanceInterval() {
-        if currentIndex + 1 < day.intervals.count {
-            currentIndex += 1
-            elapsedInCurrent = 0
-            didAnnounceHalfway = false
-            didCountdown3 = false
-            didCountdown2 = false
-            didCountdown1 = false
-            coach.announceInterval(current, isFirst: false)
-            coach.cueIntervalChange()
-        } else {
-            // Session finished cleanly.
-            stopTimer()
-            didFinish = true
-            location.stopTracking()
-            _ = run.finish()
-            let globalDay = progress.globalDay(in: program,
-                                               weekNumber: weekNumber,
-                                               dayNumber: day.dayNumber)
-            progress.markComplete(globalDay, in: program)
-            coach.announceFinish()
-            coach.cueFinish()
-        }
-    }
+    // (advanceInterval was removed — tick() now derives interval index from
+    // absolute elapsed time so it self-heals after background gaps.)
 
     // MARK: - Formatting
 

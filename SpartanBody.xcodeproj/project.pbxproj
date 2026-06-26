@@ -62,9 +62,22 @@
 		F36D37072FB3EF4000CA86B6 /* SpartanBody.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpartanBody.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		F35AF6852FEB6A3B0042BFC8 /* Exceptions for "SpartanBody" folder in "SpartanBody" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = F36D37062FB3EF4000CA86B6 /* SpartanBody */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		F36D37092FB3EF4000CA86B6 /* SpartanBody */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				F35AF6852FEB6A3B0042BFC8 /* Exceptions for "SpartanBody" folder in "SpartanBody" target */,
+			);
 			path = SpartanBody;
 			sourceTree = "<group>";
 		};
@@ -656,6 +669,7 @@
 				DEVELOPMENT_TEAM = NWUY84K2DU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SpartanBody/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PowerPump;
 				INFOPLIST_KEY_CFBundleName = PowerPump;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
@@ -668,6 +682,7 @@
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UIBackgroundModes = "audio location";
 				INFOPLIST_KEY_UILaunchScreen_BackgroundColor = LaunchBackground;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
@@ -701,6 +716,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SpartanBody/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PowerPump;
 				INFOPLIST_KEY_CFBundleName = PowerPump;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
@@ -715,6 +731,7 @@
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UIBackgroundModes = "audio location";
 				INFOPLIST_KEY_UILaunchScreen_BackgroundColor = LaunchBackground;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;

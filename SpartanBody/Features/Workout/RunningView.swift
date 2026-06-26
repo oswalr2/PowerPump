@@ -10,6 +10,7 @@ struct RunningView: View {
     @State private var activity: RunActivityType = .run
     @State private var showFinishConfirm = false
     @State private var didStartOnAppear = false
+    @State private var finishedSession: RunSession?
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -31,12 +32,18 @@ struct RunningView: View {
                 dismiss()
             }
             Button("Save") {
-                _ = run.finish()
-                dismiss()
+                if let session = run.finish(), session.route.count >= 2 {
+                    finishedSession = session
+                } else {
+                    dismiss()
+                }
             }
             Button("Cancel", role: .cancel) {}
         } message: {
             Text("Save this run to your history and Apple Health?")
+        }
+        .fullScreenCover(item: $finishedSession, onDismiss: { dismiss() }) { session in
+            RunSummaryView(session: session)
         }
     }
 

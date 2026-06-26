@@ -30,6 +30,26 @@ final class RunningCoach: ObservableObject {
         } else {
             vibrationEnabled = ud.bool(forKey: "sb_vibration_enabled")
         }
+        configureAudioSession()
+    }
+
+    /// Configure the audio session so voice cues play even when the user
+    /// locks their phone or switches to another app. We mix with other
+    /// audio (Spotify, Apple Music) and duck them while speaking so the
+    /// cue is heard clearly. Background playback requires `audio` in
+    /// UIBackgroundModes — without that we still configure the session,
+    /// the voice just stops if the screen locks.
+    private func configureAudioSession() {
+        let session = AVAudioSession.sharedInstance()
+        do {
+            try session.setCategory(.playback,
+                                     mode: .voicePrompt,
+                                     options: [.mixWithOthers, .duckOthers])
+            try session.setActive(true, options: [])
+        } catch {
+            // Falls back silently — the only consequence is that the voice
+            // won't play in the background. We don't want a crash here.
+        }
     }
 
     // MARK: - Voice
