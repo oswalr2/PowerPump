@@ -1,4 +1,4 @@
-// SpartanBody — Food Scan Proxy
+// PowerPump — Food Scan Proxy
 // Holds the Anthropic API key server-side and enforces the free quota:
 // WEEKLY_LIMIT scans per user per ISO week. State lives in Workers KV (binding: SCANS).
 

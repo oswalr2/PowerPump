@@ -1,4 +1,4 @@
-# SpartanBody — Proxy del escáner de comida (Cloudflare Worker)
+# PowerPump — Proxy del escáner de comida (Cloudflare Worker)
 
 Este Worker guarda tu API key de Anthropic en el servidor (nunca dentro de la app)
 y aplica el límite gratuito: **1 escaneo por semana por usuario**.
@@ -32,12 +32,12 @@ y aplica el límite gratuito: **1 escaneo por semana por usuario**.
    wrangler deploy
    ```
    Al final imprime la URL del worker, por ejemplo:
-   `https://spartanbody-scan.tu-subdominio.workers.dev`
+   `https://powerpump-scan.tu-subdominio.workers.dev`
 
-6. **Conecta la app:** abre `SpartanBody/Core/Config.swift` y pon esa URL
+6. **Conecta la app:** abre `PowerPump/Core/Config.swift` y pon esa URL
    (con `/scan` al final) en `scanProxyURL`:
    ```swift
-   static let scanProxyURL = "https://spartanbody-scan.tu-subdominio.workers.dev/scan"
+   static let scanProxyURL = "https://powerpump-scan.tu-subdominio.workers.dev/scan"
    ```
 
 ## Para cambiar el límite semanal
