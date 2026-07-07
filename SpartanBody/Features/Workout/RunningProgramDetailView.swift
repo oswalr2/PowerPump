@@ -76,7 +76,7 @@ struct RunningProgramDetailView: View {
                     withAnimation(.easeInOut(duration: 0.18)) { selectedTab = t }
                 } label: {
                     VStack(spacing: 8) {
-                        Text(LocalizedStringKey(t == .intro ? "Introduction" : "Progress"))
+                        Text(verbatim: PT(t == .intro ? "Introduction" : "Progress"))
                             .font(SBFont.heading(16))
                             .foregroundColor(selectedTab == t ? .sbTextPrimary : .sbTextSecondary)
                         Rectangle()
@@ -124,30 +124,24 @@ struct RunningProgramDetailView: View {
         .cornerRadius(16)
     }
 
-    private func aboutRow(icon: String, title: LocalizedStringKey, subtitle: LocalizedStringKey?) -> some View {
+    private func aboutRow(icon: String, title: String, subtitle: String?) -> some View {
         HStack(alignment: .top, spacing: 12) {
             Image(systemName: icon)
                 .foregroundColor(.sbAccent)
                 .font(.system(size: 18))
                 .frame(width: 24)
             VStack(alignment: .leading, spacing: 2) {
-                Text(title)
+                Text(verbatim: PT(title))
                     .font(SBFont.body())
                     .foregroundColor(.sbTextPrimary)
                 if let subtitle {
-                    Text(subtitle)
+                    Text(verbatim: PT(subtitle))
                         .font(SBFont.caption())
                         .foregroundColor(.sbTextSecondary)
                 }
             }
             Spacer()
         }
-    }
-
-    private func aboutRow(icon: String, title: String, subtitle: String?) -> some View {
-        aboutRow(icon: icon,
-                 title: LocalizedStringKey(title),
-                 subtitle: subtitle.map { LocalizedStringKey($0) })
     }
 
     private var badgesGrid: some View {
@@ -263,7 +257,7 @@ struct RunningProgramDetailView: View {
         } label: {
             HStack(spacing: 14) {
                 VStack(spacing: 0) {
-                    Text(LocalizedStringKey("Day"))
+                    Text(verbatim: PT("Day"))
                         .font(SBFont.label(10))
                         .foregroundColor(.sbTextSecondary)
                         .textCase(.uppercase)
@@ -335,7 +329,7 @@ struct RunningProgramDetailView: View {
         } label: {
             HStack {
                 Image(systemName: "play.fill")
-                Text(LocalizedStringKey("Start Now"))
+                Text(verbatim: PT("Start Now"))
                     .fontWeight(.bold)
             }
             .font(SBFont.heading(18))

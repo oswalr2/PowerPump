@@ -75,7 +75,7 @@ struct ProgramSessionView: View {
             }
             Button(LocalizedStringKey("Cancel"), role: .cancel) {}
         } message: {
-            Text(LocalizedStringKey("Save your progress for this day?"))
+            Text(verbatim: PT("Save your progress for this day?"))
         }
         .fullScreenCover(item: $finishedSession, onDismiss: { dismiss() }) { session in
             RunSummaryView(
@@ -159,10 +159,10 @@ struct ProgramSessionView: View {
 
     private var permissionPrompt: some View {
         VStack(spacing: 10) {
-            Text(LocalizedStringKey("Location access needed"))
+            Text(verbatim: PT("Location access needed"))
                 .font(SBFont.heading(15))
                 .foregroundColor(.sbTextPrimary)
-            Text(LocalizedStringKey("PowerPump uses your location to trace your route and measure distance."))
+            Text(verbatim: PT("PowerPump uses your location to trace your route and measure distance."))
                 .font(SBFont.caption())
                 .foregroundColor(.sbTextSecondary)
                 .multilineTextAlignment(.center)
@@ -172,7 +172,7 @@ struct ProgramSessionView: View {
 
     private var permissionBlocked: some View {
         VStack(spacing: 8) {
-            Text(LocalizedStringKey("Location is off"))
+            Text(verbatim: PT("Location is off"))
                 .font(SBFont.heading(15))
                 .foregroundColor(.sbTextPrimary)
             Button {
@@ -180,7 +180,7 @@ struct ProgramSessionView: View {
                     UIApplication.shared.open(url)
                 }
             } label: {
-                Text(LocalizedStringKey("Open Settings"))
+                Text(verbatim: PT("Open Settings"))
                     .font(SBFont.body())
                     .fontWeight(.semibold)
                     .foregroundColor(.sbAccent)
@@ -214,7 +214,7 @@ struct ProgramSessionView: View {
 
             if let next = nextInterval {
                 HStack(spacing: 6) {
-                    Text(LocalizedStringKey("Next"))
+                    Text(verbatim: PT("Next"))
                         .foregroundColor(.sbTextSecondary)
                     Image(systemName: next.kind.icon)
                         .foregroundColor(.sbTextSecondary)
@@ -336,7 +336,7 @@ struct ProgramSessionView: View {
             Image(systemName: "checkmark.seal.fill")
                 .font(.system(size: 38))
                 .foregroundColor(.sbGreen)
-            Text(LocalizedStringKey("Day complete!"))
+            Text(verbatim: PT("Day complete!"))
                 .font(SBFont.heading(20))
                 .foregroundColor(.sbTextPrimary)
             Text(String(format: NSLocalizedString("You finished week %lld, day %lld.", comment: ""),

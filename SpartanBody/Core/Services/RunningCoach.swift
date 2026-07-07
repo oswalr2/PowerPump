@@ -91,6 +91,13 @@ final class RunningCoach: ObservableObject {
         speak(PT("voice.resumed"))
     }
 
+    /// Speak an arbitrary line — used for AI-route turn-by-turn directions and
+    /// stage announcements, which are already localized when passed in.
+    func announce(_ text: String) {
+        guard voiceEnabled, !text.isEmpty else { return }
+        speak(text)
+    }
+
     private func speak(_ text: String) {
         let code = LanguageManager.shared.selectedCode
         // AVSpeechSynthesisVoice prefers e.g. "es-ES" / "pt-BR".

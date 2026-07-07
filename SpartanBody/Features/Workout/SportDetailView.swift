@@ -34,7 +34,7 @@ struct SportDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {
-                Text(LocalizedStringKey(sport.nameKey))
+                Text(verbatim: PT(sport.nameKey))
                     .font(SBFont.heading(15))
                     .foregroundColor(.sbTextPrimary)
             }
@@ -64,13 +64,13 @@ struct SportDetailView: View {
                     .foregroundColor(.sbAccent)
             }
             VStack(spacing: 4) {
-                Text(LocalizedStringKey(sport.nameKey))
+                Text(verbatim: PT(sport.nameKey))
                     .font(SBFont.display(28))
                     .foregroundColor(.sbTextPrimary)
                 HStack(spacing: 6) {
                     Image(systemName: sport.category.icon)
                         .font(.system(size: 10))
-                    Text(LocalizedStringKey(sport.category.rawValue))
+                    Text(verbatim: PT(sport.category.rawValue))
                         .font(SBFont.label(11))
                 }
                 .foregroundColor(.sbTextSecondary)
@@ -78,7 +78,7 @@ struct SportDetailView: View {
                 if sport.usesGPS {
                     HStack(spacing: 4) {
                         Image(systemName: "location.fill").font(.system(size: 10))
-                        Text(LocalizedStringKey("GPS"))
+                        Text(verbatim: PT("GPS"))
                             .font(SBFont.label(10))
                     }
                     .foregroundColor(.sbAccent)
@@ -98,7 +98,7 @@ struct SportDetailView: View {
         SBCard {
             VStack(spacing: 12) {
                 HStack {
-                    Text(LocalizedStringKey("Your stats"))
+                    Text(verbatim: PT("Your stats"))
                         .font(SBFont.heading())
                         .foregroundColor(.sbTextPrimary)
                     Spacer()
@@ -106,7 +106,7 @@ struct SportDetailView: View {
                         .font(SBFont.heading(18))
                         .foregroundColor(.sbAccent)
                         .monospacedDigit()
-                    Text(LocalizedStringKey("sessions"))
+                    Text(verbatim: PT("sessions"))
                         .font(SBFont.label(11))
                         .foregroundColor(.sbTextSecondary)
                 }
@@ -132,7 +132,7 @@ struct SportDetailView: View {
                 .monospacedDigit()
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
-            Text(LocalizedStringKey(label))
+            Text(verbatim: PT(label))
                 .font(SBFont.label(10))
                 .foregroundColor(.sbTextSecondary)
                 .textCase(.uppercase)
@@ -145,7 +145,7 @@ struct SportDetailView: View {
     private var historySection: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
-                Text(LocalizedStringKey("History"))
+                Text(verbatim: PT("History"))
                     .font(SBFont.heading())
                     .foregroundColor(.sbTextPrimary)
                 Spacer()
@@ -171,10 +171,10 @@ struct SportDetailView: View {
             Image(systemName: "clock.arrow.circlepath")
                 .font(.system(size: 26))
                 .foregroundColor(.sbTextSecondary.opacity(0.5))
-            Text(LocalizedStringKey("No sessions yet"))
+            Text(verbatim: PT("No sessions yet"))
                 .font(SBFont.body())
                 .foregroundColor(.sbTextSecondary)
-            Text(LocalizedStringKey("Tap Start to log your first session."))
+            Text(verbatim: PT("Tap Start to log your first session."))
                 .font(SBFont.label(11))
                 .foregroundColor(.sbTextSecondary.opacity(0.7))
         }
@@ -220,7 +220,7 @@ struct SportDetailView: View {
         } label: {
             HStack {
                 Image(systemName: "play.fill")
-                Text(LocalizedStringKey("Start session"))
+                Text(verbatim: PT("Start session"))
                     .fontWeight(.bold)
             }
             .font(SBFont.heading(18))
@@ -301,7 +301,7 @@ struct PastSportSessionView: View {
                                 Image(systemName: sport.icon)
                                     .font(.system(size: 60))
                                     .foregroundColor(.sbAccent)
-                                Text(LocalizedStringKey(sport.nameKey))
+                                Text(verbatim: PT(sport.nameKey))
                                     .font(SBFont.heading(20))
                                     .foregroundColor(.sbTextPrimary)
                             }
@@ -317,7 +317,7 @@ struct PastSportSessionView: View {
                         HapticManager.light()
                         dismiss()
                     } label: {
-                        Text(LocalizedStringKey("Done"))
+                        Text(verbatim: PT("Done"))
                             .font(SBFont.heading(18))
                             .fontWeight(.bold)
                             .foregroundColor(.white)
@@ -347,7 +347,7 @@ struct PastSportSessionView: View {
             HStack {
                 Image(systemName: "checkmark.seal.fill")
                     .foregroundColor(.sbGreen)
-                Text(LocalizedStringKey("Workout complete"))
+                Text(verbatim: PT("Workout complete"))
                     .font(SBFont.heading(18))
                     .foregroundColor(.sbTextPrimary)
             }
@@ -371,7 +371,7 @@ struct PastSportSessionView: View {
                 .font(SBFont.display(22))
                 .foregroundColor(.sbTextPrimary)
                 .monospacedDigit()
-            Text(LocalizedStringKey(label))
+            Text(verbatim: PT(label))
                 .font(SBFont.label(10))
                 .foregroundColor(.sbTextSecondary)
                 .textCase(.uppercase)

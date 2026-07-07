@@ -12,6 +12,13 @@ struct RunningView: View {
     @State private var didStartOnAppear = false
     @State private var finishedSession: RunSession?
 
+    // AI route guidance
+    @State private var plannedRoute: PlannedRoute?
+    @State private var showPlanner = false
+    @State private var announcedManeuvers: Set<UUID> = []
+    @State private var announcedStageB = false
+    @State private var announcedStageC = false
+
     var body: some View {
         ZStack(alignment: .bottom) {
             mapLayer
@@ -26,6 +33,12 @@ struct RunningView: View {
         }
         .onAppear { ensureAuthAndStartIfReady() }
         .onChange(of: location.authorizationStatus) { _ in ensureAuthAndStartIfReady() }
+        .onReceive(location.locationPublisher) { loc in handleGuidance(loc) }
+        .sheet(isPresented: $showPlanner) {
+            RoutePlannerView { accepted in
+                plannedRoute = accepted
+            }
+        }
         .alert("Finish run?", isPresented: $showFinishConfirm) {
             Button("Discard", role: .destructive) {
                 run.discard()
@@ -51,7 +64,8 @@ struct RunningView: View {
 
     private var mapLayer: some View {
         RunMapView(routeCoordinates: run.activeSession?.route.map(\.coordinate) ?? [],
-                   userLocation: location.lastLocation?.coordinate)
+                   userLocation: location.lastLocation?.coordinate,
+                   plannedRoute: plannedRoute)
     }
 
     // MARK: - Top bar
@@ -115,6 +129,7 @@ struct RunningView: View {
 
             if location.authorizationStatus == .authorizedWhenInUse
                 || location.authorizationStatus == .authorizedAlways {
+                if run.activeSession == nil { routeBar }
                 statsRow
                 controlsRow
             }
@@ -126,6 +141,50 @@ struct RunningView: View {
                 .fill(.ultraThinMaterial)
                 .ignoresSafeArea(edges: .bottom)
         )
+    }
+
+    // Route generator entry point (only before a run starts)
+    @ViewBuilder
+    private var routeBar: some View {
+        if let planned = plannedRoute {
+            HStack(spacing: 12) {
+                Image(systemName: "point.topleft.down.to.point.bottomright.curvepath")
+                    .foregroundColor(.sbAccent)
+                VStack(alignment: .leading, spacing: 1) {
+                    Text(verbatim: String(format: "%.1f %@ · A → B → C", planned.distanceKm, PT("route.km")))
+                        .font(SBFont.heading(14))
+                        .foregroundColor(.sbTextPrimary)
+                    Text(verbatim: PT("route.plannedLabel"))
+                        .font(SBFont.label(10))
+                        .foregroundColor(.sbTextSecondary)
+                }
+                Spacer()
+                Button { plannedRoute = nil } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundColor(.sbTextSecondary)
+                }
+            }
+            .padding(12)
+            .background(Color.sbAccent.opacity(0.12))
+            .cornerRadius(14)
+            .overlay(RoundedRectangle(cornerRadius: 14).stroke(Color.sbAccent.opacity(0.35)))
+        } else {
+            Button { showPlanner = true } label: {
+                HStack(spacing: 8) {
+                    Image(systemName: "sparkles")
+                    Text(verbatim: PT("route.generate"))
+                        .fontWeight(.semibold)
+                }
+                .font(SBFont.body())
+                .foregroundColor(.sbAccent)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+                .background(Color.sbAccent.opacity(0.12))
+                .cornerRadius(14)
+                .overlay(RoundedRectangle(cornerRadius: 14).stroke(Color.sbAccent.opacity(0.35)))
+            }
+            .buttonStyle(.plain)
+        }
     }
 
     @ViewBuilder
@@ -203,7 +262,7 @@ struct RunningView: View {
             if run.activeSession == nil {
                 Button {
                     HapticManager.medium()
-                    run.start(activity: activity)
+                    startRun()
                 } label: {
                     HStack(spacing: 8) {
                         Image(systemName: "play.fill")
@@ -253,6 +312,53 @@ struct RunningView: View {
         }
     }
 
+    // MARK: - Run lifecycle
+
+    private func startRun() {
+        announcedManeuvers.removeAll()
+        announcedStageB = false
+        announcedStageC = false
+        run.start(activity: activity)
+        if plannedRoute != nil {
+            RunningCoach.shared.announce(PT("voice.route.start"))
+            RunningCoach.shared.cueIntervalChange()
+        }
+    }
+
+    // MARK: - Voice guidance
+
+    private func handleGuidance(_ loc: CLLocation) {
+        guard let planned = plannedRoute,
+              run.activeSession != nil, !run.isPaused else { return }
+        let coach = RunningCoach.shared
+
+        // Turn-by-turn: announce the closest un-announced maneuver within 45 m.
+        var nearest: (RouteManeuver, Double)?
+        for m in planned.maneuvers where !announcedManeuvers.contains(m.id) {
+            let mLoc = CLLocation(latitude: m.coordinate.latitude, longitude: m.coordinate.longitude)
+            let d = loc.distance(from: mLoc)
+            if d < 45, nearest == nil || d < nearest!.1 { nearest = (m, d) }
+        }
+        if let (m, _) = nearest {
+            announcedManeuvers.insert(m.id)
+            coach.announce(m.instruction)
+            coach.cueCountdown()
+        }
+
+        // Stage announcements by distance covered.
+        let covered = run.activeSession?.distanceMeters ?? 0
+        if !announcedStageB, covered >= planned.totalDistance * 0.5 {
+            announcedStageB = true
+            coach.announce(PT("voice.route.stageB"))
+            coach.cueIntervalChange()
+        }
+        if !announcedStageC, covered >= planned.totalDistance * 0.85 {
+            announcedStageC = true
+            coach.announce(PT("voice.route.stageC"))
+            coach.cueIntervalChange()
+        }
+    }
+
     // MARK: - Helpers
 
     private func ensureAuthAndStartIfReady() {
@@ -293,6 +399,7 @@ struct RunningView: View {
 private struct RunMapView: UIViewRepresentable {
     let routeCoordinates: [CLLocationCoordinate2D]
     let userLocation: CLLocationCoordinate2D?
+    var plannedRoute: PlannedRoute? = nil
 
     func makeCoordinator() -> Coordinator { Coordinator() }
 
@@ -307,19 +414,39 @@ private struct RunMapView: UIViewRepresentable {
     }
 
     func updateUIView(_ map: MKMapView, context: Context) {
-        // Replace the existing polyline with one that matches the latest route.
         map.removeOverlays(map.overlays)
-        if routeCoordinates.count >= 2 {
+        map.removeAnnotations(map.annotations)
+
+        if let planned = plannedRoute, planned.coordinates.count >= 2 {
+            // Guided run: show the route to follow + the A/B/C stage pins.
+            let line = MKPolyline(coordinates: planned.coordinates, count: planned.coordinates.count)
+            map.addOverlay(line)
+            map.addAnnotations([
+                StageAnnotation(coordinate: planned.startCoord, stage: "A"),
+                StageAnnotation(coordinate: planned.midCoord,   stage: "B"),
+                StageAnnotation(coordinate: planned.endCoord,   stage: "C"),
+            ])
+            // Fit to the route only once, before the run starts moving the camera.
+            if !context.coordinator.didFitPlanned {
+                context.coordinator.didFitPlanned = true
+                map.setVisibleMapRect(line.boundingMapRect,
+                                      edgePadding: UIEdgeInsets(top: 70, left: 40, bottom: 260, right: 40),
+                                      animated: false)
+            }
+        } else if routeCoordinates.count >= 2 {
+            // Free run: trace where the user has actually been.
             let polyline = MKPolyline(coordinates: routeCoordinates, count: routeCoordinates.count)
             map.addOverlay(polyline)
         }
-        // Keep the camera centred on the user as they move.
+
         if let loc = userLocation, map.userTrackingMode == .none {
             map.setCenter(loc, animated: true)
         }
     }
 
     final class Coordinator: NSObject, MKMapViewDelegate {
+        var didFitPlanned = false
+
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
             guard let line = overlay as? MKPolyline else { return MKOverlayRenderer(overlay: overlay) }
             let renderer = MKPolylineRenderer(polyline: line)
@@ -328,6 +455,22 @@ private struct RunMapView: UIViewRepresentable {
             renderer.lineCap = .round
             renderer.lineJoin = .round
             return renderer
+        }
+
+        func mapView(_ map: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            guard let stage = annotation as? StageAnnotation else { return nil }
+            let id = "stage"
+            let view = map.dequeueReusableAnnotationView(withIdentifier: id) as? MKMarkerAnnotationView
+                ?? MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: id)
+            view.annotation = annotation
+            view.glyphText = stage.stage
+            switch stage.stage {
+            case "A": view.markerTintColor = .systemGreen
+            case "C": view.markerTintColor = .systemRed
+            default:  view.markerTintColor = UIColor(named: "AccentColor") ?? .systemBlue
+            }
+            view.displayPriority = .required
+            return view
         }
     }
 }

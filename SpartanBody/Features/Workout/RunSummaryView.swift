@@ -63,7 +63,7 @@ struct RunSummaryView: View {
             HStack {
                 Image(systemName: "checkmark.seal.fill")
                     .foregroundColor(.sbGreen)
-                Text(LocalizedStringKey("Workout complete"))
+                Text(verbatim: PT("Workout complete"))
                     .font(SBFont.heading(18))
                     .foregroundColor(.sbTextPrimary)
             }
@@ -100,7 +100,7 @@ struct RunSummaryView: View {
                         .foregroundColor(.sbTextSecondary)
                 }
             }
-            Text(LocalizedStringKey(label))
+            Text(verbatim: PT(label))
                 .font(SBFont.label(10))
                 .foregroundColor(.sbTextSecondary)
                 .textCase(.uppercase)
@@ -115,7 +115,7 @@ struct RunSummaryView: View {
             HapticManager.light()
             dismiss()
         } label: {
-            Text(LocalizedStringKey("Done"))
+            Text(verbatim: PT("Done"))
                 .font(SBFont.heading(18))
                 .fontWeight(.bold)
                 .foregroundColor(.white)

@@ -24,7 +24,7 @@ struct SportsCatalogView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text(LocalizedStringKey("Sports"))
+                    Text(verbatim: PT("Sports"))
                         .font(SBFont.heading(16))
                         .foregroundColor(.sbTextPrimary)
                 }
@@ -43,10 +43,10 @@ struct SportsCatalogView: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text(LocalizedStringKey("Track any sport"))
+            Text(verbatim: PT("Track any sport"))
                 .font(SBFont.heading(20))
                 .foregroundColor(.sbTextPrimary)
-            Text(LocalizedStringKey("Pick a sport to start a tracked session. Outdoor sports use GPS; results sync to Apple Health."))
+            Text(verbatim: PT("Pick a sport to start a tracked session. Outdoor sports use GPS; results sync to Apple Health."))
                 .font(SBFont.caption())
                 .foregroundColor(.sbTextSecondary)
         }
@@ -65,7 +65,7 @@ struct SportsCatalogView: View {
                         HStack(spacing: 6) {
                             Image(systemName: cat.icon)
                                 .font(.system(size: 11, weight: .semibold))
-                            Text(LocalizedStringKey(cat.rawValue))
+                            Text(verbatim: PT(cat.rawValue))
                                 .font(SBFont.label(12))
                                 .fontWeight(.semibold)
                         }
@@ -123,7 +123,7 @@ private struct SportCard: View {
                     .foregroundColor(.sbAccent)
             }
 
-            Text(LocalizedStringKey(sport.nameKey))
+            Text(verbatim: PT(sport.nameKey))
                 .font(SBFont.body())
                 .fontWeight(.semibold)
                 .foregroundColor(.sbTextPrimary)
@@ -135,7 +135,7 @@ private struct SportCard: View {
                 HStack(spacing: 4) {
                     Image(systemName: "location.fill")
                         .font(.system(size: 9))
-                    Text(LocalizedStringKey("GPS"))
+                    Text(verbatim: PT("GPS"))
                         .font(SBFont.label(9))
                 }
                 .foregroundColor(.sbAccent)

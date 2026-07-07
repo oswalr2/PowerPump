@@ -28,7 +28,7 @@ struct RunningProgramsView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text(LocalizedStringKey("Walk & Run Programs"))
+                    Text(verbatim: PT("Walk & Run Programs"))
                         .font(SBFont.heading(16))
                         .foregroundColor(.sbTextPrimary)
                 }
@@ -45,10 +45,10 @@ struct RunningProgramsView: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text(LocalizedStringKey("Pick a program and start today"))
+            Text(verbatim: PT("Pick a program and start today"))
                 .font(SBFont.heading(20))
                 .foregroundColor(.sbTextPrimary)
-            Text(LocalizedStringKey("Voice-guided sessions adapt walks, jogs, and runs over weeks so you build up safely."))
+            Text(verbatim: PT("Voice-guided sessions adapt walks, jogs, and runs over weeks so you build up safely."))
                 .font(SBFont.caption())
                 .foregroundColor(.sbTextSecondary)
         }

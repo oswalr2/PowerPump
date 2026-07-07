@@ -45,7 +45,7 @@ struct SportSessionView: View {
             Button(LocalizedStringKey("Save")) { saveAndShowSummary() }
             Button(LocalizedStringKey("Cancel"), role: .cancel) {}
         } message: {
-            Text(LocalizedStringKey("Save this session to your history and Apple Health?"))
+            Text(verbatim: PT("Save this session to your history and Apple Health?"))
         }
         .fullScreenCover(item: $finishedRecord, onDismiss: { dismiss() }) { _ in
             SportSummaryView(sport: sport,
@@ -94,13 +94,13 @@ struct SportSessionView: View {
             }
             Spacer()
             VStack(spacing: 2) {
-                Text(LocalizedStringKey(sport.nameKey))
+                Text(verbatim: PT(sport.nameKey))
                     .font(SBFont.heading(15))
                     .foregroundColor(sport.usesGPS ? .white : .sbTextPrimary)
                 if sport.usesGPS {
                     HStack(spacing: 4) {
                         Image(systemName: "location.fill").font(.system(size: 9))
-                        Text(LocalizedStringKey("GPS"))
+                        Text(verbatim: PT("GPS"))
                             .font(SBFont.label(9))
                     }
                     .foregroundColor(.white.opacity(0.85))
@@ -135,10 +135,10 @@ struct SportSessionView: View {
 
     private var requestLocationPrompt: some View {
         VStack(spacing: 10) {
-            Text(LocalizedStringKey("Location access needed"))
+            Text(verbatim: PT("Location access needed"))
                 .font(SBFont.heading(15))
                 .foregroundColor(.sbTextPrimary)
-            Text(LocalizedStringKey("PowerPump uses your location to trace your route and measure distance."))
+            Text(verbatim: PT("PowerPump uses your location to trace your route and measure distance."))
                 .font(SBFont.caption())
                 .foregroundColor(.sbTextSecondary)
                 .multilineTextAlignment(.center)
@@ -174,7 +174,7 @@ struct SportSessionView: View {
                     .font(SBFont.caption())
                     .foregroundColor(.sbTextSecondary)
             }
-            Text(LocalizedStringKey(label))
+            Text(verbatim: PT(label))
                 .font(SBFont.label(9))
                 .foregroundColor(.sbTextSecondary)
                 .textCase(.uppercase)
@@ -427,7 +427,7 @@ private struct SportSummaryView: View {
             HStack {
                 Image(systemName: sport.icon)
                     .foregroundColor(.sbAccent)
-                Text(LocalizedStringKey(sport.nameKey))
+                Text(verbatim: PT(sport.nameKey))
                     .font(SBFont.heading(20))
                     .foregroundColor(.sbTextPrimary)
             }
@@ -451,7 +451,7 @@ private struct SportSummaryView: View {
                 .font(SBFont.display(24))
                 .foregroundColor(.sbTextPrimary)
                 .monospacedDigit()
-            Text(LocalizedStringKey(label))
+            Text(verbatim: PT(label))
                 .font(SBFont.label(10))
                 .foregroundColor(.sbTextSecondary)
                 .textCase(.uppercase)
@@ -464,7 +464,7 @@ private struct SportSummaryView: View {
             HapticManager.light()
             dismiss()
         } label: {
-            Text(LocalizedStringKey("Done"))
+            Text(verbatim: PT("Done"))
                 .font(SBFont.heading(18))
                 .fontWeight(.bold)
                 .foregroundColor(.white)

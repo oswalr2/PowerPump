@@ -121,6 +121,7 @@ enum ProgramStrings {
         "Voice-guided sessions adapt walks, jogs, and runs over weeks so you build up safely.":
             "Voice-guided sessions adapt walks, jogs, and runs over weeks so you build up safely.",
         "Introduction": "Introduction",
+        "Progress": "Progress",
         "About the programs": "About the programs",
         "Expected results": "Expected results",
         "Your personalised plan": "Your personalised plan",
@@ -210,6 +211,36 @@ enum ProgramStrings {
         "sport.volleyball":     "Volleyball",
         "sport.baseball":       "Baseball",
         "sport.padel":          "Padel",
+
+        // Sport detail / past-session UI
+        "Your stats":               "Your stats",
+        "sessions":                 "sessions",
+        "Total time":               "Total time",
+        "Avg Pace":                 "Avg Pace",
+        "History":                  "History",
+        "No sessions yet":          "No sessions yet",
+        "Tap Start to log your first session.": "Tap Start to log your first session.",
+        "Start session":            "Start session",
+
+        // AI Route planner
+        "route.title":        "AI Route",
+        "route.subtitle":     "Let PowerPump plan a loop from where you are",
+        "route.pickDistance": "Pick your distance",
+        "route.generate":     "Generate my route",
+        "route.generating":   "Building your route…",
+        "route.regenerate":   "Try another route",
+        "route.runThis":      "Run this route",
+        "route.custom":       "Custom",
+        "route.failed":       "Couldn't build a route here. Try a shorter distance or move to a street with paths.",
+        "route.plannedLabel": "Planned route",
+        "route.stageA":       "A",
+        "route.stageB":       "B",
+        "route.stageC":       "C",
+        "route.km":           "km",
+        "voice.route.start":  "Starting your route. Follow the blue line. Let's go!",
+        "voice.route.stageB": "Great pace! You've reached stage B, the halfway point. Keep it up.",
+        "voice.route.stageC": "Final stage. You're almost home, push to the finish!",
+        "voice.route.finish": "Route complete. Amazing work!",
     ]
 
     // MARK: - Spanish
@@ -299,6 +330,7 @@ enum ProgramStrings {
         "Voice-guided sessions adapt walks, jogs, and runs over weeks so you build up safely.":
             "Sesiones guiadas por voz que adaptan andar, trotar y correr durante semanas para que progreses sin riesgo.",
         "Introduction": "Introducción",
+        "Progress": "Progreso",
         "About the programs": "Acerca de los programas",
         "Expected results": "Resultados esperados",
         "Your personalised plan": "Tu programa personalizado",
@@ -384,6 +416,36 @@ enum ProgramStrings {
         "sport.volleyball":     "Voleibol",
         "sport.baseball":       "Béisbol",
         "sport.padel":          "Pádel",
+
+        // Sport detail / past-session UI
+        "Your stats":               "Tus estadísticas",
+        "sessions":                 "sesiones",
+        "Total time":               "Tiempo total",
+        "Avg Pace":                 "Ritmo medio",
+        "History":                  "Historial",
+        "No sessions yet":          "Aún no hay sesiones",
+        "Tap Start to log your first session.": "Toca Inicio para registrar tu primera sesión.",
+        "Start session":            "Iniciar sesión",
+
+        // AI Route planner
+        "route.title":        "Ruta IA",
+        "route.subtitle":     "Deja que PowerPump te planee un circuito desde donde estás",
+        "route.pickDistance": "Elige tu distancia",
+        "route.generate":     "Generar mi ruta",
+        "route.generating":   "Creando tu ruta…",
+        "route.regenerate":   "Probar otra ruta",
+        "route.runThis":      "Correr esta ruta",
+        "route.custom":       "Personalizada",
+        "route.failed":       "No se pudo crear una ruta aquí. Prueba una distancia más corta o muévete a una calle con caminos.",
+        "route.plannedLabel": "Ruta planeada",
+        "route.stageA":       "A",
+        "route.stageB":       "B",
+        "route.stageC":       "C",
+        "route.km":           "km",
+        "voice.route.start":  "Empezamos tu ruta. Sigue la línea azul. ¡Vamos!",
+        "voice.route.stageB": "¡Buen ritmo! Llegaste a la etapa B, la mitad del recorrido. Sigue así.",
+        "voice.route.stageC": "Etapa final. Ya casi llegas, ¡empuja hasta la meta!",
+        "voice.route.finish": "Ruta completada. ¡Increíble trabajo!",
     ]
 
     // MARK: - French
@@ -473,6 +535,7 @@ enum ProgramStrings {
         "Voice-guided sessions adapt walks, jogs, and runs over weeks so you build up safely.":
             "Des séances guidées par la voix qui adaptent marche, trottinement et course pour progresser sans risque.",
         "Introduction": "Introduction",
+        "Progress": "Progrès",
         "About the programs": "À propos",
         "Expected results": "Résultats attendus",
         "Your personalised plan": "Votre plan personnalisé",
@@ -558,6 +621,36 @@ enum ProgramStrings {
         "sport.volleyball":     "Volleyball",
         "sport.baseball":       "Baseball",
         "sport.padel":          "Padel",
+
+        // Sport detail / past-session UI
+        "Your stats":               "Vos statistiques",
+        "sessions":                 "séances",
+        "Total time":               "Temps total",
+        "Avg Pace":                 "Allure moyenne",
+        "History":                  "Historique",
+        "No sessions yet":          "Aucune séance pour le moment",
+        "Tap Start to log your first session.": "Appuyez sur Démarrer pour enregistrer votre première séance.",
+        "Start session":            "Démarrer la séance",
+
+        // AI Route planner
+        "route.title":        "Itinéraire IA",
+        "route.subtitle":     "Laissez PowerPump tracer une boucle depuis votre position",
+        "route.pickDistance": "Choisissez votre distance",
+        "route.generate":     "Générer mon itinéraire",
+        "route.generating":   "Création de votre itinéraire…",
+        "route.regenerate":   "Essayer un autre itinéraire",
+        "route.runThis":      "Suivre cet itinéraire",
+        "route.custom":       "Personnalisé",
+        "route.failed":       "Impossible de créer un itinéraire ici. Essayez une distance plus courte ou déplacez-vous vers une rue avec des chemins.",
+        "route.plannedLabel": "Itinéraire prévu",
+        "route.stageA":       "A",
+        "route.stageB":       "B",
+        "route.stageC":       "C",
+        "route.km":           "km",
+        "voice.route.start":  "On démarre votre itinéraire. Suivez la ligne bleue. C'est parti !",
+        "voice.route.stageB": "Bon rythme ! Vous avez atteint l'étape B, la moitié du parcours. Continuez.",
+        "voice.route.stageC": "Dernière étape. Vous y êtes presque, foncez jusqu'à l'arrivée !",
+        "voice.route.finish": "Itinéraire terminé. Superbe travail !",
     ]
 
     // MARK: - Italian
@@ -647,6 +740,7 @@ enum ProgramStrings {
         "Voice-guided sessions adapt walks, jogs, and runs over weeks so you build up safely.":
             "Sessioni guidate dalla voce che adattano camminate, trottini e corse nel tempo.",
         "Introduction": "Introduzione",
+        "Progress": "Progresso",
         "About the programs": "Sui programmi",
         "Expected results": "Risultati attesi",
         "Your personalised plan": "Il tuo piano personalizzato",
@@ -732,6 +826,36 @@ enum ProgramStrings {
         "sport.volleyball":     "Pallavolo",
         "sport.baseball":       "Baseball",
         "sport.padel":          "Padel",
+
+        // Sport detail / past-session UI
+        "Your stats":               "Le tue statistiche",
+        "sessions":                 "sessioni",
+        "Total time":               "Tempo totale",
+        "Avg Pace":                 "Ritmo medio",
+        "History":                  "Cronologia",
+        "No sessions yet":          "Ancora nessuna sessione",
+        "Tap Start to log your first session.": "Tocca Inizia per registrare la tua prima sessione.",
+        "Start session":            "Inizia sessione",
+
+        // AI Route planner
+        "route.title":        "Percorso IA",
+        "route.subtitle":     "Lascia che PowerPump ti crei un anello da dove sei",
+        "route.pickDistance": "Scegli la distanza",
+        "route.generate":     "Genera il mio percorso",
+        "route.generating":   "Sto creando il percorso…",
+        "route.regenerate":   "Prova un altro percorso",
+        "route.runThis":      "Corri questo percorso",
+        "route.custom":       "Personalizzata",
+        "route.failed":       "Impossibile creare un percorso qui. Prova una distanza più breve o spostati su una strada con sentieri.",
+        "route.plannedLabel": "Percorso pianificato",
+        "route.stageA":       "A",
+        "route.stageB":       "B",
+        "route.stageC":       "C",
+        "route.km":           "km",
+        "voice.route.start":  "Iniziamo il tuo percorso. Segui la linea blu. Andiamo!",
+        "voice.route.stageB": "Ottimo ritmo! Hai raggiunto la tappa B, a metà percorso. Continua così.",
+        "voice.route.stageC": "Tappa finale. Ci sei quasi, spingi fino al traguardo!",
+        "voice.route.finish": "Percorso completato. Ottimo lavoro!",
     ]
 
     // MARK: - Portuguese (Brazil)
@@ -821,6 +945,7 @@ enum ProgramStrings {
         "Voice-guided sessions adapt walks, jogs, and runs over weeks so you build up safely.":
             "Sessões guiadas por voz que adaptam caminhadas, trotes e corridas ao longo das semanas.",
         "Introduction": "Introdução",
+        "Progress": "Progresso",
         "About the programs": "Sobre os programas",
         "Expected results": "Resultados esperados",
         "Your personalised plan": "Seu plano personalizado",
@@ -906,6 +1031,36 @@ enum ProgramStrings {
         "sport.volleyball":     "Vôlei",
         "sport.baseball":       "Beisebol",
         "sport.padel":          "Padel",
+
+        // Sport detail / past-session UI
+        "Your stats":               "Suas estatísticas",
+        "sessions":                 "sessões",
+        "Total time":               "Tempo total",
+        "Avg Pace":                 "Ritmo médio",
+        "History":                  "Histórico",
+        "No sessions yet":          "Ainda sem sessões",
+        "Tap Start to log your first session.": "Toque em Iniciar para registrar sua primeira sessão.",
+        "Start session":            "Iniciar sessão",
+
+        // AI Route planner
+        "route.title":        "Rota IA",
+        "route.subtitle":     "Deixe o PowerPump planejar um circuito de onde você está",
+        "route.pickDistance": "Escolha sua distância",
+        "route.generate":     "Gerar minha rota",
+        "route.generating":   "Criando sua rota…",
+        "route.regenerate":   "Tentar outra rota",
+        "route.runThis":      "Correr esta rota",
+        "route.custom":       "Personalizada",
+        "route.failed":       "Não foi possível criar uma rota aqui. Tente uma distância menor ou vá para uma rua com caminhos.",
+        "route.plannedLabel": "Rota planejada",
+        "route.stageA":       "A",
+        "route.stageB":       "B",
+        "route.stageC":       "C",
+        "route.km":           "km",
+        "voice.route.start":  "Vamos começar sua rota. Siga a linha azul. Bora!",
+        "voice.route.stageB": "Bom ritmo! Você chegou à etapa B, na metade do percurso. Continue assim.",
+        "voice.route.stageC": "Etapa final. Você está quase lá, vá até o fim!",
+        "voice.route.finish": "Rota concluída. Trabalho incrível!",
     ]
 }
 
