@@ -45,7 +45,7 @@ struct ExerciseImageAnimView: View {
             Color.black  // universal dark bg keeps the look clean
 
             if !loaded {
-                ProgressView().tint(.white.opacity(0.6))
+                SwiftUI.ProgressView().tint(.white.opacity(0.6))
             } else if frames.isEmpty {
                 // fetch failed — caller should show stick figure instead,
                 // but show a subtle placeholder just in case

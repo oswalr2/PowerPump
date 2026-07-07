@@ -208,7 +208,7 @@ struct FoodScannerView: View {
                 )
 
             VStack(spacing: 12) {
-                ProgressView()
+                SwiftUI.ProgressView()
                     .scaleEffect(1.3)
                     .tint(.sbAccent)
                 Text("Analyzing your meal…")

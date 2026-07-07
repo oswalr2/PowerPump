@@ -16,7 +16,7 @@ struct GifPlayerView: View {
             } else {
                 ZStack {
                     Color.sbSurfaceRaised
-                    ProgressView().tint(.sbAccent)
+                    SwiftUI.ProgressView().tint(.sbAccent)
                 }
             }
         }

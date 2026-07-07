@@ -173,7 +173,7 @@ struct RoutePlannerView: View {
     private var actionButtons: some View {
         if generator.isGenerating {
             HStack(spacing: 10) {
-                ProgressView().tint(.white)
+                SwiftUI.ProgressView().tint(.white)
                 Text(verbatim: PT("route.generating"))
                     .font(SBFont.heading(16)).foregroundColor(.white)
             }

@@ -15,7 +15,7 @@ struct ExerciseVideoPlayer: View {
                 // Fallback while loading
                 Color.sbSurface
                     .overlay(
-                        ProgressView().tint(.sbAccent)
+                        SwiftUI.ProgressView().tint(.sbAccent)
                     )
             }
         }

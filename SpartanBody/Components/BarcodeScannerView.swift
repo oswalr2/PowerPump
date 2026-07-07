@@ -107,7 +107,7 @@ struct BarcodeScanSheet: View {
 
                 if isLoading {
                     Color.black.opacity(0.55).ignoresSafeArea()
-                    ProgressView()
+                    SwiftUI.ProgressView()
                         .tint(.white)
                         .scaleEffect(1.4)
                 }
