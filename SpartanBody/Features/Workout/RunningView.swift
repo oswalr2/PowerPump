@@ -15,9 +15,11 @@ struct RunningView: View {
     // AI route guidance
     @State private var plannedRoute: PlannedRoute?
     @State private var showPlanner = false
+    @State private var preAnnouncedManeuvers: Set<UUID> = []
     @State private var announcedManeuvers: Set<UUID> = []
     @State private var announcedStageB = false
     @State private var announcedStageC = false
+    @State private var isOffRoute = false
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -315,9 +317,11 @@ struct RunningView: View {
     // MARK: - Run lifecycle
 
     private func startRun() {
+        preAnnouncedManeuvers.removeAll()
         announcedManeuvers.removeAll()
         announcedStageB = false
         announcedStageC = false
+        isOffRoute = false
         run.start(activity: activity)
         if plannedRoute != nil {
             RunningCoach.shared.announce(PT("voice.route.start"))
@@ -332,17 +336,41 @@ struct RunningView: View {
               run.activeSession != nil, !run.isPaused else { return }
         let coach = RunningCoach.shared
 
-        // Turn-by-turn: announce the closest un-announced maneuver within 45 m.
-        var nearest: (RouteManeuver, Double)?
-        for m in planned.maneuvers where !announcedManeuvers.contains(m.id) {
+        // Turn-by-turn in two stages so the runner is never surprised:
+        //  • ~150 m out → "In 100 metres, turn left onto …"
+        //  • ~25 m out  → the plain turn instruction (do it now)
+        for m in planned.maneuvers {
             let mLoc = CLLocation(latitude: m.coordinate.latitude, longitude: m.coordinate.longitude)
             let d = loc.distance(from: mLoc)
-            if d < 45, nearest == nil || d < nearest!.1 { nearest = (m, d) }
+
+            if d <= 150, d > 30, !preAnnouncedManeuvers.contains(m.id) {
+                preAnnouncedManeuvers.insert(m.id)
+                let rounded = max(10, Int((d / 10).rounded()) * 10)
+                coach.announce(String(format: PT("voice.route.turnIn"), rounded, m.instruction))
+                coach.cueCountdown()
+                break   // one announcement per location update
+            }
+            if d <= 30, !announcedManeuvers.contains(m.id) {
+                announcedManeuvers.insert(m.id)
+                preAnnouncedManeuvers.insert(m.id)
+                coach.announce(m.instruction)
+                coach.cueIntervalChange()
+                break
+            }
         }
-        if let (m, _) = nearest {
-            announcedManeuvers.insert(m.id)
-            coach.announce(m.instruction)
-            coach.cueCountdown()
+
+        // Off-route safety net: if the runner strays far from every point on
+        // the planned line, nudge them back — once per drift.
+        let nearestOnRoute = planned.coordinates
+            .map { loc.distance(from: CLLocation(latitude: $0.latitude, longitude: $0.longitude)) }
+            .min() ?? 0
+        if nearestOnRoute > 70, !isOffRoute {
+            isOffRoute = true
+            coach.announce(PT("voice.route.offRoute"))
+            coach.cueFinish()
+        } else if nearestOnRoute < 35, isOffRoute {
+            isOffRoute = false
+            coach.announce(PT("voice.route.backOnRoute"))
         }
 
         // Stage announcements by distance covered.
@@ -418,9 +446,17 @@ private struct RunMapView: UIViewRepresentable {
         map.removeAnnotations(map.annotations)
 
         if let planned = plannedRoute, planned.coordinates.count >= 2 {
-            // Guided run: show the route to follow + the A/B/C stage pins.
-            let line = MKPolyline(coordinates: planned.coordinates, count: planned.coordinates.count)
-            map.addOverlay(line)
+            // Guided run: draw the route to follow as a dashed "ghost" guide…
+            let guide = MKPolyline(coordinates: planned.coordinates, count: planned.coordinates.count)
+            guide.title = "planned"
+            map.addOverlay(guide)
+            // …then trace the runner's actual path on top as a bright solid
+            // line, so it visibly grows along the guide as they move.
+            if routeCoordinates.count >= 2 {
+                let trace = MKPolyline(coordinates: routeCoordinates, count: routeCoordinates.count)
+                trace.title = "trace"
+                map.addOverlay(trace)
+            }
             map.addAnnotations([
                 StageAnnotation(coordinate: planned.startCoord, stage: "A"),
                 StageAnnotation(coordinate: planned.midCoord,   stage: "B"),
@@ -429,7 +465,7 @@ private struct RunMapView: UIViewRepresentable {
             // Fit to the route only once, before the run starts moving the camera.
             if !context.coordinator.didFitPlanned {
                 context.coordinator.didFitPlanned = true
-                map.setVisibleMapRect(line.boundingMapRect,
+                map.setVisibleMapRect(guide.boundingMapRect,
                                       edgePadding: UIEdgeInsets(top: 70, left: 40, bottom: 260, right: 40),
                                       animated: false)
             }
@@ -449,11 +485,25 @@ private struct RunMapView: UIViewRepresentable {
 
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
             guard let line = overlay as? MKPolyline else { return MKOverlayRenderer(overlay: overlay) }
+            let accent = UIColor(named: "AccentColor") ?? .systemBlue
             let renderer = MKPolylineRenderer(polyline: line)
-            renderer.strokeColor = UIColor(named: "AccentColor") ?? .systemBlue
-            renderer.lineWidth = 5
             renderer.lineCap = .round
             renderer.lineJoin = .round
+
+            switch line.title {
+            case "planned":
+                // Dashed, faded guide line the runner follows.
+                renderer.strokeColor = accent.withAlphaComponent(0.4)
+                renderer.lineWidth = 7
+                renderer.lineDashPattern = [2, 10]
+            case "trace":
+                // Bright solid line showing where the runner has actually been.
+                renderer.strokeColor = accent
+                renderer.lineWidth = 6
+            default:
+                renderer.strokeColor = accent
+                renderer.lineWidth = 5
+            }
             return renderer
         }
 

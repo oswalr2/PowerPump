@@ -241,6 +241,9 @@ enum ProgramStrings {
         "voice.route.stageB": "Great pace! You've reached stage B, the halfway point. Keep it up.",
         "voice.route.stageC": "Final stage. You're almost home, push to the finish!",
         "voice.route.finish": "Route complete. Amazing work!",
+        "voice.route.turnIn":  "In %d meters, %@",
+        "voice.route.offRoute": "You're off the route. Head back to the blue line.",
+        "voice.route.backOnRoute": "Back on track. Keep going!",
     ]
 
     // MARK: - Spanish
@@ -446,6 +449,9 @@ enum ProgramStrings {
         "voice.route.stageB": "¡Buen ritmo! Llegaste a la etapa B, la mitad del recorrido. Sigue así.",
         "voice.route.stageC": "Etapa final. Ya casi llegas, ¡empuja hasta la meta!",
         "voice.route.finish": "Ruta completada. ¡Increíble trabajo!",
+        "voice.route.turnIn":  "En %d metros, %@",
+        "voice.route.offRoute": "Te has salido de la ruta. Vuelve a la línea azul.",
+        "voice.route.backOnRoute": "De vuelta en la ruta. ¡Sigue así!",
     ]
 
     // MARK: - French
@@ -651,6 +657,9 @@ enum ProgramStrings {
         "voice.route.stageB": "Bon rythme ! Vous avez atteint l'étape B, la moitié du parcours. Continuez.",
         "voice.route.stageC": "Dernière étape. Vous y êtes presque, foncez jusqu'à l'arrivée !",
         "voice.route.finish": "Itinéraire terminé. Superbe travail !",
+        "voice.route.turnIn":  "Dans %d mètres, %@",
+        "voice.route.offRoute": "Vous avez quitté l'itinéraire. Revenez sur la ligne bleue.",
+        "voice.route.backOnRoute": "De retour sur l'itinéraire. Continuez !",
     ]
 
     // MARK: - Italian
@@ -856,6 +865,9 @@ enum ProgramStrings {
         "voice.route.stageB": "Ottimo ritmo! Hai raggiunto la tappa B, a metà percorso. Continua così.",
         "voice.route.stageC": "Tappa finale. Ci sei quasi, spingi fino al traguardo!",
         "voice.route.finish": "Percorso completato. Ottimo lavoro!",
+        "voice.route.turnIn":  "Tra %d metri, %@",
+        "voice.route.offRoute": "Sei uscito dal percorso. Torna sulla linea blu.",
+        "voice.route.backOnRoute": "Di nuovo sul percorso. Continua così!",
     ]
 
     // MARK: - Portuguese (Brazil)
@@ -1061,6 +1073,9 @@ enum ProgramStrings {
         "voice.route.stageB": "Bom ritmo! Você chegou à etapa B, na metade do percurso. Continue assim.",
         "voice.route.stageC": "Etapa final. Você está quase lá, vá até o fim!",
         "voice.route.finish": "Rota concluída. Trabalho incrível!",
+        "voice.route.turnIn":  "Em %d metros, %@",
+        "voice.route.offRoute": "Você saiu da rota. Volte para a linha azul.",
+        "voice.route.backOnRoute": "De volta à rota. Continue assim!",
     ]
 }
 
