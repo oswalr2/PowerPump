@@ -1,14 +1,15 @@
-# SpartanBody — Privacy Policy
+# PowerPump — Privacy Policy
 
-**Last updated: June 11, 2026**
+**Last updated: July 7, 2026**
 
-SpartanBody ("the app") is designed so that your data stays on your device. We do not require accounts, we do not run ads, and we do not use analytics or tracking of any kind.
+PowerPump ("the app") is designed so that your data stays on your device. We do not require accounts, we do not run ads, and we do not use analytics or tracking of any kind.
 
 ## Data stored on your device
 
 All of the following is stored only on your iPhone (and synced to your Apple Watch, device-to-device):
 
-- Workout history, routines, and active sessions
+- Workout, run, and sport history, routines, and active sessions
+- Route maps recorded during outdoor activities
 - Food log, water intake, and nutrition data
 - Body weight entries and progress data
 - Profile details you enter (name, height, weight, goal, activity level)
@@ -18,30 +19,30 @@ We have no servers that store this information, and we cannot see it.
 
 ## Apple Health (HealthKit)
 
-With your permission, SpartanBody reads steps, active energy, and body mass from Apple Health, and writes workouts, nutrition, water, and body mass to it. Health data is used only to show your stats inside the app. It is **never** sent off your device by SpartanBody, never shared with third parties, and never used for advertising or marketing.
+With your permission, PowerPump reads steps, active energy, heart rate, and body mass from Apple Health, and writes workouts, nutrition, water, and body mass to it. Health data is used only to show your stats inside the app. It is **never** sent off your device by PowerPump, never shared with third parties, and never used for advertising or marketing.
 
-## AI Food Scanner
+## Location & routes
 
-When you use the AI Food Scanner, the photo you take is sent through our secure server to Anthropic (the provider of the Claude AI model) to estimate the food's nutrition. 
+When you start a run, walk, or outdoor sport, PowerPump uses your location to trace your route and measure distance and pace. Your location and recorded routes are stored **only on your device**.
 
-- Photos are processed to generate the result and are **not stored** by us.
-- Anthropic processes the image as a data processor; see [Anthropic's privacy policy](https://www.anthropic.com/privacy).
-- A random, anonymous identifier (not linked to your identity) is used solely to enforce the free weekly scan quota. It contains no personal information.
+When you use the AI route planner, PowerPump asks Apple Maps for walking directions (via Apple's MKDirections service). To do this, start and destination coordinates are sent to Apple to calculate the route, handled under [Apple's privacy policy](https://www.apple.com/legal/privacy/). We do not receive, store, or share your location.
 
-If you never use the Food Scanner, no data leaves your device.
+## Barcode scanner
+
+When you scan a product barcode, only the barcode number is looked up in the public [Open Food Facts](https://world.openfoodfacts.org) database to fetch nutrition info. No personal data is sent.
 
 ## Notifications
 
-Workout, hydration, and meal reminders are local notifications scheduled on your device. No notification data is sent anywhere.
+Workout, hydration, meal, sleep, and weigh-in reminders are local notifications scheduled on your device. No notification data is sent anywhere.
 
 ## Children
 
-SpartanBody is not directed at children under 13, and we do not knowingly collect personal information from children.
+PowerPump is not directed at children under 13, and we do not knowingly collect personal information from children.
 
 ## Your choices
 
 - You can revoke Health access at any time in Settings → Privacy & Security → Health.
-- You can revoke camera access at any time in Settings → SpartanBody.
+- You can revoke Location or Camera access at any time in Settings → PowerPump.
 - Deleting the app deletes all app data stored on your device.
 
 ## Changes to this policy
@@ -50,21 +51,22 @@ If we change this policy, we will update the date above and publish the new vers
 
 ## Contact
 
-Questions? Email us at **support@spartanbody.app**.
+Questions? Email us at **powerpump.support@gmail.com**.
 
 ---
 
-# SpartanBody — Política de Privacidad
+# PowerPump — Política de Privacidad
 
-**Última actualización: 11 de junio de 2026**
+**Última actualización: 7 de julio de 2026**
 
-SpartanBody ("la app") está diseñada para que tus datos permanezcan en tu dispositivo. No requerimos cuentas, no mostramos anuncios y no usamos analíticas ni rastreo de ningún tipo.
+PowerPump ("la app") está diseñada para que tus datos permanezcan en tu dispositivo. No requerimos cuentas, no mostramos anuncios y no usamos analíticas ni rastreo de ningún tipo.
 
 ## Datos guardados en tu dispositivo
 
 Todo lo siguiente se guarda únicamente en tu iPhone (y se sincroniza con tu Apple Watch, de dispositivo a dispositivo):
 
-- Historial de entrenamientos, rutinas y sesiones activas
+- Historial de entrenamientos, carreras y deportes, rutinas y sesiones activas
+- Mapas de ruta grabados durante actividades al aire libre
 - Registro de comidas, agua y datos de nutrición
 - Registros de peso corporal y progreso
 - Datos de perfil que tú ingresas (nombre, estatura, peso, meta, nivel de actividad)
@@ -74,30 +76,30 @@ No tenemos servidores que almacenen esta información y no podemos verla.
 
 ## Apple Health (HealthKit)
 
-Con tu permiso, SpartanBody lee pasos, energía activa y peso corporal de Apple Health, y escribe entrenamientos, nutrición, agua y peso corporal. Los datos de salud se usan solo para mostrar tus estadísticas dentro de la app. SpartanBody **nunca** los envía fuera de tu dispositivo, nunca los comparte con terceros y nunca los usa para publicidad o marketing.
+Con tu permiso, PowerPump lee pasos, energía activa, frecuencia cardíaca y peso corporal de Apple Health, y escribe entrenamientos, nutrición, agua y peso corporal. Los datos de salud se usan solo para mostrar tus estadísticas dentro de la app. PowerPump **nunca** los envía fuera de tu dispositivo, nunca los comparte con terceros y nunca los usa para publicidad o marketing.
 
-## Escáner de comida con IA
+## Ubicación y rutas
 
-Cuando usas el escáner de comida, la foto que tomas se envía a través de nuestro servidor seguro a Anthropic (el proveedor del modelo de IA Claude) para estimar la nutrición del alimento.
+Cuando inicias una carrera, caminata o deporte al aire libre, PowerPump usa tu ubicación para trazar tu ruta y medir distancia y ritmo. Tu ubicación y las rutas grabadas se guardan **solo en tu dispositivo**.
 
-- Las fotos se procesan para generar el resultado y **no se almacenan**.
-- Anthropic procesa la imagen como encargado del tratamiento; consulta la [política de privacidad de Anthropic](https://www.anthropic.com/privacy).
-- Se usa un identificador aleatorio y anónimo (no vinculado a tu identidad) únicamente para aplicar el límite semanal de escaneos gratuitos. No contiene información personal.
+Cuando usas el planificador de rutas con IA, PowerPump pide indicaciones a pie a Apple Maps (mediante el servicio MKDirections de Apple). Para ello, se envían las coordenadas de inicio y destino a Apple para calcular la ruta, tratadas bajo la [política de privacidad de Apple](https://www.apple.com/legal/privacy/). Nosotros no recibimos, almacenamos ni compartimos tu ubicación.
 
-Si nunca usas el escáner de comida, ningún dato sale de tu dispositivo.
+## Escáner de código de barras
+
+Cuando escaneas el código de barras de un producto, solo el número del código se consulta en la base de datos pública [Open Food Facts](https://world.openfoodfacts.org) para obtener la información nutricional. No se envía ningún dato personal.
 
 ## Notificaciones
 
-Los recordatorios de entrenamiento, hidratación y comidas son notificaciones locales programadas en tu dispositivo. No se envía ningún dato de notificaciones a ningún lugar.
+Los recordatorios de entrenamiento, hidratación, comidas, sueño y pesaje son notificaciones locales programadas en tu dispositivo. No se envía ningún dato de notificaciones a ningún lugar.
 
 ## Menores
 
-SpartanBody no está dirigida a menores de 13 años y no recopilamos a sabiendas información personal de menores.
+PowerPump no está dirigida a menores de 13 años y no recopilamos a sabiendas información personal de menores.
 
 ## Tus opciones
 
 - Puedes revocar el acceso a Salud en cualquier momento en Ajustes → Privacidad y seguridad → Salud.
-- Puedes revocar el acceso a la cámara en Ajustes → SpartanBody.
+- Puedes revocar el acceso a Ubicación o Cámara en cualquier momento en Ajustes → PowerPump.
 - Eliminar la app elimina todos los datos guardados en tu dispositivo.
 
 ## Cambios en esta política
@@ -106,4 +108,4 @@ Si cambiamos esta política, actualizaremos la fecha de arriba y publicaremos la
 
 ## Contacto
 
-¿Preguntas? Escríbenos a **support@spartanbody.app**.
+¿Preguntas? Escríbenos a **powerpump.support@gmail.com**.
