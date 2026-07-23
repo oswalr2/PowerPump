@@ -55,11 +55,11 @@ struct NutritionView: View {
             }
             Spacer()
             HStack(spacing: 14) {
-                Button { showFoodScanner = true } label: {
-                    Image(systemName: "camera.fill")
-                        .font(.system(size: 20))
-                        .foregroundColor(.sbAccent)
-                }
+                // AI food scanner hidden for v1 — re-enable once the Cloudflare
+                // Worker is deployed (see CloudflareWorker/README.md).
+                // Button { showFoodScanner = true } label: {
+                //     Image(systemName: "camera.fill").font(.system(size: 20)).foregroundColor(.sbAccent)
+                // }
                 Button { addingMeal = .snack } label: {
                     Image(systemName: "plus.circle.fill")
                         .font(.system(size: 26))

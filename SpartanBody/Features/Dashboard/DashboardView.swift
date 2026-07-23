@@ -409,10 +409,11 @@ struct DashboardView: View {
                 .foregroundColor(.sbTextPrimary)
 
             HStack(spacing: 10) {
-                QuickActionButton(icon: "camera.fill",       label: "Scan Food") {
-                    HapticManager.light()
-                    showFoodScanner = true
-                }
+                // AI food scanner hidden for v1 — re-enable once the Cloudflare
+                // Worker is deployed (see CloudflareWorker/README.md).
+                // QuickActionButton(icon: "camera.fill", label: "Scan Food") {
+                //     HapticManager.light(); showFoodScanner = true
+                // }
                 QuickActionButton(icon: "barcode.viewfinder", label: "Scan Barcode") {
                     HapticManager.light()
                     showBarcodeScanner = true
