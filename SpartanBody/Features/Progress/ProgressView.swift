@@ -11,6 +11,13 @@ struct ProgressView: View {
 
     private var recentSessions: [WorkoutSession] { Array(workoutStore.history.prefix(7).reversed()) }
 
+    /// Average kcal over the last 7 days, counting only days with something
+    /// logged — dividing by 7 treated unlogged days as zero (see WeightChartCard).
+    private var avgDailyKcal: Double {
+        let logged = foodLog.dailyCalories(lastDays: 7).map(\.calories).filter { $0 > 0 }
+        return logged.isEmpty ? 0 : logged.reduce(0, +) / Double(logged.count)
+    }
+
     var body: some View {
         NavigationView {
             ZStack {
@@ -137,7 +144,7 @@ struct ProgressView: View {
             )
             SummaryPill(
                 icon: "flame.fill",
-                value: "\(Int(foodLog.dailyCalories(lastDays: 7).map(\.calories).reduce(0, +) / 7)) kcal",
+                value: "\(Int(avgDailyKcal)) kcal",
                 label: "Avg/day",
                 color: .sbGreen
             )
@@ -230,8 +237,7 @@ struct ProgressView: View {
             ($0.date, Double(PlanStore.shared.targets(on: $0.date, for: profile).kcal))
         })
         let target = dayTargets.values.reduce(0, +) / Double(max(dayTargets.count, 1))
-        let logged = dailyData.filter { $0.calories > 0 }
-        let avg = logged.isEmpty ? 0.0 : logged.map(\.calories).reduce(0, +) / Double(logged.count)
+        let avg = avgDailyKcal
 
         return SBCard {
             VStack(spacing: 16) {
