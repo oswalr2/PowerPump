@@ -41,7 +41,7 @@ final class ProgressStore: ObservableObject {
 
     private func load() {
         guard let d = UserDefaults.standard.data(forKey: "sb_weight_entries"),
-              let v = try? JSONDecoder().decode([WeightEntry].self, from: d) else { return }
+              let v = SafeDecoding.decodeArray(WeightEntry.self, from: d, backupKey: "sb_weight_entries") else { return }
         weightEntries = v
     }
 }

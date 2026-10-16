@@ -23,7 +23,7 @@ final class ExerciseLogStore: ObservableObject {
 
     private func load() {
         guard let data = UserDefaults.standard.data(forKey: key),
-              let decoded = try? JSONDecoder().decode([ExerciseLog].self, from: data) else { return }
+              let decoded = SafeDecoding.decodeArray(ExerciseLog.self, from: data, backupKey: key) else { return }
         allLogs = decoded
     }
 

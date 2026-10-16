@@ -70,7 +70,7 @@ final class SportSessionStore: ObservableObject {
 
     private func load() {
         guard let data = UserDefaults.standard.data(forKey: key),
-              let decoded = try? JSONDecoder().decode([SportSessionRecord].self, from: data) else { return }
+              let decoded = SafeDecoding.decodeArray(SportSessionRecord.self, from: data, backupKey: key) else { return }
         history = decoded
     }
 }

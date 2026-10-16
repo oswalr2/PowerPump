@@ -192,7 +192,7 @@ final class RunStore: ObservableObject {
 
     private func loadHistory() {
         guard let data = UserDefaults.standard.data(forKey: historyKey),
-              let decoded = try? JSONDecoder().decode([RunSession].self, from: data) else { return }
+              let decoded = SafeDecoding.decodeArray(RunSession.self, from: data, backupKey: historyKey) else { return }
         history = decoded
     }
 
