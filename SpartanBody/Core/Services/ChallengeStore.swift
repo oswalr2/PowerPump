@@ -45,10 +45,16 @@ final class ChallengeStore: ObservableObject {
             if def.checkType == .withinCalories {
                 // Judged on a finished day: logging breakfast alone is
                 // "within the goal", which used to complete the day at 8 am.
-                if let yesterday = cal.date(byAdding: .day, value: -1, to: now),
-                   cal.startOfDay(for: yesterday) >= cal.startOfDay(for: active[i].startDate),
-                   !active[i].isDayComplete(yesterday), Self.stayedWithinCalories(on: yesterday) {
-                    active[i].mark(yesterday); changed = true
+                // Every finished day since the start is checked, not just
+                // yesterday, so days the app wasn't opened still count.
+                let today = cal.startOfDay(for: now)
+                var day = cal.startOfDay(for: active[i].startDate)
+                while day < today, !active[i].isFinished {
+                    if !active[i].isDayComplete(day), Self.stayedWithinCalories(on: day) {
+                        active[i].mark(day); changed = true
+                    }
+                    guard let next = cal.date(byAdding: .day, value: 1, to: day) else { break }
+                    day = next
                 }
                 continue
             }
