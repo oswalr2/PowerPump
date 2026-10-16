@@ -1,5 +1,6 @@
 import Foundation
 import WatchConnectivity
+import WidgetKit
 
 final class WatchConnectivityManager: NSObject, ObservableObject {
     static let shared = WatchConnectivityManager()
@@ -60,6 +61,13 @@ final class WatchConnectivityManager: NSObject, ObservableObject {
             self.hasActiveWorkout  = ctx["hasActiveWorkout"] as? Bool  ?? false
             self.activeWorkoutName = ctx["workoutName"]     as? String ?? ""
             self.currentExercise   = ctx["currentExercise"] as? String ?? ""
+
+            // The complication reads these from the shared App Group.
+            let defaults = UserDefaults(suiteName: "group.com.oswaldo.powerpump")
+            defaults?.set(self.calories,      forKey: "watch_calories")
+            defaults?.set(self.calorieTarget, forKey: "watch_calorieTarget")
+            defaults?.set(self.streak,        forKey: "watch_streak")
+            WidgetCenter.shared.reloadAllTimelines()
         }
     }
 }
@@ -69,7 +77,13 @@ final class WatchConnectivityManager: NSObject, ObservableObject {
 extension WatchConnectivityManager: WCSessionDelegate {
     func session(_ session: WCSession,
                  activationDidCompleteWith state: WCSessionActivationState,
-                 error: Error?) {}
+                 error: Error?) {
+        // applyContext already hops to the main queue.
+        let context = session.receivedApplicationContext
+        if !context.isEmpty {
+            applyContext(context)
+        }
+    }
 
     func session(_ session: WCSession,
                  didReceiveApplicationContext context: [String: Any]) {
