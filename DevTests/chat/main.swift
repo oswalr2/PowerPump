@@ -163,9 +163,12 @@ for (q, first, want) in [("¿Cuánto descanso entre series?", CoachTopic.restSet
 }
 print(fails == 0 ? "TODO OK (\(cases.count))" : "\(fails) FALLOS")
 for (q, want) in [("¿Cuántas series por semana hago para pecho?", CoachTopic.volume), ("How many sets per week for back?", .volume), ("¿Qué como hoy?", .eatToday)] {
-    let got = CoachTopic.detect(q); print(got == want ? "  OK  " : "  FALLO", q, "→", got?.rawValue ?? "IA", got?.isCurated == true ? "(fija)" : "")
+    let got = CoachTopic.detect(q); if got != want { fails += 1 }
+    print(got == want ? "  OK  " : "  FALLO", q, "→", got?.rawValue ?? "IA", got?.isCurated == true ? "(fija)" : "")
 }
 for (q, want) in [("¿Cómo caliento antes de entrenar?", CoachTopic.warmUp), ("Je veux perdre du gras et prendre du muscle", .recomp),
                   ("Quiero bajar grasa sin perder masa muscular", .recomp), ("je suis jeune et je veux faire du sport", nil)] {
-    let got = CoachTopic.detect(q); print(got == want ? "  OK  " : "  FALLO", q, "→", got?.rawValue ?? "IA")
+    let got = CoachTopic.detect(q); if got != want { fails += 1 }
+    print(got == want ? "  OK  " : "  FALLO", q, "→", got?.rawValue ?? "IA")
 }
+exit(fails == 0 ? 0 : 1)

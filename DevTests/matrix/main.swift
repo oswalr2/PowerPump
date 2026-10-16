@@ -212,3 +212,4 @@ if failures.isEmpty {
         print("     por debajo: \(ratios.filter { $0 < 1 }.count)  por encima: \(ratios.filter { $0 > 1 }.count)  peor bajo: \(Int((ratios.min() ?? 0) * 100))%  peor alto: \(Int((ratios.max() ?? 0) * 100))%")
     }
 }
+exit(failures.isEmpty ? 0 : 1)
