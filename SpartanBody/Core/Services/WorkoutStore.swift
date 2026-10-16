@@ -230,18 +230,37 @@ final class WorkoutStore: ObservableObject {
 
     // MARK: - Personal Records
 
+    // Ranked by Epley estimated 1RM, not weight × reps: by volume 40 kg × 20
+    // beat 100 kg × 5 and "New PR!" fired on light sets. Bodyweight sets
+    // (weight 0) are ranked by reps, and any weighted set outranks them.
     func personalRecord(for exerciseID: String) -> SessionSet? {
         history.flatMap(\.exercises)
             .filter { $0.exerciseID == exerciseID }
             .flatMap(\.sets)
             .filter(\.completed)
-            .max { ($0.weight * Double($0.reps)) < ($1.weight * Double($1.reps)) }
+            .max { Self.isLess(weight: $0.weight, reps: $0.reps, than: $1.weight, $1.reps) }
     }
 
     func isNewRecord(exerciseID: String, weight: Double, reps: Int) -> Bool {
-        let newVolume = weight * Double(reps)
-        guard let pr = personalRecord(for: exerciseID) else { return newVolume > 0 }
-        return newVolume > pr.weight * Double(pr.reps)
+        guard reps > 0 else { return false }
+        guard let pr = personalRecord(for: exerciseID) else { return weight > 0 }
+        return Self.isLess(weight: pr.weight, reps: pr.reps, than: weight, reps)
+    }
+
+    /// Epley: weight × (1 + reps / 30); a single rep is the weight itself.
+    static func estimatedOneRepMax(weight: Double, reps: Int) -> Double {
+        guard weight > 0, reps > 0 else { return 0 }
+        return reps == 1 ? weight : weight * (1 + Double(reps) / 30)
+    }
+
+    private static func isLess(weight w1: Double, reps r1: Int,
+                               than w2: Double, _ r2: Int) -> Bool {
+        switch (w1 > 0, w2 > 0) {
+        case (true, true):   return estimatedOneRepMax(weight: w1, reps: r1) < estimatedOneRepMax(weight: w2, reps: r2)
+        case (false, false): return r1 < r2
+        case (false, true):  return r2 > 0
+        case (true, false):  return false
+        }
     }
 
     // MARK: - Achievements
