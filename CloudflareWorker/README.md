@@ -1,7 +1,12 @@
 # PowerPump — Proxy del escáner de comida (Cloudflare Worker)
 
 Este Worker guarda tu API key de Anthropic en el servidor (nunca dentro de la app)
-y aplica el límite gratuito: **1 escaneo por semana por usuario**.
+y aplica el límite gratuito: **1 escaneo por semana por usuario** y, además,
+**5 escaneos al día por IP** (para que generar `user_id` nuevos no dé escaneos ilimitados).
+
+> ⚠️ Es una protección básica: el `user_id` lo genera la app y KV no es atómico.
+> Antes de lanzar el escáner, añade **App Attest / DeviceCheck** y una regla de
+> **Rate Limiting** de Cloudflare delante del Worker.
 
 ## Cómo desplegarlo (una sola vez, ~10 minutos)
 
@@ -40,9 +45,17 @@ y aplica el límite gratuito: **1 escaneo por semana por usuario**.
    static let scanProxyURL = "https://powerpump-scan.tu-subdominio.workers.dev/scan"
    ```
 
-## Para cambiar el límite semanal
+## Para cambiar los límites
 
-Edita `WEEKLY_LIMIT` en `worker.js` y vuelve a correr `wrangler deploy`.
+Edita `WEEKLY_LIMIT` (por usuario y semana) o `DAILY_IP_LIMIT` (por IP y día)
+en `worker.js` y vuelve a correr `wrangler deploy`.
+
+## Qué valida el Worker
+
+- `user_id` debe ser un UUID (el que genera la app).
+- `language` solo acepta los 5 idiomas de la app; cualquier otro valor usa inglés.
+- La imagen debe ser JPEG o PNG en base64 (se detecta por sus primeros bytes).
+- El cupo se reserva antes de llamar a Anthropic y se devuelve si la llamada falla.
 
 ## Costos
 
