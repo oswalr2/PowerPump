@@ -38,7 +38,14 @@ struct SportSessionView: View {
             statsPanel
         }
         .onAppear { setupLocationIfNeeded() }
-        .onDisappear { stopTimer() }
+        .onDisappear {
+            stopTimer()
+            // Leaving without starting must not keep GPS on in the background.
+            if !didStart {
+                locationSubscription = nil
+                location.stopTracking()
+            }
+        }
         .onChange(of: location.authorizationStatus) { _ in setupLocationIfNeeded() }
         .alert(LocalizedStringKey("Finish session?"), isPresented: $showFinishConfirm) {
             Button(LocalizedStringKey("Discard"), role: .destructive) { discardAndDismiss() }
