@@ -150,7 +150,7 @@ struct RunSummaryView: View {
     }
 
     private var formattedPace: String {
-        guard session.distanceKm > 0 else { return "--'--\"" }
+        guard session.paceSecondsPerKm > 0 else { return "--'--\"" }
         let secPerKm = Int(session.paceSecondsPerKm)
         let m = secPerKm / 60
         let s = secPerKm % 60
