@@ -412,7 +412,7 @@ private struct SetRow: View {
                 .cornerRadius(8)
                 .onChange(of: weightText) { val in
                     // The keypad types "92,5" in most languages.
-                    if let w = Double(val.replacingOccurrences(of: ",", with: ".")) {
+                    if let w = val.localizedDouble, w >= 0 {
                         store.updateWeight(w, exerciseIndex: exerciseIndex, setIndex: setIndex)
                     }
                 }
@@ -432,7 +432,7 @@ private struct SetRow: View {
                 }
 
             Button {
-                let w = Double(weightText.replacingOccurrences(of: ",", with: ".")) ?? set.weight
+                let w = weightText.localizedDouble.flatMap { $0 >= 0 ? $0 : nil } ?? set.weight
                 let r = Int(repsText) ?? set.reps
                 let isNewPR = !set.completed && store.isNewRecord(exerciseID: exerciseID, weight: w, reps: r)
                 let nowComplete = store.toggleSet(exerciseIndex: exerciseIndex, setIndex: setIndex)

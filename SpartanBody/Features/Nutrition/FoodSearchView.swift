@@ -332,7 +332,7 @@ struct FoodSearchView: View {
                             .cornerRadius(12)
                             .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.sbBorder))
                             .onChange(of: gramsText) { val in
-                                if let g = Double(val), g > 0 { grams = g }
+                                if let g = parsedGrams(val) { grams = g }
                             }
 
                         Button { adjustGrams(10)  } label: { adjustBtn("+10") }
@@ -393,6 +393,8 @@ struct FoodSearchView: View {
                         .cornerRadius(14)
                 }
                 .buttonStyle(.plain)
+                .opacity(parsedGrams(gramsText) == nil ? 0.45 : 1)
+                .disabled(parsedGrams(gramsText) == nil)
             }
             .padding(20)
         }
@@ -400,8 +402,15 @@ struct FoodSearchView: View {
 
     // MARK: - Helpers
 
+    /// A portion typed in the grams field: accepts "," as decimal separator,
+    /// rejects zero, negative and absurd (> 5 kg) amounts.
+    private func parsedGrams(_ text: String) -> Double? {
+        guard let g = text.localizedDouble, g > 0, g <= 5000 else { return nil }
+        return g
+    }
+
     private func adjustGrams(_ delta: Double) {
-        grams = max(1, grams + delta)
+        grams = min(5000, max(1, grams + delta))
         gramsText = String(Int(grams))
     }
 
@@ -438,7 +447,7 @@ struct FoodSearchView: View {
     }
 
     private func confirmAdd() {
-        guard let item = selected else { return }
+        guard let item = selected, parsedGrams(gramsText) != nil else { return }
         HapticManager.success()
         store.add(item, grams: grams, meal: meal)
         dismiss()
