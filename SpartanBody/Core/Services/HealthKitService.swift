@@ -69,12 +69,33 @@ final class HealthKitService: ObservableObject {
         // write, it was never "authorized", so every relaunch lost the
         // connection. "Already asked" is the signal Apple provides.
         hk.getRequestStatusForAuthorization(toShare: shareTypes, read: readTypes) { [weak self] status, _ in
-            guard status == .unnecessary else { return }
-            DispatchQueue.main.async {
-                self?.isAuthorized = true
-                self?.fetchTodayStats()
+            guard let self else { return }
+            switch status {
+            case .unnecessary:
+                DispatchQueue.main.async {
+                    self.isAuthorized = true
+                    self.fetchTodayStats()
+                }
+            case .shouldRequest where self.hasConnectedBefore:
+                // An update added read types (sleep, resting HR, HRV), so the
+                // status went back to "should request" for users who had
+                // already connected. Ask again — iOS only shows the new types —
+                // instead of silently showing them as disconnected.
+                DispatchQueue.main.async { self.requestAuthorization() }
+            default:
+                break
             }
         }
+    }
+
+    private static let connectedOnceKey = "hk_connected_once"
+
+    /// Whether the user has gone through the HealthKit sheet before. Users
+    /// who connected before the flag existed are recognised by the write
+    /// types: their status is no longer `.notDetermined` once asked.
+    private var hasConnectedBefore: Bool {
+        if UserDefaults.standard.bool(forKey: Self.connectedOnceKey) { return true }
+        return shareTypes.contains { hk.authorizationStatus(for: $0) != .notDetermined }
     }
 
     /// Time asleep in a set of samples, counting overlaps once. The watch
@@ -110,7 +131,10 @@ final class HealthKitService: ObservableObject {
         hk.requestAuthorization(toShare: shareTypes, read: readTypes) { [weak self] ok, _ in
             DispatchQueue.main.async {
                 self?.isAuthorized = ok
-                if ok { self?.fetchTodayStats() }
+                if ok {
+                    UserDefaults.standard.set(true, forKey: Self.connectedOnceKey)
+                    self?.fetchTodayStats()
+                }
                 completion(ok)
             }
         }
