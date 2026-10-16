@@ -126,6 +126,7 @@ struct ActiveWorkoutView: View {
                     .background(Color.sbSurface)
                     .clipShape(Circle())
             }
+            .accessibilityLabel(Text("Close"))
 
             Spacer()
 
@@ -155,6 +156,7 @@ struct ActiveWorkoutView: View {
                         .background(Color.sbSurface)
                         .clipShape(Circle())
                 }
+                .accessibilityLabel(Text("Rest Timer"))
 
                 Button { showFinishDialog = true } label: {
                     Text("Finish")
@@ -306,6 +308,7 @@ private struct ExerciseCard: View {
                             .foregroundColor(.sbAccent)
                     }
                     .buttonStyle(.plain)
+                    .accessibilityLabel(Text(EXL("Check Form")))
                 }
 
                 Button {
@@ -316,6 +319,7 @@ private struct ExerciseCard: View {
                         .foregroundColor(.sbTextSecondary)
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel(Text("Delete"))
             }
             .padding(14)
             .fullScreenCover(isPresented: $showFormCheck) {
@@ -456,6 +460,8 @@ private struct SetRow: View {
             }
             .buttonStyle(.plain)
             .frame(width: 44)
+            .accessibilityLabel(Text(verbatim: "\(EXL("Set")) \(set.setNumber)"))
+            .accessibilityAddTraits(set.completed ? .isSelected : [])
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 4)
@@ -517,6 +523,7 @@ struct RestTimerView: View {
                         .font(.system(size: 22))
                         .foregroundColor(.sbTextSecondary)
                 }
+                .accessibilityLabel(Text("Close"))
             }
 
             // Preset duration buttons

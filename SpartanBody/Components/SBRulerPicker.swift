@@ -9,6 +9,10 @@ struct SBRulerPicker: View {
     var tickSpacing: CGFloat = 9
     var majorTickEvery: Int = 10
     var tintColor: Color = .sbAccent
+    /// What VoiceOver announces for the ruler (e.g. "Weight") and the unit
+    /// read after the value (e.g. "kg").
+    var accessibilityName: LocalizedStringKey = ""
+    var unit: LocalizedStringKey = ""
 
     @State private var dragAnchor: Double? = nil
 
@@ -65,6 +69,30 @@ struct SBRulerPicker: View {
             )
         }
         .frame(height: 64)
+        // The drag gesture is unusable with VoiceOver; expose the ruler as a
+        // single adjustable element (swipe up/down) instead.
+        .accessibilityElement()
+        .accessibilityLabel(Text(accessibilityName))
+        .accessibilityValue(Text(verbatim: formattedValue + " ") + Text(unit))
+        .accessibilityAdjustableAction { direction in
+            switch direction {
+            case .increment: adjust(by: step)
+            case .decrement: adjust(by: -step)
+            @unknown default: break
+            }
+        }
+    }
+
+    private var formattedValue: String {
+        String(format: step < 1 ? "%.1f" : "%.0f", value)
+    }
+
+    private func adjust(by delta: Double) {
+        let snapped = (round((value + delta) / step) * step)
+        let clamped = min(max(snapped, range.lowerBound), range.upperBound)
+        guard clamped != value else { return }
+        HapticManager.selection()
+        value = clamped
     }
 
     private func tickMark(idx: Int, value tick: Double) -> some View {
