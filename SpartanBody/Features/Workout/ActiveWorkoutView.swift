@@ -197,9 +197,18 @@ struct ActiveWorkoutView: View {
     // MARK: - Helpers
 
     private func startClock() {
-        clockTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-            elapsedSeconds += 1
-        }
+        // Derive elapsed time from the session start instead of counting ticks,
+        // so it survives locking, backgrounding and reopening a restored session.
+        clockTimer?.invalidate()
+        updateElapsed()
+        let timer = Timer(timeInterval: 1, repeats: true) { _ in updateElapsed() }
+        RunLoop.main.add(timer, forMode: .common)   // keep ticking while scrolling
+        clockTimer = timer
+    }
+
+    private func updateElapsed() {
+        guard let start = store.activeSession?.startedAt else { return }
+        elapsedSeconds = max(0, Int(Date().timeIntervalSince(start)))
     }
 
     private func formatTime(_ s: Int) -> String {
@@ -485,6 +494,8 @@ struct RestTimerView: View {
     @Binding var seconds: Int
     @Binding var isShowing: Bool
     @State private var countdown: Timer?
+    @State private var restEnd = Date()
+    @State private var lastShown = -1   // last value this view wrote to `seconds`
     @State private var total: Int = {
         let saved = UserDefaults.standard.integer(forKey: "sb_rest_duration")
         return saved > 0 ? saved : 90
@@ -525,10 +536,8 @@ struct RestTimerView: View {
                     Button {
                         HapticManager.light()
                         total = preset
-                        seconds = preset
                         UserDefaults.standard.set(preset, forKey: "sb_rest_duration")
-                        isDone = false
-                        restartCountdown()
+                        setRemaining(preset)
                     } label: {
                         Text(presetLabel(preset))
                             .font(SBFont.label(12))
@@ -580,7 +589,7 @@ struct RestTimerView: View {
 
             // Adjust -15 / Skip / +15
             HStack(spacing: 12) {
-                adjustButton("-15") { seconds = max(0, seconds - 15) }
+                adjustButton("-15") { setRemaining(max(0, remaining() - 15)) }
 
                 Button { dismissTimer() } label: {
                     Text("Skip Rest")
@@ -594,7 +603,7 @@ struct RestTimerView: View {
                 }
                 .buttonStyle(.plain)
 
-                adjustButton("+15") { seconds = min(300, seconds + 15) }
+                adjustButton("+15") { setRemaining(min(300, remaining() + 15)) }
             }
         }
         .padding(24)
@@ -602,24 +611,46 @@ struct RestTimerView: View {
         .cornerRadius(28)
         .overlay(RoundedRectangle(cornerRadius: 28).stroke(Color.sbBorder))
         .padding(.horizontal, 20)
-        .onAppear { startCountdown() }
+        .onAppear {
+            restEnd = Date().addingTimeInterval(Double(seconds))
+            lastShown = seconds
+            startCountdown()
+        }
         .onDisappear { countdown?.invalidate() }
+        .onChange(of: seconds) { newValue in
+            // The parent resets `seconds` when another set is completed while
+            // resting; treat that as a fresh rest.
+            if newValue != lastShown { setRemaining(newValue) }
+        }
+    }
+
+    /// Seconds left, computed from the wall-clock end date so the countdown
+    /// stays correct after the phone is locked or the app is backgrounded.
+    private func remaining() -> Int {
+        max(0, Int(restEnd.timeIntervalSinceNow.rounded(.up)))
     }
 
     private func startCountdown() {
         countdown?.invalidate()
-        countdown = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-            if seconds > 0 {
-                seconds -= 1
-            } else {
-                timerFinished()
-            }
+        let timer = Timer(timeInterval: 1, repeats: true) { _ in
+            let left = remaining()
+            lastShown = left
+            seconds = left
+            if left == 0 { timerFinished() }
         }
+        RunLoop.main.add(timer, forMode: .common)
+        countdown = timer
     }
 
-    private func restartCountdown() {
-        countdown?.invalidate()
+    /// Moves the end date (presets, -15/+15), restarts the countdown and keeps
+    /// the Live Activity's rest countdown in sync.
+    private func setRemaining(_ newSeconds: Int) {
+        restEnd = Date().addingTimeInterval(Double(newSeconds))
+        lastShown = newSeconds
+        seconds = newSeconds
+        isDone = false
         startCountdown()
+        WorkoutLiveActivityManager.shared.startRest(seconds: newSeconds, session: WorkoutStore.shared.activeSession)
     }
 
     private func timerFinished() {
@@ -628,6 +659,9 @@ struct RestTimerView: View {
         HapticManager.heavy()
         AudioServicesPlaySystemSound(1057)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+            // A new rest (or a +15 / preset tap) in the meantime sets seconds > 0;
+            // don't close that one.
+            guard seconds == 0 else { return }
             withAnimation(.spring(response: 0.35)) { isShowing = false }
         }
     }
