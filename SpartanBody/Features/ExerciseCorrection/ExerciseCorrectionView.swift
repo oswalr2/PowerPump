@@ -36,12 +36,16 @@ struct ExerciseCorrectionView: View {
             }
 
             // UI overlay
-            VStack(spacing: 0) {
-                topBar
-                Spacer()
-                bottomPanel
+            if detector.permissionDenied {
+                cameraDeniedView
+            } else {
+                VStack(spacing: 0) {
+                    topBar
+                    Spacer()
+                    bottomPanel
+                }
+                .ignoresSafeArea(edges: .top)
             }
-            .ignoresSafeArea(edges: .top)
         }
         .onAppear {
             detector.setup(front: false)
@@ -60,6 +64,56 @@ struct ExerciseCorrectionView: View {
                 showExercisePicker = false
             })
         }
+    }
+
+    // MARK: - Camera denied
+
+    private var cameraDeniedView: some View {
+        VStack(spacing: 0) {
+            HStack {
+                Button { dismiss() } label: {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.white)
+                        .frame(width: 38, height: 38)
+                        .background(.ultraThinMaterial)
+                        .clipShape(Circle())
+                }
+                Spacer()
+            }
+            .padding(.horizontal, 20)
+            .padding(.top, 60)
+
+            Spacer()
+
+            VStack(spacing: 10) {
+                Image(systemName: "video.slash.fill")
+                    .font(.system(size: 34))
+                    .foregroundColor(.white.opacity(0.8))
+                Text("Camera access is off")
+                    .font(SBFont.heading(17))
+                    .foregroundColor(.white)
+                Text("Enable camera access for PowerPump in iOS Settings to check your form live.")
+                    .font(SBFont.caption())
+                    .foregroundColor(.white.opacity(0.75))
+                    .multilineTextAlignment(.center)
+                Button {
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(url)
+                    }
+                } label: {
+                    Text("Open Settings")
+                        .font(SBFont.body())
+                        .fontWeight(.semibold)
+                        .foregroundColor(.sbAccent)
+                }
+                .padding(.top, 6)
+            }
+            .padding(.horizontal, 32)
+
+            Spacer()
+        }
+        .ignoresSafeArea(edges: .top)
     }
 
     // MARK: - Top bar

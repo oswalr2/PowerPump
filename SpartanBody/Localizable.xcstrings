@@ -6947,6 +6947,40 @@
         }
       }
     },
+    "Camera access is off" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Camera access is off"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El acceso a la cámara está desactivado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L’accès à la caméra est désactivé"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L’accesso alla fotocamera è disattivato"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O acesso à câmera está desativado"
+          }
+        }
+      }
+    },
     "Camera access is used only to scan product barcodes and to analyze your exercise form live. Barcode scans send the barcode number alone to the public Open Food Facts database to look up nutrition info. Videos for form analysis are chosen with the system picker, so PowerPump only sees the video you pick, never the rest of your library. Form analysis is processed entirely on your device. PowerPump never uploads your photos or video." : {
       "localizations" : {
         "en" : {
@@ -17957,6 +17991,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Empanada"
+          }
+        }
+      }
+    },
+    "Enable camera access for PowerPump in iOS Settings to check your form live." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable camera access for PowerPump in iOS Settings to check your form live."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activa el acceso a la cámara para PowerPump en Ajustes de iOS para corregir tu técnica en directo."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Autorisez l’accès à la caméra pour PowerPump dans les Réglages iOS pour corriger votre technique en direct."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consenti l’accesso alla fotocamera per PowerPump nelle Impostazioni di iOS per correggere la tua tecnica dal vivo."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ative o acesso à câmera para o PowerPump nos Ajustes do iOS para corrigir sua técnica ao vivo."
           }
         }
       }
