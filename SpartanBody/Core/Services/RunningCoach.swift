@@ -14,6 +14,7 @@ final class RunningCoach: ObservableObject {
     @Published var vibrationEnabled: Bool { didSet { ud.set(vibrationEnabled, forKey: "sb_vibration_enabled") } }
 
     private let synthesizer = AVSpeechSynthesizer()
+    private let speechDelegate = SpeechSessionReleaser()
     private let ud = UserDefaults.standard
 
     private init() {
@@ -31,6 +32,7 @@ final class RunningCoach: ObservableObject {
             vibrationEnabled = ud.bool(forKey: "sb_vibration_enabled")
         }
         configureAudioSession()
+        synthesizer.delegate = speechDelegate
     }
 
     /// Configure the audio session so voice cues play even when the user
@@ -39,13 +41,14 @@ final class RunningCoach: ObservableObject {
     /// cue is heard clearly. Background playback requires `audio` in
     /// UIBackgroundModes — without that we still configure the session,
     /// the voice just stops if the screen locks.
+    /// The session is only activated while speaking (see `speak` and
+    /// `SpeechSessionReleaser`), otherwise other apps would stay ducked.
     private func configureAudioSession() {
         let session = AVAudioSession.sharedInstance()
         do {
             try session.setCategory(.playback,
                                      mode: .voicePrompt,
                                      options: [.mixWithOthers, .duckOthers])
-            try session.setActive(true, options: [])
         } catch {
             // Falls back silently — the only consequence is that the voice
             // won't play in the background. We don't want a crash here.
@@ -116,6 +119,8 @@ final class RunningCoach: ObservableObject {
         utterance.pitchMultiplier = 1.0
         utterance.preUtteranceDelay = 0
         utterance.postUtteranceDelay = 0
+        // Activate (and duck other audio) only for the duration of the cue.
+        try? AVAudioSession.sharedInstance().setActive(true, options: [])
         synthesizer.speak(utterance)
     }
 
@@ -153,5 +158,29 @@ final class RunningCoach: ObservableObject {
     func cueFinish() {
         guard vibrationEnabled else { return }
         feedback.notificationOccurred(.success)
+    }
+}
+
+/// Deactivates the audio session once the synthesizer has nothing left to say,
+/// so music ducked by `.duckOthers` returns to full volume between cues.
+private final class SpeechSessionReleaser: NSObject, AVSpeechSynthesizerDelegate {
+    private let queue = DispatchQueue(label: "RunningCoach.audioSession")
+
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        releaseIfIdle(synthesizer)
+    }
+
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
+        releaseIfIdle(synthesizer)
+    }
+
+    private func releaseIfIdle(_ synthesizer: AVSpeechSynthesizer) {
+        guard !synthesizer.isSpeaking else { return }
+        // setActive(false) blocks while audio I/O stops; keep it off main.
+        queue.async {
+            guard !synthesizer.isSpeaking else { return }
+            try? AVAudioSession.sharedInstance()
+                .setActive(false, options: .notifyOthersOnDeactivation)
+        }
     }
 }
