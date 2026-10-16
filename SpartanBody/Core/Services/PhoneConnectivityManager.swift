@@ -111,8 +111,30 @@ extension PhoneConnectivityManager: WCSessionDelegate {
         guard payload["action"] as? String == "workoutFinished" else { return }
         let duration = payload["duration"] as? Int ?? 0
         let sets     = payload["sets"]     as? Int ?? 0
+        let id       = payload["id"]       as? String
         DispatchQueue.main.async {
+            // The watch falls back to transferUserInfo when sendMessage reports
+            // an error, which can happen even after the message was delivered.
+            // Payloads from older watch builds have no id and are always accepted.
+            if let id {
+                guard !self.processedWorkoutIDs.contains(id) else { return }
+                self.markWorkoutProcessed(id)
+            }
             WorkoutStore.shared.recordWatchWorkout(durationSeconds: duration, sets: sets)
         }
+    }
+
+    // MARK: - Watch payload de-duplication
+
+    private var processedIDsKey: String { "sb_watch_processed_workout_ids" }
+
+    private var processedWorkoutIDs: [String] {
+        UserDefaults.standard.stringArray(forKey: processedIDsKey) ?? []
+    }
+
+    private func markWorkoutProcessed(_ id: String) {
+        var ids = processedWorkoutIDs
+        ids.append(id)
+        UserDefaults.standard.set(Array(ids.suffix(50)), forKey: processedIDsKey)
     }
 }

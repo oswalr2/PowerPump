@@ -47,7 +47,9 @@ final class WorkoutStore: ObservableObject {
                                      fallbackWeight: fallbackWeight)
     }
 
-    func finish() {
+    /// `saveToHealth` is false when the workout came from the Apple Watch,
+    /// which already saved it to HealthKit via HKLiveWorkoutBuilder.
+    func finish(saveToHealth: Bool = true) {
         guard var session = activeSession else { return }
         session.finishedAt = .now
         // Opened by mistake and closed straight away: not a workout. Saving
@@ -60,7 +62,7 @@ final class WorkoutStore: ObservableObject {
         history.insert(session, at: 0)
         activeSession = nil
         save()
-        HealthKitService.shared.saveWorkout(session)
+        if saveToHealth { HealthKitService.shared.saveWorkout(session) }
         NotificationCenter.default.post(name: .sbWorkoutFinished, object: session.id)
     }
 
@@ -79,7 +81,7 @@ final class WorkoutStore: ObservableObject {
     // the watch already saved the workout via HKLiveWorkoutBuilder.
     func recordWatchWorkout(durationSeconds: Int, sets: Int) {
         if activeSession != nil {
-            finish()
+            finish(saveToHealth: false)
             return
         }
         guard durationSeconds > 0 else { return }

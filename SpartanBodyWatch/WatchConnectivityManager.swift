@@ -35,6 +35,7 @@ final class WatchConnectivityManager: NSObject, ObservableObject {
     func sendWorkoutFinished(duration: Int, sets: Int) {
         let payload: [String: Any] = [
             "action":   "workoutFinished",
+            "id":       UUID().uuidString,
             "duration": duration,
             "sets":     sets
         ]
