@@ -56,6 +56,7 @@
 		AA000001000000000000AA07 /* WatchWorkoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchWorkoutManager.swift; sourceTree = "<group>"; };
 		AA000001000000000000AA08 /* WatchWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchWorkoutView.swift; sourceTree = "<group>"; };
 		AA000001000000000000AA09 /* SpartanBodyComplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpartanBodyComplication.swift; sourceTree = "<group>"; };
+		AA000001000000000000AA78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB000001000000000000BB01 /* SpartanBodyWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SpartanBodyWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB000001000000000000BB02 /* SpartanBodyWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpartanBodyWidgetBundle.swift; sourceTree = "<group>"; };
 		BB000001000000000000BB03 /* WorkoutActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutActivityAttributes.swift; sourceTree = "<group>"; };
@@ -127,6 +128,7 @@
 				AA000001000000000000AA06 /* WatchDashboardView.swift */,
 				AA000001000000000000AA07 /* WatchWorkoutManager.swift */,
 				AA000001000000000000AA08 /* WatchWorkoutView.swift */,
+				AA000001000000000000AA78 /* Info.plist */,
 				AA000001000000000000AA21 /* Complications */,
 			);
 			path = SpartanBodyWatch;
@@ -394,6 +396,8 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SpartanBodyWatch/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PowerPump;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "PowerPump reads your heart rate during workouts.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "PowerPump saves your workout data to Apple Health.";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.oswaldo.powerpump;
@@ -421,6 +425,8 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SpartanBodyWatch/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PowerPump;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "PowerPump reads your heart rate during workouts.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "PowerPump saves your workout data to Apple Health.";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.oswaldo.powerpump;
