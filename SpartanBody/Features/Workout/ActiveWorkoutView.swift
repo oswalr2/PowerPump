@@ -15,6 +15,7 @@ struct ActiveWorkoutView: View {
 
     @State private var showExercisePicker = false
     @State private var showFinishDialog = false
+    @State private var showDiscardConfirm = false
     @State private var showSaveRoutine = false
     @State private var routineName = ""
 
@@ -109,6 +110,13 @@ struct ActiveWorkoutView: View {
             let sets = store.activeSession?.completedSets ?? 0
             Text(verbatim: String.localizedStringWithFormat(NSLocalizedString("workout.setsCompleted %lld", comment: ""), sets))
         }
+        .alert(LocalizedStringKey("Discard workout?"), isPresented: $showDiscardConfirm) {
+            Button(LocalizedStringKey("Discard"), role: .destructive) { discardWorkout() }
+            Button(LocalizedStringKey("Cancel"), role: .cancel) {}
+        } message: {
+            let sets = store.activeSession?.completedSets ?? 0
+            Text(verbatim: String.localizedStringWithFormat(NSLocalizedString("workout.setsCompleted %lld", comment: ""), sets))
+        }
     }
 
     // MARK: - Top bar
@@ -116,8 +124,12 @@ struct ActiveWorkoutView: View {
     private var topBar: some View {
         HStack(spacing: 12) {
             Button {
-                store.cancel()
-                isPresented = false
+                // Only ask when there's logged work to lose.
+                if (store.activeSession?.completedSets ?? 0) > 0 {
+                    showDiscardConfirm = true
+                } else {
+                    discardWorkout()
+                }
             } label: {
                 Image(systemName: "xmark")
                     .font(.system(size: 15, weight: .semibold))
@@ -195,6 +207,11 @@ struct ActiveWorkoutView: View {
     }
 
     // MARK: - Helpers
+
+    private func discardWorkout() {
+        store.cancel()
+        isPresented = false
+    }
 
     private func startClock() {
         clockTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
