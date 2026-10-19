@@ -271,9 +271,9 @@ final class WorkoutStore: ObservableObject {
 
     private func load() {
         if let d = UserDefaults.standard.data(forKey: "sb_templates"),
-           let v = try? JSONDecoder().decode([WorkoutTemplate].self, from: d) { templates = v }
+           let v = SafeDecoding.decodeArray(WorkoutTemplate.self, from: d, backupKey: "sb_templates") { templates = v }
         if let d = UserDefaults.standard.data(forKey: "sb_history"),
-           let v = try? JSONDecoder().decode([WorkoutSession].self, from: d) { history = v }
+           let v = SafeDecoding.decodeArray(WorkoutSession.self, from: d, backupKey: "sb_history") { history = v }
         restoreActiveSession()
     }
 

@@ -194,7 +194,7 @@ final class FoodLogStore: ObservableObject {
 
     private func load() {
         if let data = UserDefaults.standard.data(forKey: "sb_food_logs"),
-           let decoded = try? JSONDecoder().decode([String: [LoggedFood]].self, from: data) {
+           let decoded = SafeDecoding.decodeDictionaryOfArrays(LoggedFood.self, from: data, backupKey: "sb_food_logs") {
             allLogs = decoded
         }
         loadedDayKey = todayKey

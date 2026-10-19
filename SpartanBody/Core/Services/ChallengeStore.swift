@@ -121,8 +121,8 @@ final class ChallengeStore: ObservableObject {
 
     private func load() {
         if let d = UserDefaults.standard.data(forKey: "sb_challenges_active"),
-           let v = try? JSONDecoder().decode([ActiveChallenge].self, from: d) { active = v }
+           let v = SafeDecoding.decodeArray(ActiveChallenge.self, from: d, backupKey: "sb_challenges_active") { active = v }
         if let d = UserDefaults.standard.data(forKey: "sb_challenges_done"),
-           let v = try? JSONDecoder().decode([ActiveChallenge].self, from: d) { completed = v }
+           let v = SafeDecoding.decodeArray(ActiveChallenge.self, from: d, backupKey: "sb_challenges_done") { completed = v }
     }
 }
