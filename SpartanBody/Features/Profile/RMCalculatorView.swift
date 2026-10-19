@@ -9,7 +9,7 @@ struct RMCalculatorView: View {
 
     private let repTargets: [Int] = [1, 3, 5, 7, 9, 12, 15, 20]
 
-    private var inputWeight: Double { Double(weight.replacingOccurrences(of: ",", with: ".")) ?? 0 }
+    private var inputWeight: Double { weight.localizedDouble ?? 0 }
     private var inputReps:   Int    { Int(reps) ?? 0 }
 
     // 1RM = weight × (1 + reps/30)

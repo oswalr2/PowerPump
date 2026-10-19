@@ -12,7 +12,24 @@ struct CreateFoodView: View {
     @State private var fat      = ""
 
     private var isValid: Bool {
-        !name.trimmingCharacters(in: .whitespaces).isEmpty && Double(calories) != nil
+        !name.trimmingCharacters(in: .whitespaces).isEmpty
+            && kcalValue != nil
+            && macroValue(protein) != nil
+            && macroValue(carbs) != nil
+            && macroValue(fat) != nil
+    }
+
+    /// kcal per 100 g; nothing edible exceeds ~900 (pure fat).
+    private var kcalValue: Double? {
+        guard let v = calories.localizedDouble, (0...900).contains(v) else { return nil }
+        return v
+    }
+
+    /// Grams per 100 g. Left empty means 0; anything unparseable is invalid.
+    private func macroValue(_ text: String) -> Double? {
+        if text.trimmingCharacters(in: .whitespaces).isEmpty { return 0 }
+        guard let v = text.localizedDouble, (0...100).contains(v) else { return nil }
+        return v
     }
 
     var body: some View {
@@ -36,10 +53,10 @@ struct CreateFoodView: View {
                         SBPrimaryButton(title: "Save") {
                             let item = CustomFoodStore.shared.add(
                                 name: name.trimmingCharacters(in: .whitespaces),
-                                caloriesPer100g: Double(calories) ?? 0,
-                                protein: Double(protein) ?? 0,
-                                carbs:   Double(carbs) ?? 0,
-                                fat:     Double(fat) ?? 0
+                                caloriesPer100g: kcalValue ?? 0,
+                                protein: macroValue(protein) ?? 0,
+                                carbs:   macroValue(carbs) ?? 0,
+                                fat:     macroValue(fat) ?? 0
                             )
                             HapticManager.success()
                             dismiss()
