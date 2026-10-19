@@ -17020,6 +17020,42 @@
         }
       }
     },
+    "Discard workout?" : {
+      "comment" : "Title of the alert shown before discarding an in-progress gym workout.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Discard workout?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Descartar entrenamiento?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abandonner l'entraînement ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scartare l'allenamento?"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descartar treino?"
+          }
+        }
+      }
+    },
     "Do 30 push-ups today and check in" : {
       "extractionState" : "stale",
       "localizations" : {
