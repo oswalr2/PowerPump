@@ -168,9 +168,13 @@ final class RunStore: ObservableObject {
                 if rejectedInARow >= 3 { needsAnchor = true }
                 return
             }
-            // Drop tiny GPS jitter (< 3 m) so a stationary user doesn't
-            // accumulate phantom distance.
-            if delta > 3 { session.distanceMeters += delta }
+            // Standing still, GPS fixes wander within their accuracy radius
+            // (often ±10–15 m). Ignore moves smaller than that noise, or when
+            // the device itself reports (almost) no speed, and keep the last
+            // point as the reference so real slow movement still adds up.
+            let noise = max(3, new.horizontalAccuracy / 2)
+            if delta < noise || (new.speed >= 0 && new.speed < 0.3) { return }
+            session.distanceMeters += delta
         }
         needsAnchor = false
         rejectedInARow = 0

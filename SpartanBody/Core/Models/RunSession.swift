@@ -68,8 +68,10 @@ struct RunSession: Identifiable, Codable {
     var distanceKm: Double { distanceMeters / 1000 }
 
     /// Average pace in seconds per kilometre (running convention).
+    /// 0 (shown as "--") until 100 m are covered: over a few metres the
+    /// average is meaningless (e.g. 30 s for 5 m reads as 100'/km).
     var paceSecondsPerKm: Double {
-        guard distanceKm > 0 else { return 0 }
+        guard distanceMeters >= 100 else { return 0 }
         return movingSeconds / distanceKm
     }
 
