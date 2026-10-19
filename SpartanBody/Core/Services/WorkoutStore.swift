@@ -12,7 +12,12 @@ final class WorkoutStore: ObservableObject {
         }
     }
 
-    private init() { load() }
+    private init() {
+        load()
+        // Ends an activity left by a crash or a kill, or brings the restored
+        // workout's own one up to date.
+        WorkoutLiveActivityManager.shared.sync(session: activeSession)
+    }
 
     // MARK: - Session lifecycle
 

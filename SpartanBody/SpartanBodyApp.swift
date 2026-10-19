@@ -7,8 +7,10 @@ struct SpartanBodyApp: App {
 
     init() {
         _ = PhoneConnectivityManager.shared
-        // Restores a run that was going when the app was closed.
+        // Restores a run or workout that was going when the app was closed,
+        // and ends Live Activities left without one.
         _ = RunStore.shared
+        _ = WorkoutStore.shared
     }
 
     var body: some Scene {
