@@ -82,7 +82,8 @@ struct MonthlyCalendarCard: View {
 
     private var weekdayHeader: some View {
         HStack(spacing: 0) {
-            ForEach(localizedShortWeekdays, id: \.self) { day in
+            // Offsets, not the symbols: "S"/"T" repeat in very-short weekday names.
+            ForEach(Array(localizedShortWeekdays.enumerated()), id: \.offset) { _, day in
                 Text(day)
                     .font(SBFont.label(10))
                     .foregroundColor(.sbTextSecondary)
@@ -108,7 +109,8 @@ struct MonthlyCalendarCard: View {
             columns: Array(repeating: GridItem(.flexible(), spacing: 4), count: 7),
             spacing: 6
         ) {
-            ForEach(days, id: \.self) { day in
+            // Offsets, not the dates: every padding cell is nil, so \.self repeats.
+            ForEach(Array(days.enumerated()), id: \.offset) { _, day in
                 if let day {
                     dayCell(day)
                 } else {
