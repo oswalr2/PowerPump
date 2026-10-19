@@ -51,6 +51,10 @@ final class RunStore: ObservableObject {
             }
             .store(in: &subscriptions)
         restoreActive()
+        // No run to carry on: end any activity a crash or a kill left behind.
+        if activeSession == nil {
+            RunLiveActivityManager.shared.sync(session: nil, isPaused: false)
+        }
     }
 
     // MARK: - Lifecycle

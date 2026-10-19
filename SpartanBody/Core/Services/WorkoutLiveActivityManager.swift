@@ -11,6 +11,8 @@ final class WorkoutLiveActivityManager {
     private init() {}
 
     private var restEndDate: Date?
+    /// Leftover activities are being ended before this workout's is requested.
+    private var replacing = false
 
     func sync(session: WorkoutSession?) {
         guard #available(iOS 16.1, *) else { return }
@@ -46,15 +48,34 @@ final class WorkoutLiveActivityManager {
             restEndDate:   restEndDate
         )
 
-        if let activity = Activity<WorkoutActivityAttributes>.activities.first {
-            Task { await activity.update(using: state) }
-        } else {
-            let attributes = WorkoutActivityAttributes(
-                workoutName: session.name,
-                startedAt:   session.startedAt
-            )
-            _ = try? Activity.request(attributes: attributes, contentState: state)
+        // Only this workout's own activity is reused, never one left over
+        // from an earlier workout or a crash.
+        let all = Activity<WorkoutActivityAttributes>.activities
+        if let current = all.first(where: { Self.belongs($0.attributes, to: session) }) {
+            Task { await current.update(using: state) }
+            for stale in all where stale.id != current.id {
+                Task { await stale.end(dismissalPolicy: .immediate) }
+            }
+            return
         }
+        guard !replacing else { return }
+        replacing = true
+        let attributes = WorkoutActivityAttributes(
+            workoutName: session.name,
+            startedAt:   session.startedAt
+        )
+        Task { @MainActor in
+            // End the leftovers first so two never show at once.
+            for stale in all { await stale.end(dismissalPolicy: .immediate) }
+            _ = try? Activity.request(attributes: attributes, contentState: state)
+            self.replacing = false
+        }
+    }
+
+    @available(iOS 16.1, *)
+    private static func belongs(_ attributes: WorkoutActivityAttributes, to session: WorkoutSession) -> Bool {
+        attributes.workoutName == session.name
+            && abs(attributes.startedAt.timeIntervalSince(session.startedAt)) < 1
     }
 
     @available(iOS 16.1, *)
