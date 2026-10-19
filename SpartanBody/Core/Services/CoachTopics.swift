@@ -50,12 +50,13 @@ enum CoachTopic: String, CaseIterable {
         let q = " " + question.folding(options: [.diacriticInsensitive, .caseInsensitive], locale: nil)
             .replacingOccurrences(of: "?", with: " ").replacingOccurrences(of: "¿", with: " ") + " "
         if crisisWords.contains(where: q.contains) { return .crisis }
+        // Health and pain right after a crisis: "solo tengo 20 minutos, me
+        // duele el pecho" needs the pain answer, not a shorter workout.
+        if let hit = keywords.prefix(2).first(where: { _, words in words.contains { q.contains($0) } }) { return hit.0 }
         if isCrashDiet(q) { return .loseFast }
         if isShortOnTime(q) { return .shortToday }
         if isWeightLoss(q) { return .loseFat }
         if isRecomp(q) { return .recomp }
-        // Health and pain before anything about exercises or food.
-        if let hit = keywords.prefix(2).first(where: { _, words in words.contains { q.contains($0) } }) { return hit.0 }
         if let age = age(in: q) {
             if age < 18 { return .teen }
             if age >= 40 { return .olderAdult }

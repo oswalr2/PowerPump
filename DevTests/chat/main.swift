@@ -148,6 +148,10 @@ cases += [
     ("Mi press de banca no sube", .plateau),
     ("How to deal with depression", .stress),
     ("Quiero mejorar mi resistencia en combate", .endurance),
+    // Pain and health win over time and diet requests
+    ("Solo tengo 20 minutos hoy, me duele el pecho", .pain),
+    ("I only have 20 minutes today and my knee hurts", .pain),
+    ("Quiero bajar 5 kilos en 2 semanas, estoy embarazada", .health),
 ]
 var fails = 0
 for (q, want) in cases {
