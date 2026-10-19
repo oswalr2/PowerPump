@@ -186,14 +186,12 @@ final class FoodLogStore: ObservableObject {
     // MARK: - Persistence
 
     private func save() {
-        if let data = try? JSONEncoder().encode(allLogs) {
-            UserDefaults.standard.set(data, forKey: "sb_food_logs")
-        }
+        DiskStore.save(allLogs, as: "food_logs")
         PhoneConnectivityManager.shared.syncToWatch()
     }
 
     private func load() {
-        if let data = UserDefaults.standard.data(forKey: "sb_food_logs"),
+        if let data = DiskStore.data("food_logs", legacyKey: "sb_food_logs"),
            let decoded = SafeDecoding.decodeDictionaryOfArrays(LoggedFood.self, from: data, backupKey: "sb_food_logs") {
             allLogs = decoded
         }

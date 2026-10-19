@@ -294,7 +294,7 @@ struct SportSessionView: View {
             calories: estimatedCalories,
             route: route.map { RunRoutePoint(latitude: $0.latitude,
                                              longitude: $0.longitude,
-                                             timestamp: Date()) }
+                                             timestamp: Date()) }.simplified()
         )
         SportSessionStore.shared.add(record)
         HealthKitService.shared.saveSport(
