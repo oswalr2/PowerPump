@@ -56,6 +56,7 @@ struct ContentView: View {
 
 struct MainTabView: View {
     @State private var selectedTab = 0
+    @ObservedObject private var run = RunStore.shared
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -76,6 +77,9 @@ struct MainTabView: View {
             SBTabBar(selectedTab: $selectedTab)
         }
         .ignoresSafeArea(edges: .bottom)
+        // A run cut short by a crash or by iOS closing the app comes back
+        // on its own screen.
+        .fullScreenCover(isPresented: $run.resumedAtLaunch) { ResumedRunView() }
         .onReceive(NotificationCenter.default.publisher(for: .switchToTab)) { note in
             if let tab = note.object as? Int {
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {

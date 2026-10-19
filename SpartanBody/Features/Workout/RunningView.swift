@@ -33,7 +33,11 @@ struct RunningView: View {
 
             statsPanel
         }
-        .onAppear { ensureAuthAndStartIfReady() }
+        .onAppear {
+            // Reopened for a run already going: show its activity.
+            if let session = run.activeSession { activity = session.activity }
+            ensureAuthAndStartIfReady()
+        }
         .onDisappear {
             // Closing before starting a run must not leave GPS running in
             // the background; an active run is stopped by RunStore instead.

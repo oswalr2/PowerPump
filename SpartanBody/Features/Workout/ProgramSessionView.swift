@@ -16,6 +16,8 @@ struct ProgramSessionView: View {
     let program: RunningProgram
     let weekNumber: Int
     let day: ProgramDay
+    /// Reopened at launch for a session the app was closed in the middle of.
+    var resuming = false
 
     @State private var currentIndex = 0
     @State private var elapsedInCurrent: TimeInterval = 0
@@ -64,7 +66,10 @@ struct ProgramSessionView: View {
 
             controlsPanel
         }
-        .onAppear { ensureAuth() }
+        .onAppear {
+            ensureAuth()
+            if resuming { resumeFromStore() }
+        }
         .onDisappear { stopTimer() }
         .onChange(of: location.authorizationStatus) { _ in ensureAuth() }
         .onChange(of: scenePhase) { phase in
@@ -264,6 +269,7 @@ struct ProgramSessionView: View {
             let jump = TimeInterval(remainingInCurrent)
             if current.kind != .warmup && current.kind != .cooldown { skippedWork += jump }
             skipped += jump
+            saveProgramContext()
             tick(0)
         } label: {
             Label(skipLabel, systemImage: "forward.end.fill")
@@ -418,9 +424,49 @@ struct ProgramSessionView: View {
         pauseStartedAt = nil
         location.startTracking()
         run.start(activity: .run)
+        saveProgramContext()
         coach.announceInterval(current, isFirst: true)
         coach.cueIntervalChange()
         startTimer()
+    }
+
+    /// Lets RunStore save which day this is and what was skipped, so the
+    /// session can be reopened if the app is closed halfway.
+    private func saveProgramContext() {
+        run.setProgram(.init(programID: program.id, weekNumber: weekNumber,
+                             dayNumber: day.dayNumber,
+                             skipped: skipped, skippedWork: skippedWork))
+    }
+
+    /// Carries on a session the app was closed in the middle of: the clock
+    /// comes from RunStore, the skips from its program context.
+    private func resumeFromStore() {
+        guard let timing = run.timing, run.activeSession != nil else { return }
+        didStart = true
+        sessionStartedAt = timing.startedAt
+        pausedAccum = timing.pausedAccum
+        pauseStartedAt = timing.pauseStartedAt
+        isPaused = run.isPaused
+        skipped = run.program?.skipped ?? 0
+        skippedWork = run.program?.skippedWork ?? 0
+        // Land on the right stretch without announcing each one passed.
+        let now = timing.pauseStartedAt ?? Date()
+        totalElapsed = max(0, now.timeIntervalSince(timing.startedAt) - timing.pausedAccum)
+        position = totalElapsed + skipped
+        var start: TimeInterval = 0
+        var index = day.intervals.count - 1
+        for (i, interval) in day.intervals.enumerated() {
+            if position < start + TimeInterval(interval.duration) { index = i; break }
+            if i == day.intervals.count - 1 { break }   // past the end: stay on the last
+            start += TimeInterval(interval.duration)
+        }
+        currentIndex = index
+        elapsedInCurrent = min(max(0, position - start), TimeInterval(current.duration))
+        didAnnounceHalfway = true
+        if !isPaused {
+            startTimer()
+            tick(0)
+        }
     }
 
     private func completeAndDismiss() {
