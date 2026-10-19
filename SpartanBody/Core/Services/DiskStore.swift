@@ -28,11 +28,12 @@ enum DiskStore {
     /// The stored bytes for `name`. The first time, data still kept in
     /// UserDefaults under `legacyKey` is moved into the file; the old key is
     /// removed only once the file reads back identical.
-    static func data(_ name: String, legacyKey: String) -> Data? {
+    static func data(_ name: String, legacyKey: String? = nil) -> Data? {
         queue.sync {
             let file = url(name)
             if let stored = try? Data(contentsOf: file) { return stored }
-            guard let legacy = UserDefaults.standard.data(forKey: legacyKey) else { return nil }
+            guard let legacyKey,
+                  let legacy = UserDefaults.standard.data(forKey: legacyKey) else { return nil }
             do {
                 try write(legacy, to: file)
                 if (try? Data(contentsOf: file)) == legacy {
@@ -58,6 +59,11 @@ enum DiskStore {
                 log.error("Saving \(name, privacy: .public) failed: \(error.localizedDescription, privacy: .public)")
             }
         }
+    }
+
+    /// Deletes the file, after any save still queued for it.
+    static func remove(_ name: String) {
+        queue.async { try? FileManager.default.removeItem(at: url(name)) }
     }
 
     /// Blocks until every pending save has been written.

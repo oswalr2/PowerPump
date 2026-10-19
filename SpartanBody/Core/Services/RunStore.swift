@@ -1,6 +1,7 @@
 import Foundation
 import CoreLocation
 import Combine
+import UIKit
 
 @MainActor
 final class RunStore: ObservableObject {
@@ -9,6 +10,11 @@ final class RunStore: ObservableObject {
     @Published private(set) var activeSession: RunSession?
     @Published private(set) var isPaused = false
     @Published private(set) var history: [RunSession] = []
+    /// The walk/run program being followed, if any (see `ProgramContext`).
+    @Published private(set) var program: ProgramContext?
+    /// True when a run interrupted by a crash or by iOS closing the app was
+    /// picked up again at launch; the app then reopens its screen.
+    @Published var resumedAtLaunch = false
 
     private let location = LocationService.shared
     private var subscriptions: Set<AnyCancellable> = []
@@ -26,6 +32,7 @@ final class RunStore: ObservableObject {
     /// the GPS kept disagreeing with the last point.
     private var needsAnchor = false
     private var rejectedInARow = 0
+    private var lastActiveSave = Date.distantPast
 
     private init() {
         loadHistory()
@@ -33,6 +40,17 @@ final class RunStore: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] loc in self?.handle(location: loc) }
             .store(in: &subscriptions)
+        // iOS may end the app any time once it's in the background.
+        NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)
+            .merge(with: NotificationCenter.default.publisher(for: UIApplication.willTerminateNotification))
+            .sink { [weak self] _ in
+                Task { @MainActor in
+                    self?.saveActive()
+                    DiskStore.flush()
+                }
+            }
+            .store(in: &subscriptions)
+        restoreActive()
     }
 
     // MARK: - Lifecycle
@@ -51,6 +69,7 @@ final class RunStore: ObservableObject {
         location.startTracking()
         startTicker()
         RunLiveActivityManager.shared.sync(session: activeSession, isPaused: false)
+        saveActive()
     }
 
     func pause() {
@@ -59,6 +78,7 @@ final class RunStore: ObservableObject {
         isPaused = true
         pauseStartedAt = .now
         RunLiveActivityManager.shared.sync(session: activeSession, isPaused: true)
+        saveActive()
     }
 
     func resume() {
@@ -70,6 +90,7 @@ final class RunStore: ObservableObject {
         isPaused = false
         needsAnchor = true
         RunLiveActivityManager.shared.sync(session: activeSession, isPaused: false)
+        saveActive()
     }
 
     func finish() -> RunSession? {
@@ -93,6 +114,8 @@ final class RunStore: ObservableObject {
         sessionStartedAt = nil
         pauseStartedAt = nil
         pausedAccum = 0
+        program = nil
+        clearActive()
         RunLiveActivityManager.shared.sync(session: nil, isPaused: false)
         return session
     }
@@ -105,6 +128,8 @@ final class RunStore: ObservableObject {
         sessionStartedAt = nil
         pauseStartedAt = nil
         pausedAccum = 0
+        program = nil
+        clearActive()
         RunLiveActivityManager.shared.sync(session: nil, isPaused: false)
     }
 
@@ -130,7 +155,10 @@ final class RunStore: ObservableObject {
         // suspends it but syncMovingSeconds() will catch up the next time a
         // location update or willEnterForeground arrives.
         ticker = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-            Task { @MainActor in self?.syncMovingSeconds() }
+            Task { @MainActor in
+                self?.syncMovingSeconds()
+                self?.saveActiveIfDue()
+            }
         }
     }
 
@@ -183,6 +211,7 @@ final class RunStore: ObservableObject {
         session.route.append(point)
         activeSession = session
         RunLiveActivityManager.shared.sync(session: activeSession, isPaused: isPaused)
+        saveActiveIfDue()
     }
 
     // MARK: - History persistence
@@ -203,5 +232,86 @@ final class RunStore: ObservableObject {
     func delete(_ session: RunSession) {
         history.removeAll { $0.id == session.id }
         saveHistory()
+    }
+
+    // MARK: - Surviving a crash or iOS closing the app
+
+    /// What a walk/run program needs to carry on where it was. The timing
+    /// lives here in RunStore; the program screen adds which day it is and
+    /// how much was skipped.
+    struct ProgramContext: Codable, Equatable {
+        let programID: String
+        let weekNumber: Int
+        let dayNumber: Int
+        var skipped: TimeInterval = 0
+        var skippedWork: TimeInterval = 0
+    }
+
+    /// The clock of the run in progress, for a screen that reopens it.
+    var timing: (startedAt: Date, pausedAccum: TimeInterval, pauseStartedAt: Date?)? {
+        sessionStartedAt.map { ($0, pausedAccum, pauseStartedAt) }
+    }
+
+    func setProgram(_ context: ProgramContext?) {
+        program = context
+        saveActive()
+    }
+
+    private struct SavedRun: Codable {
+        var session: RunSession
+        var sessionStartedAt: Date
+        var pausedAccum: TimeInterval
+        var pauseStartedAt: Date?
+        var isPaused: Bool
+        var program: ProgramContext?
+    }
+
+    private let activeFile = "active_run"
+
+    /// Every 30 s at most while running: often enough to lose little, rare
+    /// enough not to rewrite a long route on every GPS fix.
+    private func saveActiveIfDue() {
+        guard Date().timeIntervalSince(lastActiveSave) >= 30 else { return }
+        saveActive()
+    }
+
+    private func saveActive() {
+        guard let session = activeSession, let start = sessionStartedAt else { return }
+        lastActiveSave = Date()
+        DiskStore.save(SavedRun(session: session, sessionStartedAt: start,
+                                pausedAccum: pausedAccum, pauseStartedAt: pauseStartedAt,
+                                isPaused: isPaused, program: program),
+                       as: activeFile)
+    }
+
+    private func clearActive() {
+        lastActiveSave = .distantPast
+        DiskStore.remove(activeFile)
+    }
+
+    /// Picks up a run that was still going when the app was closed. Like gym
+    /// workouts, anything older than 12 hours is dropped. The distance covered
+    /// while the app was closed is added as a straight line from the last
+    /// point, if it's a pace a person could have kept.
+    private func restoreActive() {
+        guard let data = DiskStore.data(activeFile) else { return }
+        guard let saved = try? JSONDecoder().decode(SavedRun.self, from: data),
+              Date().timeIntervalSince(saved.sessionStartedAt) < 12 * 3600 else {
+            clearActive()
+            return
+        }
+        activeSession = saved.session
+        sessionStartedAt = saved.sessionStartedAt
+        pausedAccum = saved.pausedAccum
+        pauseStartedAt = saved.pauseStartedAt
+        isPaused = saved.isPaused
+        program = saved.program
+        needsAnchor = saved.isPaused
+        rejectedInARow = 0
+        syncMovingSeconds()
+        location.startTracking()
+        startTicker()
+        resumedAtLaunch = true
+        RunLiveActivityManager.shared.sync(session: activeSession, isPaused: isPaused)
     }
 }

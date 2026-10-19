@@ -7,6 +7,8 @@ struct SpartanBodyApp: App {
 
     init() {
         _ = PhoneConnectivityManager.shared
+        // Restores a run that was going when the app was closed.
+        _ = RunStore.shared
     }
 
     var body: some Scene {
