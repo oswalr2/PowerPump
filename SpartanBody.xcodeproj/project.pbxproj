@@ -20,6 +20,8 @@
 		BB000001000000000000BB12 /* WorkoutActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000001000000000000BB03 /* WorkoutActivityAttributes.swift */; };
 		BB000001000000000000BB21 /* RunActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000001000000000000BB23 /* RunActivityAttributes.swift */; };
 		BB000001000000000000BB22 /* RunActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000001000000000000BB23 /* RunActivityAttributes.swift */; };
+		AA000001000000000000AA70 /* SpartanBodyWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = BB000001000000000000BB01 /* SpartanBodyWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		AA000001000000000000AA71 /* SpartanBodyWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = AA000001000000000000AA01 /* SpartanBodyWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +31,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = AA000001000000000000AA41;
 			remoteInfo = SpartanBodyComplication;
+		};
+		AA000001000000000000AA75 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F36D36FF2FB3EF4000CA86B6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BB000001000000000000BB40;
+			remoteInfo = SpartanBodyWidget;
+		};
+		AA000001000000000000AA77 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F36D36FF2FB3EF4000CA86B6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA000001000000000000AA40;
+			remoteInfo = SpartanBodyWatch;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -42,6 +58,28 @@
 				AA000001000000000000AA18 /* SpartanBodyComplication.appex in Embed Widget Extensions */,
 			);
 			name = "Embed Widget Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA000001000000000000AA72 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				AA000001000000000000AA70 /* SpartanBodyWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA000001000000000000AA73 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				AA000001000000000000AA71 /* SpartanBodyWatch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -236,10 +274,14 @@
 				F36D37032FB3EF4000CA86B6 /* Sources */,
 				F36D37042FB3EF4000CA86B6 /* Frameworks */,
 				F36D37052FB3EF4000CA86B6 /* Resources */,
+				AA000001000000000000AA72 /* Embed Foundation Extensions */,
+				AA000001000000000000AA73 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				AA000001000000000000AA74 /* PBXTargetDependency */,
+				AA000001000000000000AA76 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				F36D37092FB3EF4000CA86B6 /* SpartanBody */,
@@ -380,6 +422,16 @@
 			isa = PBXTargetDependency;
 			target = AA000001000000000000AA41 /* SpartanBodyComplication */;
 			targetProxy = AA000001000000000000AA63 /* PBXContainerItemProxy */;
+		};
+		AA000001000000000000AA74 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BB000001000000000000BB40 /* SpartanBodyWidget */;
+			targetProxy = AA000001000000000000AA75 /* PBXContainerItemProxy */;
+		};
+		AA000001000000000000AA76 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AA000001000000000000AA40 /* SpartanBodyWatch */;
+			targetProxy = AA000001000000000000AA77 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
