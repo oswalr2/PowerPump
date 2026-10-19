@@ -34,6 +34,14 @@ struct RunningView: View {
             statsPanel
         }
         .onAppear { ensureAuthAndStartIfReady() }
+        .onDisappear {
+            // Closing before starting a run must not leave GPS running in
+            // the background; an active run is stopped by RunStore instead.
+            if run.activeSession == nil {
+                location.stopTracking()
+                didStartOnAppear = false
+            }
+        }
         .onChange(of: location.authorizationStatus) { _ in ensureAuthAndStartIfReady() }
         .onReceive(location.locationPublisher) { loc in handleGuidance(loc) }
         .sheet(isPresented: $showPlanner) {
