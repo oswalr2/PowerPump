@@ -286,14 +286,14 @@ final class WorkoutStore: ObservableObject {
 
     func save() {
         if let d = try? JSONEncoder().encode(templates) { UserDefaults.standard.set(d, forKey: "sb_templates") }
-        if let d = try? JSONEncoder().encode(history)   { UserDefaults.standard.set(d, forKey: "sb_history") }
+        DiskStore.save(history, as: "workouts")
         PhoneConnectivityManager.shared.syncToWatch()
     }
 
     private func load() {
         if let d = UserDefaults.standard.data(forKey: "sb_templates"),
            let v = SafeDecoding.decodeArray(WorkoutTemplate.self, from: d, backupKey: "sb_templates") { templates = v }
-        if let d = UserDefaults.standard.data(forKey: "sb_history"),
+        if let d = DiskStore.data("workouts", legacyKey: "sb_history"),
            let v = SafeDecoding.decodeArray(WorkoutSession.self, from: d, backupKey: "sb_history") { history = v }
         restoreActiveSession()
     }

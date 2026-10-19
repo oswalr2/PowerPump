@@ -63,13 +63,11 @@ final class SportSessionStore: ObservableObject {
     }
 
     private func save() {
-        if let data = try? JSONEncoder().encode(history) {
-            UserDefaults.standard.set(data, forKey: key)
-        }
+        DiskStore.save(history, as: "sports")
     }
 
     private func load() {
-        guard let data = UserDefaults.standard.data(forKey: key),
+        guard let data = DiskStore.data("sports", legacyKey: key),
               let decoded = SafeDecoding.decodeArray(SportSessionRecord.self, from: data, backupKey: key) else { return }
         history = decoded
     }

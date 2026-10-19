@@ -83,6 +83,7 @@ final class RunStore: ObservableObject {
         // Persist + sync to Health, but only if we got somewhere meaningful.
         // A 5-second misfire shouldn't pollute history.
         if session.movingSeconds > 10 && session.distanceMeters > 20 {
+            session.route = session.route.simplified()
             history.insert(session, at: 0)
             saveHistory()
             HealthKitService.shared.saveRun(session)
@@ -186,16 +187,15 @@ final class RunStore: ObservableObject {
 
     // MARK: - History persistence
 
+    // Stored on disk (see DiskStore); the key is where older versions kept it.
     private let historyKey = "sb_run_history"
 
     private func saveHistory() {
-        if let data = try? JSONEncoder().encode(history) {
-            UserDefaults.standard.set(data, forKey: historyKey)
-        }
+        DiskStore.save(history, as: "runs")
     }
 
     private func loadHistory() {
-        guard let data = UserDefaults.standard.data(forKey: historyKey),
+        guard let data = DiskStore.data("runs", legacyKey: historyKey),
               let decoded = SafeDecoding.decodeArray(RunSession.self, from: data, backupKey: historyKey) else { return }
         history = decoded
     }
