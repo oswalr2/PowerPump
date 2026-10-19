@@ -14,6 +14,7 @@ def local(name, lang):
     block = strings[strings.index('"%s": [' % lang):]
     m = re.search(r'"%s":\s*"((?:[^"\\]|\\.)*)"' % re.escape(name), block)
     return m.group(1) if m else name
+print('import Foundation')
 print('var bad = 0, total = 0')
 for lang in ['en', 'es', 'fr', 'it', 'pt-BR']:
     fmt = question[lang]['stringUnit']['value']
@@ -21,3 +22,4 @@ for lang in ['en', 'es', 'fr', 'it', 'pt-BR']:
         q = fmt.replace('%@', local(n, lang)).replace('\\', '\\\\').replace('"', '\\"')
         print(f'total += 1; if CoachTopic.detect("{q}") != .exerciseHowTo {{ bad += 1; print("  FALLO", "{lang}", "{q}", CoachTopic.detect("{q}")?.rawValue ?? "nada") }}')
 print('print(bad == 0 ? "TODO OK (\\(total) preguntas)" : "\\(bad) FALLOS")')
+print('exit(bad == 0 ? 0 : 1)')

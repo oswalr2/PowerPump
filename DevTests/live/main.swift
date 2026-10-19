@@ -12,9 +12,29 @@ func rot(_ v: CGPoint, _ deg: Double) -> CGPoint {
     return CGPoint(x: v.x * cos(r) - v.y * sin(r), y: v.x * sin(r) + v.y * cos(r))
 }
 func add(_ a: CGPoint, _ b: CGPoint, _ k: CGFloat = 1) -> CGPoint { CGPoint(x: a.x + b.x * k, y: a.y + b.y * k) }
-var rng = SystemRandomNumberGenerator()
+/// Deterministic generator (SplitMix64) so a failing run can be reproduced:
+/// the same seed always produces the same synthetic skeletons.
+struct SplitMix64: RandomNumberGenerator {
+    var state: UInt64
+    init(seed: UInt64) { state = seed }
+    mutating func next() -> UInt64 {
+        state &+= 0x9E37_79B9_7F4A_7C15
+        var z = state
+        z = (z ^ (z >> 30)) &* 0xBF58_476D_1CE4_E5B9
+        z = (z ^ (z >> 27)) &* 0x94D0_49BB_1331_11EB
+        return z ^ (z >> 31)
+    }
+}
+var rng = SplitMix64(seed: 42)
 func jitter(_ p: CGPoint, _ n: CGFloat) -> CGPoint {
     CGPoint(x: p.x + .random(in: -n...n, using: &rng), y: p.y + .random(in: -n...n, using: &rng))
+}
+/// Jitters every joint in a fixed order (dictionary iteration order changes
+/// between runs, which would otherwise make the seeded noise non-repeatable).
+func jittered(_ pts: [BodyJoint: CGPoint], _ n: CGFloat) -> [BodyJoint: CGPoint] {
+    var out = pts
+    for j in BodyJoint.allCases { if let p = pts[j] { out[j] = jitter(p, n) } }
+    return out
 }
 
 /// Standing/squatting body facing +x. knee = hip–knee–ankle angle, lean =
@@ -46,7 +66,7 @@ func standing(knee: Double, lean: Double, elbow: Double = 170, shinTilt: Double 
     } else {       // other shoulder nearly behind
         pts[side == "left" ? .rightShoulder : .leftShoulder] = CGPoint(x: shoulder.x + 0.02, y: shoulder.y)
     }
-    return pts.mapValues { jitter($0, noise) }
+    return jittered(pts, noise)
 }
 
 /// Horizontal body for push-ups / plank. offset: hip above (+) / below (−) line.
@@ -60,7 +80,7 @@ func prone(elbow: Double, offset: CGFloat, noise: CGFloat = 0.004) -> [BodyJoint
     let pts: [BodyJoint: CGPoint] = [.leftShoulder: shoulder, .leftElbow: elbowP, .leftWrist: wrist,
                                      .leftHip: mid, .leftKnee: CGPoint(x: 0.33, y: 0.1 + (mid.y - 0.1) / 2),
                                      .leftAnkle: ankle, .nose: CGPoint(x: 0.88, y: shoulder.y + 0.03)]
-    return pts.mapValues { jitter($0, noise) }
+    return jittered(pts, noise)
 }
 
 /// Frames at 12 fps following `curve(t)` → joints.
@@ -150,3 +170,4 @@ for i in 0..<Int(150 * 12) {
 _ = t7.analyze()
 check(abs(t7.reps - 60) <= 1, "serie de 150 s: \(t7.reps) reps de 60, búfer \(t7.frames.count) frames")
 print(failures == 0 ? "TODO OK" : "\(failures) FALLOS")
+exit(failures == 0 ? 0 : 1)
