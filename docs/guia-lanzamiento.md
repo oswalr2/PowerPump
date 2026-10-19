@@ -47,12 +47,23 @@ Tu lista de tareas, en orden. Lo que ya está hecho en código no aparece aquí.
 - [ ] Pega los textos de `docs/app-store-listing.md` en cada idioma
       (nombre, subtítulo, descripción, palabras clave, texto promocional)
 - [ ] Pega la URL de tu política de privacidad
-- [ ] **Cuestionario App Privacy** — respuestas para esta app:
-      - Health & Fitness: **Collected — Linked to user: NO — Tracking: NO** (App Functionality)
-      - Location: **Collected — Linked to user: NO — Tracking: NO** (App Functionality)
-        — se usa para trazar rutas; no sale del dispositivo salvo el cálculo
-        de indicaciones de Apple Maps
-      - Identifiers, Photos, Contacts, y todo lo demás: **Not collected**
+- [ ] **Cuestionario App Privacy** — respuesta recomendada: **Data Not Collected**
+      (“No, we do not collect data from this app”).
+      - Para Apple, “recopilar” significa **transmitir datos fuera del
+        dispositivo** de forma que tú (o terceros) podáis acceder a ellos más
+        tiempo del necesario para atender la petición. Los datos que solo se
+        procesan en el iPhone no cuentan como recopilados.
+      - Salud, ubicación, cámara y vídeos se procesan solo en el dispositivo,
+        y las peticiones a Apple Maps (indicaciones), Open Food Facts (código de
+        barras) y GitHub (imágenes de ejercicios) no envían datos personales ni
+        los guardamos nosotros.
+      - Así coincide con `SpartanBody/PrivacyInfo.xcprivacy`
+        (`NSPrivacyCollectedDataTypes` vacío) y con la política de privacidad,
+        que dicen que los datos nunca salen del dispositivo. Marcar Health o
+        Location como “Collected” contradiría ambos.
+      - ⚠️ Si se activa el escáner de comida con IA (fotos enviadas al
+        Worker → Anthropic), habrá que revisar esta respuesta (Photos / Other
+        User Content) y actualizar la política y el manifiesto.
 - [ ] Categoría: Health & Fitness · Clasificación de edad: 4+
 
 ## Fase 5 — Screenshots (~30 min)
