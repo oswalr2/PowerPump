@@ -13,16 +13,43 @@ final class PoseDetectionService: NSObject, ObservableObject {
     /// for placing the skeleton on the aspect-filled preview.
     @Published var aspect: CGFloat = 9.0 / 16.0
 
+    /// Camera access was denied or is restricted — the view shows a hint
+    /// to enable it in Settings instead of a black preview.
+    @Published var permissionDenied = false
+
     let session = AVCaptureSession()
     private let videoOutput = AVCaptureVideoDataOutput()
     private let processingQueue = DispatchQueue(label: "sb.pose.processing", qos: .userInteractive)
-    private var configured = false
+    /// All session configuration / start / stop happens here, in order, so a
+    /// quick close can't race a start that's still in flight.
+    private let sessionQueue = DispatchQueue(label: "sb.pose.session")
+    private var configured = false   // only touched on sessionQueue
 
     // MARK: - Setup
 
     func setup(front: Bool = true) {
-        guard !configured else { return }
-        configured = true
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized:
+            break
+        case .notDetermined:
+            // Hold the session work (configure, start) until the user answers.
+            sessionQueue.suspend()
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                if !granted {
+                    DispatchQueue.main.async { self.permissionDenied = true }
+                }
+                self.sessionQueue.resume()
+            }
+        default:
+            permissionDenied = true
+            return
+        }
+        sessionQueue.async { self.configureSession(front: front) }
+    }
+
+    private func configureSession(front: Bool) {
+        guard !configured,
+              AVCaptureDevice.authorizationStatus(for: .video) == .authorized else { return }
         session.beginConfiguration()
         session.sessionPreset = .high
 
@@ -30,16 +57,21 @@ final class PoseDetectionService: NSObject, ObservableObject {
             .builtInWideAngleCamera,
             for: .video,
             position: front ? .front : .back
-        ), let input = try? AVCaptureDeviceInput(device: device) else {
+        ), let input = try? AVCaptureDeviceInput(device: device),
+           session.canAddInput(input) else {
             session.commitConfiguration()
             return
         }
-
-        if session.canAddInput(input) { session.addInput(input) }
+        session.addInput(input)
 
         videoOutput.setSampleBufferDelegate(self, queue: processingQueue)
         videoOutput.alwaysDiscardsLateVideoFrames = true
-        if session.canAddOutput(videoOutput) { session.addOutput(videoOutput) }
+        guard session.canAddOutput(videoOutput) else {
+            session.removeInput(input)
+            session.commitConfiguration()
+            return
+        }
+        session.addOutput(videoOutput)
 
         // Fix orientation for portrait
         if let connection = videoOutput.connection(with: .video) {
@@ -48,16 +80,21 @@ final class PoseDetectionService: NSObject, ObservableObject {
         }
 
         session.commitConfiguration()
+        configured = true
     }
 
     func start() {
-        guard !session.isRunning else { return }
-        processingQueue.async { self.session.startRunning() }
+        sessionQueue.async {
+            guard self.configured, !self.session.isRunning else { return }
+            self.session.startRunning()
+        }
     }
 
     func stop() {
-        guard session.isRunning else { return }
-        processingQueue.async { self.session.stopRunning() }
+        sessionQueue.async {
+            guard self.session.isRunning else { return }
+            self.session.stopRunning()
+        }
     }
 }
 
