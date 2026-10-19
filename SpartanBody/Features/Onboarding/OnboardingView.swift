@@ -327,7 +327,8 @@ private struct TargetWeightStep: View {
 
                     SBRulerPicker(
                         value: $profile.targetWeightKg,
-                        range: range, step: 1, majorTickEvery: 10
+                        range: range, step: 1, majorTickEvery: 10,
+                        accessibilityName: "Your target weight", unit: "kg"
                     )
 
                     deltaIndicator
@@ -797,7 +798,8 @@ private struct PersonalStep: View {
                             get: { Double(profile.age) },
                             set: { profile.age = Int($0) }
                         ),
-                        range: 13...90, step: 1, majorTickEvery: 5
+                        range: 13...90, step: 1, majorTickEvery: 5,
+                        accessibilityName: "Age", unit: "years"
                     )
                 }
                 .padding(16)
@@ -824,7 +826,8 @@ private struct PersonalStep: View {
                     }
                     SBRulerPicker(
                         value: $profile.weightKg,
-                        range: 30...250, step: 1, majorTickEvery: 10
+                        range: 30...250, step: 1, majorTickEvery: 10,
+                        accessibilityName: "Weight", unit: "kg"
                     )
                     Divider().background(Color.sbBorder).padding(.vertical, 6)
                     SBBMIBar(bmi: profile.bmi)
@@ -853,7 +856,8 @@ private struct PersonalStep: View {
                     }
                     SBRulerPicker(
                         value: $profile.heightCm,
-                        range: 100...230, step: 1, majorTickEvery: 10
+                        range: 100...230, step: 1, majorTickEvery: 10,
+                        accessibilityName: "Height", unit: "cm"
                     )
                 }
                 .padding(16)
