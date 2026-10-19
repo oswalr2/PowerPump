@@ -32,7 +32,8 @@ final class RunLiveActivityManager {
             movingSeconds:    session.movingSeconds,
             paceSecondsPerKm: session.paceSecondsPerKm,
             calories:         session.calories,
-            isPaused:         isPaused
+            isPaused:         isPaused,
+            clockStart:       isPaused ? nil : Date().addingTimeInterval(-session.movingSeconds)
         )
 
         // Only this run's own activity is reused. Taking whatever came first

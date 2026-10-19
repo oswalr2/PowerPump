@@ -13,6 +13,10 @@ struct RunActivityAttributes: ActivityAttributes {
         var paceSecondsPerKm: Double
         var calories: Int
         var isPaused: Bool
+        /// When the clock would have read 0:00 counting only moving time.
+        /// Lets the Lock Screen tick by itself between GPS fixes; nil while
+        /// paused, when the time shown stays still.
+        var clockStart: Date? = nil
     }
 
     /// "Run" / "Walk" / "Hike" — matches RunActivityType.rawValue.
