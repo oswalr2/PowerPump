@@ -1,4 +1,5 @@
 import Foundation
+import WidgetKit
 import SwiftUI
 import ObjectiveC
 
@@ -47,6 +48,7 @@ final class LanguageManager: ObservableObject {
             UserDefaults.standard.set(selectedCode, forKey: "sb_language")
         }
         UserDefaults.standard.set([selectedCode], forKey: "AppleLanguages")
+        shareWithWidgets()
         // Install the bundle override so SwiftUI's Text("...") routes through
         // the selected language's lproj even when the OS language differs.
         Bundle.activateLanguageOverride()
@@ -65,12 +67,20 @@ final class LanguageManager: ObservableObject {
         return "en"
     }
 
+    /// The widget and the Live Activities run outside the app, so they read
+    /// the chosen language from the shared App Group instead of the phone's.
+    private func shareWithWidgets() {
+        UserDefaults(suiteName: "group.com.oswaldo.powerpump")?.set(selectedCode, forKey: "sb_language")
+    }
+
     func select(_ code: String) {
         guard selectedCode != code else { return }
         selectedCode = code
         UserDefaults.standard.set(code, forKey: "sb_language")
         UserDefaults.standard.set([code], forKey: "AppleLanguages")
         UserDefaults.standard.synchronize()
+        shareWithWidgets()
+        WidgetCenter.shared.reloadAllTimelines()
         // Live switch — no app restart needed.
         Bundle.setLanguage(code)
         objectWillChange.send()

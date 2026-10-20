@@ -20,6 +20,31 @@ private extension Color {
 
 private let appGroupID = "group.com.oswaldo.powerpump"
 
+// MARK: - Texts (the extension has no string catalog; the app shares the
+// language the user picked in it, which can differ from the phone's)
+
+private let widgetTexts: [String: [String: String]] = [
+    "run":       ["en": "Run", "es": "Correr", "fr": "Course", "it": "Corsa", "pt": "Corrida"],
+    "walk":      ["en": "Walk", "es": "Caminar", "fr": "Marche", "it": "Camminata", "pt": "Caminhada"],
+    "hike":      ["en": "Hike", "es": "Senderismo", "fr": "Randonnée", "it": "Trekking", "pt": "Trilha"],
+    "paused":    ["en": "PAUSED", "es": "EN PAUSA", "fr": "EN PAUSE", "it": "IN PAUSA", "pt": "PAUSADO"],
+    "rest":      ["en": "Rest", "es": "Descanso", "fr": "Repos", "it": "Riposo", "pt": "Descanso"],
+    "sets":      ["en": "sets", "es": "series", "fr": "séries", "it": "serie", "pt": "séries"],
+    "exercises": ["en": "exercises", "es": "ejercicios", "fr": "exercices", "it": "esercizi", "pt": "exercícios"],
+    "about":     ["en": "Calories, streak and water at a glance.",
+                  "es": "Calorías, racha y agua de un vistazo.",
+                  "fr": "Calories, série et eau en un coup d'œil.",
+                  "it": "Calorie, serie e acqua a colpo d'occhio.",
+                  "pt": "Calorias, sequência e água de relance."],
+]
+
+private func WL(_ key: String) -> String {
+    let code = UserDefaults(suiteName: appGroupID)?.string(forKey: "sb_language")
+        ?? Locale.preferredLanguages.first ?? "en"
+    let lang = String(code.prefix(2))
+    return widgetTexts[key]?[lang] ?? widgetTexts[key]?["en"] ?? key
+}
+
 // MARK: - Dashboard widget (home screen + lock screen)
 
 struct DashboardEntry: TimelineEntry {
@@ -71,7 +96,7 @@ struct SpartanDashboardWidget: Widget {
             DashboardWidgetView(entry: entry)
         }
         .configurationDisplayName("PowerPump")
-        .description("Calories, streak, and water at a glance.")
+        .description(Text(verbatim: WL("about")))
         .supportedFamilies([.systemSmall, .systemMedium,
                             .accessoryCircular, .accessoryRectangular, .accessoryInline])
     }
@@ -238,7 +263,7 @@ struct WorkoutLiveActivity: Widget {
                     if let restEnd = context.state.restEndDate, restEnd > .now {
                         HStack(spacing: 8) {
                             Image(systemName: "timer").foregroundColor(.orange)
-                            Text("Rest")
+                            Text(verbatim: WL("rest"))
                                 .font(.system(size: 13, weight: .semibold, design: .rounded))
                                 .foregroundColor(.white.opacity(0.7))
                             Text(timerInterval: Date()...restEnd, countsDown: true)
@@ -251,7 +276,7 @@ struct WorkoutLiveActivity: Widget {
                         HStack {
                             Label("\(context.state.exerciseCount)", systemImage: "list.bullet")
                             Spacer()
-                            Text("\(context.state.setsDone)/\(context.state.totalSets) sets")
+                            Text(verbatim: "\(context.state.setsDone)/\(context.state.totalSets) \(WL("sets"))")
                                 .font(.system(size: 15, weight: .bold, design: .rounded))
                                 .foregroundColor(.wAccent)
                         }
@@ -298,7 +323,7 @@ struct LockScreenWorkoutView: View {
                     .font(.system(size: 15, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
                     .lineLimit(1)
-                Text("\(context.state.setsDone)/\(context.state.totalSets) sets · \(context.state.exerciseCount) exercises")
+                Text(verbatim: "\(context.state.setsDone)/\(context.state.totalSets) \(WL("sets")) · \(context.state.exerciseCount) \(WL("exercises"))")
                     .font(.system(size: 12, weight: .medium, design: .rounded))
                     .foregroundColor(.white.opacity(0.6))
             }
@@ -311,7 +336,7 @@ struct LockScreenWorkoutView: View {
                         .font(.system(size: 22, weight: .heavy, design: .rounded).monospacedDigit())
                         .foregroundColor(.orange)
                         .frame(width: 70)
-                    Text("rest")
+                    Text(verbatim: WL("rest").lowercased())
                         .font(.system(size: 10, weight: .semibold, design: .rounded))
                         .foregroundColor(.white.opacity(0.5))
                 }
@@ -354,9 +379,12 @@ struct RunLiveActivity: Widget {
                 }
                 DynamicIslandExpandedRegion(.bottom) {
                     HStack(spacing: 14) {
-                        runStat(icon: "clock.fill",
-                                value: formatTime(context.state.movingSeconds),
-                                color: .white)
+                        HStack(spacing: 4) {
+                            Image(systemName: "clock.fill").font(.system(size: 11, weight: .bold))
+                            runClock(context.state)
+                                .font(.system(size: 13, weight: .bold, design: .rounded).monospacedDigit())
+                        }
+                        .foregroundColor(.white)
                         runStat(icon: "speedometer",
                                 value: formatPace(context.state.paceSecondsPerKm),
                                 color: .wAccent)
@@ -365,7 +393,7 @@ struct RunLiveActivity: Widget {
                                 color: .orange)
                         Spacer()
                         if context.state.isPaused {
-                            Text("PAUSED")
+                            Text(verbatim: WL("paused"))
                                 .font(.system(size: 11, weight: .heavy, design: .rounded))
                                 .foregroundColor(.orange)
                         }
@@ -406,7 +434,7 @@ struct LockScreenRunView: View {
                         .font(.system(size: 15, weight: .bold, design: .rounded))
                         .foregroundColor(.white)
                     if context.state.isPaused {
-                        Text("PAUSED")
+                        Text(verbatim: WL("paused"))
                             .font(.system(size: 10, weight: .heavy, design: .rounded))
                             .foregroundColor(.orange)
                             .padding(.horizontal, 6).padding(.vertical, 2)
@@ -429,8 +457,10 @@ struct LockScreenRunView: View {
 
             Spacer()
 
-            Text(formatTime(context.state.movingSeconds))
+            runClock(context.state)
                 .font(.system(size: 22, weight: .heavy, design: .rounded).monospacedDigit())
+                .multilineTextAlignment(.trailing)
+                .frame(maxWidth: 90, alignment: .trailing)
                 .foregroundColor(.white)
         }
         .padding(16)
@@ -449,9 +479,20 @@ private func runIcon(_ raw: String) -> String {
 
 private func runLabel(_ raw: String) -> String {
     switch raw {
-    case "Walk": return "Walk"
-    case "Hike": return "Hike"
-    default:     return "Run"
+    case "Walk": return WL("walk")
+    case "Hike": return WL("hike")
+    default:     return WL("run")
+    }
+}
+
+/// Moving time. While running it ticks on its own (the app only updates the
+/// activity on GPS fixes, so a fixed number froze between them).
+@ViewBuilder
+private func runClock(_ state: RunActivityAttributes.ContentState) -> some View {
+    if let start = state.clockStart, !state.isPaused {
+        Text(timerInterval: start...Date(timeIntervalSinceNow: 86400), countsDown: false)
+    } else {
+        Text(verbatim: formatTime(state.movingSeconds))
     }
 }
 
@@ -468,7 +509,7 @@ private func formatTime(_ seconds: TimeInterval) -> String {
 }
 
 private func formatPace(_ secondsPerKm: Double) -> String {
-    guard secondsPerKm > 0, secondsPerKm.isFinite else { return "—:—" }
+    guard secondsPerKm > 0, secondsPerKm.isFinite else { return "--:--" }
     let s = Int(secondsPerKm)
     return String(format: "%d:%02d", s / 60, s % 60)
 }

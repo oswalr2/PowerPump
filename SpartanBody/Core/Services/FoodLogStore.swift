@@ -120,11 +120,15 @@ final class FoodLogStore: ObservableObject {
     }
 
     // Most-logged foods of the past 30 days, most frequent first.
+    // Recipes are left out: they're logged as a whole portion, so here they
+    // read "465 kcal per 100 g" and typing grams counted the dish twice.
+    // They're logged again from Recipes, by servings.
     var frequentItems: [FoodItem] {
         let cutoff = Calendar.current.date(byAdding: .day, value: -30, to: .now) ?? .now
+        let recipeIDs = Set(RecipeDatabase.all.map(\.id))
         var stats: [String: (count: Int, lastAt: Date, sample: LoggedFood)] = [:]
         for entries in allLogs.values {
-            for e in entries where e.loggedAt >= cutoff && e.grams > 0 {
+            for e in entries where e.loggedAt >= cutoff && e.grams > 0 && !recipeIDs.contains(e.foodID) {
                 let prev = stats[e.foodID]
                 stats[e.foodID] = ((prev?.count ?? 0) + 1,
                                    max(prev?.lastAt ?? .distantPast, e.loggedAt),
