@@ -24,6 +24,7 @@
 		BB000001000000000000BB21 /* RunActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000001000000000000BB23 /* RunActivityAttributes.swift */; };
 		BB000001000000000000BB22 /* RunActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000001000000000000BB23 /* RunActivityAttributes.swift */; };
 		BB000001000000000000BB61 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = BB000001000000000000BB60 /* PrivacyInfo.xcprivacy */; };
+		AA000001000000000000AA83 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000AA82 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +107,7 @@
 		BB000001000000000000BB23 /* RunActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunActivityAttributes.swift; sourceTree = "<group>"; };
 		BB000001000000000000BB60 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		F36D37072FB3EF4000CA86B6 /* SpartanBody.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpartanBody.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA000001000000000000AA82 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -171,6 +173,7 @@
 				AA000001000000000000AA07 /* WatchWorkoutManager.swift */,
 				AA000001000000000000AA08 /* WatchWorkoutView.swift */,
 				AA000001000000000000AA78 /* Info.plist */,
+				AA000001000000000000AA82 /* Assets.xcassets */,
 				AA000001000000000000AA21 /* Complications */,
 			);
 			path = SpartanBodyWatch;
@@ -356,6 +359,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA000001000000000000AA83 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
