@@ -213,7 +213,7 @@ struct RunningView: View {
                     .font(SBFont.caption())
                     .foregroundColor(.sbTextSecondary)
                     .multilineTextAlignment(.center)
-                SBPrimaryButton(title: "Allow Location") {
+                SBPrimaryButton(title: "Continue") {
                     location.requestAuthorization()
                 }
             }

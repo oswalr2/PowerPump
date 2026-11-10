@@ -179,7 +179,7 @@ struct ProgramSessionView: View {
                 .font(SBFont.caption())
                 .foregroundColor(.sbTextSecondary)
                 .multilineTextAlignment(.center)
-            SBPrimaryButton(title: "Allow Location") { location.requestAuthorization() }
+            SBPrimaryButton(title: "Continue") { location.requestAuthorization() }
         }
     }
 

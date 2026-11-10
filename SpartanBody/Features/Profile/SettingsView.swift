@@ -162,7 +162,7 @@ struct SettingsView: View {
                 .foregroundColor(.sbTextSecondary)
                 .lineSpacing(3)
 
-            SBPrimaryButton(title: "Enable Notifications") {
+            SBPrimaryButton(title: "Continue") {
                 notif.requestPermission()
             }
         }
