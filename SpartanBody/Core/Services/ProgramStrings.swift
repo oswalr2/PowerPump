@@ -115,6 +115,8 @@ enum ProgramStrings {
         "voice.duration.minutes": "for %d minutes",
         "voice.duration.seconds": "for %d seconds",
         "voice.duration.minutesSeconds": "for %d minutes %d seconds",
+        "voice.duration.oneMinute": "for 1 minute",
+        "voice.duration.oneMinuteSeconds": "for 1 minute %d seconds",
 
         // UI strings
         "Walk & Run Programs": "Walk & Run Programs",
@@ -341,6 +343,8 @@ enum ProgramStrings {
         "voice.duration.minutes": "durante %d minutos",
         "voice.duration.seconds": "durante %d segundos",
         "voice.duration.minutesSeconds": "durante %d minutos %d segundos",
+        "voice.duration.oneMinute": "durante 1 minuto",
+        "voice.duration.oneMinuteSeconds": "durante 1 minuto %d segundos",
 
         "Walk & Run Programs": "Programas de andar y correr",
         "Lose weight · 5K · Pace · Voice coach": "Adelgazar · 5K · Ritmo · Voz coach",
@@ -562,6 +566,8 @@ enum ProgramStrings {
         "voice.duration.minutes": "pendant %d minutes",
         "voice.duration.seconds": "pendant %d secondes",
         "voice.duration.minutesSeconds": "pendant %d minutes %d secondes",
+        "voice.duration.oneMinute": "pendant 1 minute",
+        "voice.duration.oneMinuteSeconds": "pendant 1 minute %d secondes",
 
         "Walk & Run Programs": "Programmes marche & course",
         "Lose weight · 5K · Pace · Voice coach": "Maigrir · 5K · Rythme · Coach vocal",
@@ -783,6 +789,8 @@ enum ProgramStrings {
         "voice.duration.minutes": "per %d minuti",
         "voice.duration.seconds": "per %d secondi",
         "voice.duration.minutesSeconds": "per %d minuti %d secondi",
+        "voice.duration.oneMinute": "per 1 minuto",
+        "voice.duration.oneMinuteSeconds": "per 1 minuto %d secondi",
 
         "Walk & Run Programs": "Programmi camminata e corsa",
         "Lose weight · 5K · Pace · Voice coach": "Dimagrire · 5K · Ritmo · Coach vocale",
@@ -1004,6 +1012,8 @@ enum ProgramStrings {
         "voice.duration.minutes": "por %d minutos",
         "voice.duration.seconds": "por %d segundos",
         "voice.duration.minutesSeconds": "por %d minutos %d segundos",
+        "voice.duration.oneMinute": "por 1 minuto",
+        "voice.duration.oneMinuteSeconds": "por 1 minuto %d segundos",
 
         "Walk & Run Programs": "Programas de caminhada e corrida",
         "Lose weight · 5K · Pace · Voice coach": "Emagrecer · 5K · Ritmo · Voz coach",

@@ -148,7 +148,10 @@ struct FoodSearchView: View {
 
                 if showsQuickSections && !store.frequentItems.isEmpty {
                     sectionLabel("Frequent")
-                    ForEach(store.frequentItems) { item in
+                    // A frequent food is also listed under All Foods. Giving
+                    // these rows their own ids stops SwiftUI from treating the
+                    // two rows as one, which left a blank gap in the list.
+                    ForEach(store.frequentItems, id: \.frequentRowID) { item in
                         foodRow(item)
                     }
                     sectionLabel("All Foods")
@@ -452,4 +455,9 @@ struct FoodSearchView: View {
         store.add(item, grams: grams, meal: meal)
         dismiss()
     }
+}
+
+private extension FoodItem {
+    /// Row identity inside the Frequent section of the food search.
+    var frequentRowID: String { "frequent." + id }
 }

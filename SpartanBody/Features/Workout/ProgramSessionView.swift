@@ -584,10 +584,17 @@ struct ProgramSessionView: View {
             coach.announceHalfway()
         }
 
-        // Countdown ticks at 3, 2, 1.
-        if !didCountdown3 && remaining == 3 { didCountdown3 = true; coach.cueCountdown() }
-        if !didCountdown2 && remaining == 2 { didCountdown2 = true; coach.cueCountdown() }
-        if !didCountdown1 && remaining == 1 { didCountdown1 = true; coach.cueCountdown() }
+        // Countdown at 3, 2, 1: a tick, and the number spoken when voice is on.
+        if !didCountdown3 && remaining == 3 { didCountdown3 = true; countdownCue(3) }
+        if !didCountdown2 && remaining == 2 { didCountdown2 = true; countdownCue(2) }
+        if !didCountdown1 && remaining == 1 { didCountdown1 = true; countdownCue(1) }
+    }
+
+    /// One step of the 3, 2, 1 countdown. Very short stretches only vibrate,
+    /// so the numbers never talk over the announcement of the stretch itself.
+    private func countdownCue(_ n: Int) {
+        coach.cueCountdown()
+        if current.duration >= 10 { coach.announceCountdown(n) }
     }
 
     // (advanceInterval was removed — tick() now derives interval index from
