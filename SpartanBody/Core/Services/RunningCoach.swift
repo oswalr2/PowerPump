@@ -128,6 +128,10 @@ final class RunningCoach: ObservableObject {
         let mins = seconds / 60
         let secs = seconds % 60
         // Use localized templates so the grammar adapts (1 minute / 1 minuto).
+        if mins == 1 {
+            return secs == 0 ? PT("voice.duration.oneMinute")
+                             : String(format: PT("voice.duration.oneMinuteSeconds"), secs)
+        }
         if mins > 0 && secs == 0 {
             return String(format: PT("voice.duration.minutes"), mins)
         }
